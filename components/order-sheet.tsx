@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { ClipboardList, X } from 'lucide-react'
 import { useLanguage } from '@/components/language-provider'
 import { Modal } from '@/components/modal'
+import { DineInStep, OrderTypeStep } from '@/components/order-steps'
 import { useOrder } from '@/components/order-provider'
 import { QuantityStepper } from '@/components/quantity-stepper'
 import { formatPrice } from '@/lib/format'
@@ -13,6 +14,8 @@ export function OrderBar() {
   const { lang, t } = useLanguage()
   const { sections, lines, count, total, add, remove, clear } = useOrder()
   const [open, setOpen] = useState(false)
+  // Cerrar el pedido: lista → elegir salón / para llevar → (salón) resumen para el mozo.
+  const [step, setStep] = useState<'list' | 'choose' | 'dine-in'>('list')
 
   // Platos agrupados por categoría, en el mismo orden que el menú.
   const groups = sections
@@ -42,8 +45,19 @@ export function OrderBar() {
       )}
 
       {open && (
-        <Modal labelledBy="order-dialog-title" onClose={() => setOpen(false)}>
-          {(close) => (
+        <Modal
+          labelledBy="order-dialog-title"
+          onClose={() => {
+            setOpen(false)
+            setStep('list')
+          }}
+        >
+          {(close) =>
+            step === 'choose' ? (
+              <OrderTypeStep onBack={() => setStep('list')} onClose={close} onDineIn={() => setStep('dine-in')} />
+            ) : step === 'dine-in' ? (
+              <DineInStep groups={groups} total={total} onBack={() => setStep('choose')} onClose={close} />
+            ) : (
             <div className="flex flex-col">
               <div className="flex items-start justify-between gap-4 border-b border-border p-6 pb-4">
                 <div>
@@ -93,6 +107,13 @@ export function OrderBar() {
                     </p>
                     <button
                       type="button"
+                      onClick={() => setStep('choose')}
+                      className="h-11 w-full rounded-pill bg-button px-5 text-sm font-semibold text-button-foreground transition hover:bg-button/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    >
+                      {t.finishOrder}
+                    </button>
+                    <button
+                      type="button"
                       onClick={() => {
                         clear()
                         close()
@@ -105,7 +126,8 @@ export function OrderBar() {
                 </>
               )}
             </div>
-          )}
+            )
+          }
         </Modal>
       )}
     </>

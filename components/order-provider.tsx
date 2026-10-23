@@ -14,6 +14,8 @@ export interface OrderLine {
 
 interface OrderContextValue {
   sections: MenuSection[]
+  /** false hasta leer el pedido guardado en el dispositivo: evita mostrar "vacío" por un instante. */
+  ready: boolean
   quantities: Quantities
   lines: OrderLine[]
   count: number
@@ -79,6 +81,7 @@ export function OrderProvider({ sections, children }: { sections: MenuSection[];
       .filter((line): line is OrderLine => Boolean(line.item))
     return {
       sections,
+      ready: hydrated,
       quantities,
       lines,
       count: lines.reduce((sum, line) => sum + line.quantity, 0),
@@ -87,7 +90,7 @@ export function OrderProvider({ sections, children }: { sections: MenuSection[];
       remove,
       clear,
     }
-  }, [sections, itemsById, quantities, add, remove, clear])
+  }, [sections, itemsById, hydrated, quantities, add, remove, clear])
 
   return <OrderContext.Provider value={value}>{children}</OrderContext.Provider>
 }
