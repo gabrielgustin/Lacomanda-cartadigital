@@ -17,8 +17,8 @@ const LanguageContext = createContext<LanguageContextValue | null>(null)
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const { texts } = useSiteTheme()
-  // El servidor siempre renderiza en español; el idioma guardado o el del
-  // dispositivo se aplica después de hidratar para no desfasar el HTML.
+  // Siempre arranca en español (también en el servidor). Solo se pasa a inglés si el cliente
+  // lo eligió con el interruptor; esa elección se aplica después de hidratar para no desfasar el HTML.
   const [lang, setLangState] = useState<Lang>('es')
 
   useEffect(() => {
@@ -27,7 +27,6 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       stored = window.localStorage.getItem(STORAGE_KEY)
     } catch {}
     if (stored === 'es' || stored === 'en') setLangState(stored)
-    else if (navigator.language?.toLowerCase().startsWith('en')) setLangState('en')
   }, [])
 
   useEffect(() => {

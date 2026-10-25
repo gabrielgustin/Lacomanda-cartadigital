@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ClipboardList, X } from 'lucide-react'
 import { useLanguage } from '@/components/language-provider'
 import { Modal } from '@/components/modal'
@@ -9,13 +9,42 @@ import { useOrder } from '@/components/order-provider'
 import { QuantityStepper } from '@/components/quantity-stepper'
 import { formatPrice } from '@/lib/format'
 
+const DINE_IN_KEY = 'la-comanda-dine-in'
+
 // Barra fija con el resumen del pedido + hoja con el detalle para mostrarle al mozo.
 export function OrderBar() {
   const { lang, t } = useLanguage()
-  const { sections, lines, count, total, add, remove, clear } = useOrder()
+  const { sections, ready, lines, count, total, add, remove } = useOrder()
   const [open, setOpen] = useState(false)
   // Cerrar el pedido: lista → elegir salón / para llevar → (salón) resumen para el mozo.
   const [step, setStep] = useState<'list' | 'choose' | 'dine-in'>('list')
+  // Una vez elegido "para el salón", el pedido queda marcado: al reabrir se ve el resumen
+  // para el mozo (no la lista otra vez) y la barra lo dice. Se recuerda en el dispositivo.
+  const [dineIn, setDineIn] = useState(false)
+
+  const updateDineIn = (value: boolean) => {
+    setDineIn(value)
+    try {
+      if (value) window.localStorage.setItem(DINE_IN_KEY, '1')
+      else window.localStorage.removeItem(DINE_IN_KEY)
+    } catch {}
+  }
+
+  useEffect(() => {
+    try {
+      setDineIn(window.localStorage.getItem(DINE_IN_KEY) === '1')
+    } catch {}
+  }, [])
+
+  // Sin platos no hay pedido para el salón.
+  useEffect(() => {
+    if (ready && count === 0 && dineIn) updateDineIn(false)
+  }, [ready, count, dineIn])
+
+  const openSheet = () => {
+    setStep(dineIn ? 'dine-in' : 'list')
+    setOpen(true)
+  }
 
   // Platos agrupados por categoría, en el mismo orden que el menú.
   const groups = sections
@@ -31,12 +60,12 @@ export function OrderBar() {
         <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center px-4 pb-4">
           <button
             type="button"
-            onClick={() => setOpen(true)}
+            onClick={openSheet}
             className="pointer-events-auto flex w-full max-w-md items-center justify-between gap-4 rounded-pill bg-button px-5 py-3.5 text-button-foreground shadow-xl shadow-button/30 transition hover:bg-button/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             <span className="flex items-center gap-2.5 text-sm font-semibold">
               <ClipboardList className="h-5 w-5" aria-hidden />
-              {t.viewOrder}
+              {dineIn ? t.dineInTitle : t.viewOrder}
               <span className="rounded-pill bg-button-foreground/20 px-2 py-0.5 text-xs">{t.itemsCount(count)}</span>
             </span>
             <span className="font-heading text-sm">{formatPrice(total)}</span>
@@ -54,9 +83,24 @@ export function OrderBar() {
         >
           {(close) =>
             step === 'choose' ? (
-              <OrderTypeStep onBack={() => setStep('list')} onClose={close} onDineIn={() => setStep('dine-in')} />
+              <OrderTypeStep
+                onBack={() => setStep('list')}
+                onClose={close}
+                onDineIn={() => {
+                  updateDineIn(true)
+                  setStep('dine-in')
+                }}
+              />
             ) : step === 'dine-in' ? (
-              <DineInStep groups={groups} total={total} onBack={() => setStep('choose')} onClose={close} />
+              <DineInStep
+                groups={groups}
+                total={total}
+                onEdit={() => {
+                  updateDineIn(false)
+                  setStep('list')
+                }}
+                onClose={close}
+              />
             ) : (
             <div className="flex flex-col">
               <div className="flex items-start justify-between gap-4 border-b border-border p-6 pb-4">
@@ -111,16 +155,6 @@ export function OrderBar() {
                       className="h-11 w-full rounded-pill bg-button px-5 text-sm font-semibold text-button-foreground transition hover:bg-button/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
                       {t.finishOrder}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        clear()
-                        close()
-                      }}
-                      className="w-full rounded-pill border border-border py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground transition hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
-                    >
-                      {t.clearOrder}
                     </button>
                   </div>
                 </>

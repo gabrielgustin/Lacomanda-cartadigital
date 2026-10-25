@@ -10,7 +10,7 @@ import type { MenuSection } from '@/lib/menu-data'
 interface StepHeaderProps {
   id: string
   title: string
-  hint: string
+  hint?: string
   onBack: () => void
   onClose: () => void
 }
@@ -32,7 +32,7 @@ function StepHeader({ id, title, hint, onBack, onClose }: StepHeaderProps) {
           <h2 id={id} className="font-heading text-2xl text-heading">
             {title}
           </h2>
-          <p className="mt-1.5 text-sm leading-6 text-muted-foreground">{hint}</p>
+          {hint && <p className="mt-1.5 text-sm leading-6 text-muted-foreground">{hint}</p>}
         </div>
       </div>
       <button
@@ -55,7 +55,7 @@ export function OrderTypeStep({ onBack, onClose, onDineIn }: { onBack: () => voi
   const { t } = useLanguage()
   return (
     <div>
-      <StepHeader id="order-dialog-title" title={t.orderTypeTitle} hint={t.orderTypeHint} onBack={onBack} onClose={onClose} />
+      <StepHeader id="order-dialog-title" title={t.orderTypeTitle} onBack={onBack} onClose={onClose} />
       <div className="space-y-3 p-6">
         <button type="button" onClick={onDineIn} className={optionClass} data-autofocus>
           <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-pill bg-button text-button-foreground">
@@ -83,16 +83,17 @@ export function OrderTypeStep({ onBack, onClose, onDineIn }: { onBack: () => voi
 interface DineInStepProps {
   groups: { section: MenuSection; lines: OrderLine[] }[]
   total: number
-  onBack: () => void
+  /** Volver a editar el pedido (el pedido deja de estar marcado como "para el salón"). */
+  onEdit: () => void
   onClose: () => void
 }
 
 /** Pedido para el salón: resumen de solo lectura para mostrarle al mozo. No se guarda ni se envía. */
-export function DineInStep({ groups, total, onBack, onClose }: DineInStepProps) {
+export function DineInStep({ groups, total, onEdit, onClose }: DineInStepProps) {
   const { lang, t } = useLanguage()
   return (
     <div>
-      <StepHeader id="order-dialog-title" title={t.dineInTitle} hint={t.dineInShow} onBack={onBack} onClose={onClose} />
+      <StepHeader id="order-dialog-title" title={t.dineInTitle} hint={t.dineInShow} onBack={onEdit} onClose={onClose} />
       <div className="space-y-5 px-6 pt-4">
         {groups.map(({ section, lines }) => (
           <section key={section.id} aria-label={section.title[lang]}>
@@ -122,6 +123,13 @@ export function DineInStep({ groups, total, onBack, onClose }: DineInStepProps) 
           className="h-11 w-full rounded-pill bg-button px-5 text-sm font-semibold text-button-foreground transition hover:bg-button/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           {t.done}
+        </button>
+        <button
+          type="button"
+          onClick={onEdit}
+          className="w-full rounded-pill border border-border py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground transition hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+        >
+          {t.editOrder}
         </button>
       </div>
     </div>

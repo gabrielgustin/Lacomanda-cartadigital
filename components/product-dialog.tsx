@@ -15,6 +15,9 @@ interface ProductDialogProps {
   onClose: () => void
 }
 
+const primaryButton =
+  'h-11 w-full rounded-pill bg-button px-5 text-sm font-semibold text-button-foreground transition hover:bg-button/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2'
+
 export function ProductDialog({ item, section, onClose }: ProductDialogProps) {
   const { lang, t } = useLanguage()
   const { quantities, add, remove } = useOrder()
@@ -48,19 +51,29 @@ export function ProductDialog({ item, section, onClose }: ProductDialogProps) {
               </span>
             </div>
             <p className="text-sm leading-6 text-muted-foreground">{item.description[lang]}</p>
-            <div className="flex items-center justify-between gap-4 pt-2">
+            <div className="space-y-3 pt-2">
               {quantity === 0 ? (
+                // Primera vez: suma uno y cierra la ventana.
                 <button
                   type="button"
-                  onClick={() => add(item.id)}
-                  className="h-11 w-full rounded-pill bg-button px-5 text-sm font-semibold text-button-foreground transition hover:bg-button/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  onClick={() => {
+                    add(item.id)
+                    close()
+                  }}
+                  className={primaryButton}
                 >
                   {t.addToOrder}
                 </button>
               ) : (
+                // Ya está en el pedido: se ajusta la cantidad con − y +, y "Listo" cierra.
                 <>
-                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">{t.inYourOrder}</span>
-                  <QuantityStepper name={name} quantity={quantity} onAdd={() => add(item.id)} onRemove={() => remove(item.id)} />
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">{t.inYourOrder}</span>
+                    <QuantityStepper name={name} quantity={quantity} onAdd={() => add(item.id)} onRemove={() => remove(item.id)} />
+                  </div>
+                  <button type="button" onClick={close} className={primaryButton}>
+                    {t.done}
+                  </button>
                 </>
               )}
             </div>
