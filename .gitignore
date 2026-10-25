@@ -19,3 +19,11 @@ node_modules
 # Generados por TypeScript / Next
 *.tsbuildinfo
 next-env.d.ts
+
+# Herramientas locales (no van a git)
+graphify-out/
+promo-video/
+
+# MemPalace per-project files (issue #185)
+mempalace.yaml
+entities.json
