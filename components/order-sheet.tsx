@@ -11,6 +11,9 @@ import { formatPrice } from '@/lib/format'
 
 const DINE_IN_KEY = 'la-comanda-dine-in'
 
+// none: sin elegir · chosen: eligió salón · done: ya tocó "Listo" (el mozo lo ve en pantalla).
+type DineInMode = 'none' | 'chosen' | 'done'
+
 // Barra fija con el resumen del pedido + hoja con el detalle para mostrarle al mozo.
 export function OrderBar() {
   const { lang, t } = useLanguage()
@@ -20,25 +23,27 @@ export function OrderBar() {
   const [step, setStep] = useState<'list' | 'choose' | 'dine-in'>('list')
   // Una vez elegido "para el salón", el pedido queda marcado: al reabrir se ve el resumen
   // para el mozo (no la lista otra vez) y la barra lo dice. Se recuerda en el dispositivo.
-  const [dineIn, setDineIn] = useState(false)
+  const [dineMode, setDineMode] = useState<DineInMode>('none')
+  const dineIn = dineMode !== 'none'
 
-  const updateDineIn = (value: boolean) => {
-    setDineIn(value)
+  const updateDineMode = (mode: DineInMode) => {
+    setDineMode(mode)
     try {
-      if (value) window.localStorage.setItem(DINE_IN_KEY, '1')
-      else window.localStorage.removeItem(DINE_IN_KEY)
+      if (mode === 'none') window.localStorage.removeItem(DINE_IN_KEY)
+      else window.localStorage.setItem(DINE_IN_KEY, mode)
     } catch {}
   }
 
   useEffect(() => {
     try {
-      setDineIn(window.localStorage.getItem(DINE_IN_KEY) === '1')
+      const saved = window.localStorage.getItem(DINE_IN_KEY)
+      setDineMode(saved === 'done' ? 'done' : saved ? 'chosen' : 'none')
     } catch {}
   }, [])
 
   // Sin platos no hay pedido para el salón.
   useEffect(() => {
-    if (ready && count === 0 && dineIn) updateDineIn(false)
+    if (ready && count === 0 && dineIn) updateDineMode('none')
   }, [ready, count, dineIn])
 
   const openSheet = () => {
@@ -87,7 +92,7 @@ export function OrderBar() {
                 onBack={() => setStep('list')}
                 onClose={close}
                 onDineIn={() => {
-                  updateDineIn(true)
+                  updateDineMode('chosen')
                   setStep('dine-in')
                 }}
               />
@@ -95,8 +100,13 @@ export function OrderBar() {
               <DineInStep
                 groups={groups}
                 total={total}
+                confirmed={dineMode === 'done'}
+                onConfirm={() => {
+                  updateDineMode('done')
+                  close()
+                }}
                 onEdit={() => {
-                  updateDineIn(false)
+                  updateDineMode('none')
                   setStep('list')
                 }}
                 onClose={close}

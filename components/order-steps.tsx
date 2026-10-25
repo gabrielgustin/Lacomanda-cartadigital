@@ -85,11 +85,15 @@ interface DineInStepProps {
   total: number
   /** Volver a editar el pedido (el pedido deja de estar marcado como "para el salón"). */
   onEdit: () => void
+  /** Ya se tocó "Listo": desde ahí solo se ofrece "Modificar pedido". */
+  confirmed: boolean
+  /** "Listo": deja el pedido confirmado y cierra la ventana. */
+  onConfirm: () => void
   onClose: () => void
 }
 
 /** Pedido para el salón: resumen de solo lectura para mostrarle al mozo. No se guarda ni se envía. */
-export function DineInStep({ groups, total, onEdit, onClose }: DineInStepProps) {
+export function DineInStep({ groups, total, onEdit, confirmed, onConfirm, onClose }: DineInStepProps) {
   const { lang, t } = useLanguage()
   return (
     <div>
@@ -117,13 +121,15 @@ export function DineInStep({ groups, total, onEdit, onClose }: DineInStepProps) 
           <span className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">{t.estimatedTotal}</span>
           <span className="font-heading text-xl text-price">{formatPrice(total)}</span>
         </p>
-        <button
-          type="button"
-          onClick={onClose}
-          className="h-11 w-full rounded-pill bg-button px-5 text-sm font-semibold text-button-foreground transition hover:bg-button/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-        >
-          {t.done}
-        </button>
+        {!confirmed && (
+          <button
+            type="button"
+            onClick={onConfirm}
+            className="h-11 w-full rounded-pill bg-button px-5 text-sm font-semibold text-button-foreground transition hover:bg-button/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          >
+            {t.done}
+          </button>
+        )}
         <button
           type="button"
           onClick={onEdit}
