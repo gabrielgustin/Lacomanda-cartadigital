@@ -5,6 +5,7 @@ import { OrderTracking } from '@/components/order-tracking'
 import { PageShell } from '@/components/page-shell'
 import { StoreProviders } from '@/components/store-providers'
 import { getOrderByToken, toPublicOrder } from '@/lib/orders'
+import { getStore } from '@/lib/store'
 
 export const metadata: Metadata = { title: 'Seguimiento de tu pedido', robots: { index: false, follow: false } }
 
@@ -19,11 +20,13 @@ export default async function TrackingPage({
   const { token } = await params
   const order = await getOrderByToken(token)
   if (!order) notFound()
+  // Solo se pasan los datos de contacto: cupones y demás configuración no viajan al navegador.
+  const { settings } = await getStore()
 
   return (
     <StoreProviders>
       <PageShell>
-        <OrderTracking token={token} initial={toPublicOrder(order)} isNew={(await searchParams).nuevo === '1'} />
+        <OrderTracking token={token} initial={toPublicOrder(order)} isNew={(await searchParams).nuevo === '1'} negocio={settings.negocio} />
       </PageShell>
     </StoreProviders>
   )

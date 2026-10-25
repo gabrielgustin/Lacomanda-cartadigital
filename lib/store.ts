@@ -1,6 +1,7 @@
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
 import { seedMenu, type MenuItem, type MenuSection } from '@/lib/menu-data'
+import { DEFAULT_SETTINGS, sanitizeSettings, type OrderSettings } from '@/lib/settings'
 import { DEFAULT_THEME, sanitizeTheme, type ThemeSettings } from '@/lib/theme'
 
 // Persistencia en un archivo JSON local: simple y sin servicios externos.
@@ -11,6 +12,8 @@ export interface StoreData {
   theme: ThemeSettings
   /** Dirección pública de la carta, la que codifica el QR. Null = la del sitio actual. */
   siteUrl: string | null
+  /** Horarios, medios de pago, cupones y datos del negocio. Nunca viaja entera al navegador del cliente. */
+  settings: OrderSettings
 }
 
 export const DATA_DIR = path.join(process.cwd(), 'data')
@@ -21,6 +24,7 @@ const seed = (): StoreData => ({
   sections: structuredClone(seedMenu),
   theme: { ...DEFAULT_THEME },
   siteUrl: null,
+  settings: structuredClone(DEFAULT_SETTINGS),
 })
 
 export async function getStore(): Promise<StoreData> {
@@ -31,6 +35,7 @@ export async function getStore(): Promise<StoreData> {
       sections: raw.sections,
       theme: sanitizeTheme(raw.theme),
       siteUrl: raw.siteUrl ?? null,
+      settings: sanitizeSettings(raw.settings),
     }
   } catch {
     return seed()

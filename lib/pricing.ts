@@ -7,10 +7,24 @@ export interface PricedLine {
   quantity: number
 }
 
-// shortcut: sin cupones ni envío (el pedido es para retirar), total = subtotal; sumar discount y delivery cuando existan.
-export function orderTotals(lines: PricedLine[]) {
+export interface CouponTerms {
+  tipo: 'porcentaje' | 'fijo'
+  valor: number
+}
+
+const round2 = (amount: number) => Math.round(amount * 100) / 100
+
+/** Descuento del cupón: nunca negativo ni mayor al subtotal, redondeado a centavos. */
+export function couponDiscount(subtotal: number, coupon: CouponTerms) {
+  const raw = coupon.tipo === 'porcentaje' ? (subtotal * coupon.valor) / 100 : coupon.valor
+  return Math.min(subtotal, Math.max(0, round2(raw)))
+}
+
+// Sin costo de envío: todos los pedidos son para retirar en el local.
+export function orderTotals(lines: PricedLine[], coupon?: CouponTerms | null) {
   const subtotal = lines.reduce((sum, line) => sum + line.price * line.quantity, 0)
-  return { subtotal, total: subtotal }
+  const descuento = coupon ? couponDiscount(subtotal, coupon) : 0
+  return { subtotal, descuento, total: round2(subtotal - descuento) }
 }
 
 export const orderNumber = (id: number) => `#${String(id).padStart(5, '0')}`

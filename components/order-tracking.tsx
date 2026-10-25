@@ -4,13 +4,15 @@ import { useEffect, useState } from 'react'
 import { Check } from 'lucide-react'
 import { useLanguage } from '@/components/language-provider'
 import { useOrder } from '@/components/order-provider'
-import { formatPrice } from '@/lib/format'
+import { formatOrderDate, formatPrice } from '@/lib/format'
 import type { PublicOrder } from '@/lib/orders'
 import { PROGRESS_STEPS, STATE_LABELS, orderNumber } from '@/lib/pricing'
+import type { Negocio } from '@/lib/settings'
+import { waLink } from '@/lib/whatsapp'
 
 const POLL_MS = 20_000
 
-export function OrderTracking({ token, initial, isNew }: { token: string; initial: PublicOrder; isNew: boolean }) {
+export function OrderTracking({ token, initial, isNew, negocio }: { token: string; initial: PublicOrder; isNew: boolean; negocio: Negocio }) {
   const { lang, t } = useLanguage()
   const { ready, clear } = useOrder()
   const [order, setOrder] = useState(initial)
@@ -40,13 +42,10 @@ export function OrderTracking({ token, initial, isNew }: { token: string; initia
 
   const cancelled = order.estado === 'cancelado'
   const currentIndex = PROGRESS_STEPS.indexOf(order.estado as (typeof PROGRESS_STEPS)[number])
-  // Fecha en zona horaria fija y 24 h: igual en servidor y cliente, sin errores de hidratación.
-  const placedAt = new Date(order.createdAt).toLocaleString(lang === 'en' ? 'en-GB' : 'es-AR', {
-    timeZone: 'America/Argentina/Buenos_Aires',
-    dateStyle: 'short',
-    timeStyle: 'short',
-    hour12: false,
-  })
+  const placedAt = formatOrderDate(order.createdAt)
+  const contactHref = waLink(negocio.whatsapp, `Hola, consulto por mi pedido ${orderNumber(order.id)}`)
+  const hasContact = Boolean(negocio.direccion || contactHref || negocio.instagram || negocio.facebook)
+  const linkClass = 'rounded-pill border border-border px-4 py-2 text-sm font-semibold text-foreground transition hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2'
 
   return (
     <div className="space-y-6">
@@ -106,10 +105,33 @@ export function OrderTracking({ token, initial, isNew }: { token: string; initia
             </li>
           ))}
         </ul>
-        <p className="mt-2 flex items-baseline justify-between border-t border-border pt-4">
-          <span className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">{t.totalLabel}</span>
-          <span className="font-heading text-xl text-price">{formatPrice(order.total)}</span>
-        </p>
+        <div className="mt-2 space-y-1 border-t border-border pt-4">
+          {order.descuento > 0 && (
+            <>
+              <p className="flex items-baseline justify-between text-sm text-muted-foreground">
+                <span>{t.subtotalLabel}</span>
+                <span className="tabular-nums">{formatPrice(order.subtotal)}</span>
+              </p>
+              <p className="flex items-baseline justify-between text-sm text-muted-foreground">
+                <span>
+                  {t.discountLabel}
+                  {order.cupon && ` (${order.cupon})`}
+                </span>
+                <span className="tabular-nums">-{formatPrice(order.descuento)}</span>
+              </p>
+            </>
+          )}
+          <p className="flex items-baseline justify-between pt-2">
+            <span className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">{t.totalLabel}</span>
+            <span className="font-heading text-xl text-price">{formatPrice(order.total)}</span>
+          </p>
+          {order.metodoPago && (
+            <p className="flex items-baseline justify-between text-xs text-muted-foreground">
+              <span>{t.paymentLabel}</span>
+              <span>{order.metodoPago}</span>
+            </p>
+          )}
+        </div>
         {order.notas && (
           <div className="mt-4 rounded-2xl bg-muted px-4 py-3">
             <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-eyebrow">{t.commentsTitle}</p>
@@ -117,6 +139,44 @@ export function OrderTracking({ token, initial, isNew }: { token: string; initia
           </div>
         )}
       </section>
+
+      {hasContact && (
+        <section className="rounded-3xl border border-border bg-card p-5 sm:p-6" aria-labelledby="tracking-contact">
+          <h2 id="tracking-contact" className="font-heading text-lg text-heading">
+            {t.contactStore}
+          </h2>
+          {negocio.direccion && (
+            <p className="mt-3 text-sm text-foreground">
+              <span className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">{t.storeAddress}</span>
+              <br />
+              {negocio.direccion}
+            </p>
+          )}
+          <div className="mt-4 flex flex-wrap gap-2">
+            {contactHref && (
+              <a
+                href={contactHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${t.contactStore} (WhatsApp)`}
+                className="rounded-pill bg-button px-4 py-2 text-sm font-semibold text-button-foreground transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                {t.contactStore}
+              </a>
+            )}
+            {negocio.instagram && (
+              <a href={negocio.instagram} target="_blank" rel="noopener noreferrer" aria-label={`${t.followUs}: Instagram`} className={linkClass}>
+                Instagram
+              </a>
+            )}
+            {negocio.facebook && (
+              <a href={negocio.facebook} target="_blank" rel="noopener noreferrer" aria-label={`${t.followUs}: Facebook`} className={linkClass}>
+                Facebook
+              </a>
+            )}
+          </div>
+        </section>
+      )}
     </div>
   )
 }

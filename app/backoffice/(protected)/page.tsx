@@ -1,11 +1,13 @@
 import Link from 'next/link'
-import { ExternalLink, Grid3X3, Palette, QrCode, UtensilsCrossed, type LucideIcon } from 'lucide-react'
+import { ClipboardList, Clock, CreditCard, ExternalLink, Grid3X3, Palette, QrCode, Store, Ticket, UtensilsCrossed, type LucideIcon } from 'lucide-react'
 import { PageShell } from '@/components/backoffice/page-shell'
+import { countOrders } from '@/lib/orders'
 import { getStore } from '@/lib/store'
 
 export default async function BackofficeHome() {
   const { sections } = await getStore()
   const products = sections.reduce((sum, section) => sum + section.items.length, 0)
+  const nuevos = await countOrders('nuevo')
 
   const main: { href: string; title: string; detail: string; Icon: LucideIcon }[] = [
     { href: '/backoffice/categorias', title: 'Categorías', detail: sections.length === 1 ? '1 categoría' : `${sections.length} categorías`, Icon: Grid3X3 },
@@ -15,11 +17,32 @@ export default async function BackofficeHome() {
     { href: '/backoffice/codigo-qr', title: 'Código QR', Icon: QrCode },
     { href: '/backoffice/personalizar', title: 'Personaliza tu App', Icon: Palette },
   ]
+  const takeaway: { href: string; title: string; detail: string; Icon: LucideIcon }[] = [
+    { href: '/backoffice/horarios', title: 'Horarios', detail: 'Días y horas de atención', Icon: Clock },
+    { href: '/backoffice/pagos', title: 'Medios de pago', detail: 'Efectivo, transferencia y más', Icon: CreditCard },
+    { href: '/backoffice/cupones', title: 'Cupones', detail: 'Descuentos para tus clientes', Icon: Ticket },
+    { href: '/backoffice/negocio', title: 'Datos del negocio', detail: 'Nombre, dirección y contacto', Icon: Store },
+  ]
 
   return (
     <PageShell width="max-w-5xl">
       <div className="flex flex-col gap-6 lg:flex-row">
         <div className="flex-1">
+          <Link
+            href="/backoffice/pedidos"
+            className="mb-8 flex items-center justify-between gap-4 rounded-3xl border border-border bg-card p-6 transition-shadow hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <span className="flex items-center gap-4">
+              <span className="rounded-2xl bg-muted p-3">
+                <ClipboardList className="h-6 w-6 text-heading" aria-hidden />
+              </span>
+              <span className="title-font text-lg font-medium text-heading">Pedidos</span>
+            </span>
+            <span className={nuevos > 0 ? 'rounded-full bg-button px-3 py-1 text-sm text-button-foreground' : 'text-sm text-muted-foreground'}>
+              {nuevos === 0 ? 'Sin pedidos nuevos' : nuevos === 1 ? '1 pedido nuevo' : `${nuevos} pedidos nuevos`}
+            </span>
+          </Link>
+
           <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
             {main.map(({ href, title, detail, Icon }) => (
               <Link
@@ -46,6 +69,25 @@ export default async function BackofficeHome() {
                   <Icon className="h-5 w-5 text-[#1e4b8e]" aria-hidden />
                 </span>
                 <span className="font-medium text-gray-700">{title}</span>
+              </Link>
+            ))}
+          </div>
+
+          <h2 className="mb-6 mt-8 title-font text-xl font-medium text-heading">Pedidos para llevar</h2>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {takeaway.map(({ href, title, detail, Icon }) => (
+              <Link
+                key={href}
+                href={href}
+                className="flex items-center gap-4 rounded-3xl border border-border bg-card p-4 transition-shadow hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <span className="rounded-2xl bg-muted p-2">
+                  <Icon className="h-5 w-5 text-heading" aria-hidden />
+                </span>
+                <span className="flex flex-col">
+                  <span className="title-font font-medium text-heading">{title}</span>
+                  <span className="text-sm text-muted-foreground">{detail}</span>
+                </span>
               </Link>
             ))}
           </div>
