@@ -100,7 +100,6 @@ export interface CategoryInput {
   title: Localized
   eyebrow: Localized
   icon: string
-  image: string
   visible: boolean
 }
 
@@ -113,11 +112,10 @@ export async function saveCategory(input: CategoryInput): Promise<ActionResult> 
     title.es = label.es
     title.en = label.en
   }
-  if (!validImage(input.image)) return fail('Elegí una imagen para la categoría.')
   const icon = input.icon in categoryIcons ? input.icon : 'utensils'
 
   return mutate((draft) => {
-    const fields = { label, title, eyebrow, icon, image: input.image, visible: Boolean(input.visible) }
+    const fields = { label, title, eyebrow, icon, visible: Boolean(input.visible) }
     const existing = input.id ? draft.sections.find((section) => section.id === input.id) : undefined
     if (existing) {
       Object.assign(existing, fields)
@@ -126,7 +124,7 @@ export async function saveCategory(input: CategoryInput): Promise<ActionResult> 
     if (input.id) return 'La categoría ya no existe.'
     // El id queda fijo para siempre (es el ancla de la carta): renombrar no lo cambia.
     const id = uniqueId(slugify(label.es), new Set(draft.sections.map((section) => section.id)))
-    draft.sections.push({ id, ...fields, items: [] } satisfies MenuSection)
+    draft.sections.push({ id, ...fields, image: '', items: [] } satisfies MenuSection)
   })
 }
 

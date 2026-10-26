@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { Banknote, Beef, Beer, Clock, CreditCard, Martini, Pizza, Sandwich, Smartphone, Users, type LucideIcon } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { Banknote, Beef, Beer, ChevronRight, Clock, CreditCard, Martini, Pizza, Sandwich, Smartphone, Users, type LucideIcon } from 'lucide-react'
 import { useLanguage } from '@/components/language-provider'
 import { paymentMethods, promos, promosCopy, type Promo } from '@/lib/promos'
 
@@ -14,6 +14,27 @@ export function PromosPanel() {
   const [today, setToday] = useState<number | null>(null)
   useEffect(() => setToday(new Date().getDay()), [])
 
+  // Celular: una pista que desaparece apenas se desliza, un degradé en el borde y un empujoncito inicial.
+  const listRef = useRef<HTMLUListElement>(null)
+  const [atEnd, setAtEnd] = useState(false)
+  const [touched, setTouched] = useState(false)
+  useEffect(() => {
+    const list = listRef.current
+    if (!list || list.scrollWidth <= list.clientWidth || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const timer = setTimeout(() => {
+      list.scrollTo({ left: 56, behavior: 'smooth' })
+      setTimeout(() => list.scrollTo({ left: 0, behavior: 'smooth' }), 700)
+    }, 900)
+    return () => clearTimeout(timer)
+  }, [])
+  const onScroll = () => {
+    const list = listRef.current
+    if (!list) return
+    if (list.scrollLeft > 80) setTouched(true)
+    setAtEnd(list.scrollLeft + list.clientWidth >= list.scrollWidth - 8)
+  }
+  const next = () => listRef.current?.scrollBy({ left: 272, behavior: 'smooth' })
+
   return (
     <section aria-labelledby="promos-title" className="mb-14">
       <div className="mb-4">
@@ -24,7 +45,11 @@ export function PromosPanel() {
       </div>
 
       {/* Celular: tarjetas en fila que se deslizan; pantallas grandes: grilla. */}
-      <ul className="-mx-5 flex scroll-px-5 snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-3">
+      <div className="relative">
+      <ul
+        ref={listRef}
+        onScroll={onScroll}
+        className="-mx-5 flex scroll-px-5 snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-3">
         {promos.map((promo) => {
           const Icon = promoIcons[promo.icon]
           const isToday = today !== null && promo.days.includes(today)
@@ -55,6 +80,26 @@ export function PromosPanel() {
           )
         })}
       </ul>
+      {!atEnd && (
+        <>
+          <div aria-hidden className="pointer-events-none absolute -right-5 top-0 h-[calc(100%-0.5rem)] w-14 bg-gradient-to-l from-background to-transparent sm:hidden" />
+          <button
+            type="button"
+            onClick={next}
+            aria-label={promosCopy.next[lang]}
+            className="absolute right-1 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-pill bg-button text-button-foreground shadow-md transition hover:bg-button/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:hidden"
+          >
+            <ChevronRight className="h-5 w-5" aria-hidden />
+          </button>
+        </>
+      )}
+      </div>
+      {!touched && (
+        <p className="mt-1 flex items-center justify-center gap-1 text-xs font-semibold text-primary sm:hidden">
+          {promosCopy.swipe[lang]}
+          <ChevronRight className="h-3.5 w-3.5 motion-safe:animate-pulse" aria-hidden />
+        </p>
+      )}
 
       <div className="mt-4 space-y-4 rounded-xl border border-border bg-muted/40 p-4">
         <p className="flex items-start gap-2.5 text-sm leading-6 text-foreground">

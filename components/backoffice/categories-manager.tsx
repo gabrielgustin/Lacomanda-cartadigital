@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 import { ArrowDown, ArrowUp, Pencil, Plus, Trash2, X } from 'lucide-react'
 import {
   deleteCategory,
@@ -10,19 +9,17 @@ import {
   setCategoryVisible,
   type CategoryInput,
 } from '@/app/backoffice/actions'
-import { ImageField } from '@/components/backoffice/image-field'
 import { ErrorNote, Field, Switch, btnDanger, btnIcon, btnOutline, btnPrimary, inputClass, useRunner } from '@/components/backoffice/ui'
 import { Modal } from '@/components/modal'
 import { categoryIcons, getCategoryIcon } from '@/lib/category-icons'
 import type { MenuSection } from '@/lib/menu-data'
 import { cn } from '@/lib/utils'
 
-const emptyCategory = (image: string): CategoryInput => ({
+const emptyCategory = (): CategoryInput => ({
   label: { es: '', en: '' },
   title: { es: '', en: '' },
   eyebrow: { es: '', en: '' },
   icon: 'utensils',
-  image,
   visible: true,
 })
 
@@ -32,7 +29,6 @@ const toInput = (section: MenuSection): CategoryInput => ({
   title: section.title,
   eyebrow: section.eyebrow,
   icon: section.icon,
-  image: section.image,
   visible: section.visible,
 })
 
@@ -41,15 +37,13 @@ export function CategoriesManager({ sections }: { sections: MenuSection[] }) {
   const [deleting, setDeleting] = useState<MenuSection | null>(null)
   const row = useRunner()
 
-  const presets = [...new Set(sections.map((section) => section.image))]
-
   return (
     <>
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
         <p className="text-sm text-muted-foreground">
           El orden de esta lista es el de la carta. Las categorías ocultas no se muestran a los clientes.
         </p>
-        <button type="button" className={btnPrimary} onClick={() => setEditing(emptyCategory(presets[0] ?? '/placeholder.jpg'))}>
+        <button type="button" className={btnPrimary} onClick={() => setEditing(emptyCategory())}>
           <Plus className="h-4 w-4" aria-hidden />
           Nueva categoría
         </button>
@@ -72,7 +66,9 @@ export function CategoriesManager({ sections }: { sections: MenuSection[] }) {
                 key={section.id}
                 className={cn('flex flex-wrap items-center gap-3 rounded-lg border border-border bg-card p-3 sm:flex-nowrap sm:p-4', !section.visible && 'opacity-70')}
               >
-                <Image src={section.image} alt="" width={64} height={64} className="h-16 w-16 shrink-0 rounded-xl object-cover ring-1 ring-border" />
+                <span aria-hidden className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-muted text-primary ring-1 ring-border">
+                  <Icon className="h-5 w-5" />
+                </span>
                 <div className="min-w-0 flex-1">
                   <p className="flex items-center gap-2 text-base text-foreground">
                     <Icon className="h-4 w-4 shrink-0 text-primary" aria-hidden />
@@ -110,13 +106,13 @@ export function CategoriesManager({ sections }: { sections: MenuSection[] }) {
         </ul>
       )}
 
-      {editing && <CategoryDialog initial={editing} presets={presets} onClose={() => setEditing(null)} />}
+      {editing && <CategoryDialog initial={editing} onClose={() => setEditing(null)} />}
       {deleting && <DeleteDialog section={deleting} onClose={() => setDeleting(null)} />}
     </>
   )
 }
 
-function CategoryDialog({ initial, presets, onClose }: { initial: CategoryInput; presets: string[]; onClose: () => void }) {
+function CategoryDialog({ initial, onClose }: { initial: CategoryInput; onClose: () => void }) {
   const [draft, setDraft] = useState(initial)
   const { pending, error, run } = useRunner()
   const isNew = !initial.id
@@ -185,13 +181,6 @@ function CategoryDialog({ initial, presets, onClose }: { initial: CategoryInput;
                 ))}
               </div>
             </fieldset>
-
-            <ImageField
-              label="Imagen de la categoría"
-              value={draft.image}
-              presets={presets}
-              onChange={(url) => url && setDraft((current) => ({ ...current, image: url }))}
-            />
 
             <label className="flex items-center justify-between gap-4 rounded-xl border border-border bg-muted/40 px-4 py-3 text-sm">
               <span>

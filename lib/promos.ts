@@ -65,6 +65,8 @@ export const promosCopy = {
   eyebrow: { es: 'Beneficios', en: 'Perks' },
   title: { es: 'Promos de la semana', en: 'This week’s deals' },
   today: { es: 'Hoy', en: 'Today' },
+  swipe: { es: 'Deslizá para ver más promos', en: 'Swipe to see more deals' },
+  next: { es: 'Ver más promos', en: 'See more deals' },
   cashOnly: {
     es: 'Todas las promos son solo en efectivo y se abonan por la totalidad de la mesa, sin excepción.',
     en: 'All deals are cash only and apply to the whole table’s bill, no exceptions.',
