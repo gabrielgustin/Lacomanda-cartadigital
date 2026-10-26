@@ -1,11 +1,12 @@
 import { randomBytes } from 'node:crypto'
-import { promises as fs } from 'node:fs'
-import path from 'node:path'
 import { NextResponse } from 'next/server'
 import { isAdmin } from '@/lib/backoffice-auth'
-import { UPLOADS_DIR } from '@/lib/store'
+import { query } from '@/lib/db'
 
-const MAX_BYTES = 4 * 1024 * 1024
+// Vercel limita el cuerpo de una función a 4,5 MB: con 3 MB sobra margen para el formulario multipart.
+const MAX_BYTES = 3 * 1024 * 1024
+
+const CONTENT_TYPES: Record<string, string> = { '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp' }
 
 // Se identifica el formato por los primeros bytes, no por lo que declare el navegador.
 function detectExtension(bytes: Uint8Array) {
@@ -22,7 +23,7 @@ export async function POST(request: Request) {
   const form = await request.formData().catch(() => null)
   const file = form?.get('file')
   if (!(file instanceof File)) return NextResponse.json({ error: 'Falta el archivo' }, { status: 400 })
-  if (file.size > MAX_BYTES) return NextResponse.json({ error: 'La imagen supera los 4 MB' }, { status: 413 })
+  if (file.size > MAX_BYTES) return NextResponse.json({ error: 'La imagen supera los 3 MB' }, { status: 413 })
 
   const bytes = new Uint8Array(await file.arrayBuffer())
   const extension = detectExtension(bytes)
@@ -30,9 +31,9 @@ export async function POST(request: Request) {
 
   const name = `${randomBytes(8).toString('hex')}${extension}`
   try {
-    await fs.mkdir(UPLOADS_DIR, { recursive: true })
-    await fs.writeFile(path.join(UPLOADS_DIR, name), bytes)
-  } catch {
+    await query('INSERT INTO media (name, content_type, bytes) VALUES ($1, $2, $3)', [name, CONTENT_TYPES[extension], Buffer.from(bytes)])
+  } catch (error) {
+    console.error('[upload] No se pudo guardar la imagen', error)
     return NextResponse.json({ error: 'No se pudo guardar la imagen en el servidor' }, { status: 500 })
   }
   return NextResponse.json({ url: `/media/${name}` })

@@ -1,11 +1,9 @@
-import { randomUUID } from 'node:crypto'
-import { promises as fs } from 'node:fs'
-import path from 'node:path'
+import { query } from '@/lib/db'
 import type { Localized, MenuSection } from '@/lib/menu-data'
 import type { OrderInput } from '@/lib/order-schema'
 import { orderTotals, type OrderState } from '@/lib/pricing'
 import { acceptsOrdersAt, couponValidOn, findCoupon, type OrderSettings } from '@/lib/settings'
-import { DATA_DIR, getStore } from '@/lib/store'
+import { loadStore } from '@/lib/store'
 
 export class OrderError extends Error {
   constructor(
@@ -124,81 +122,73 @@ export function buildOrder(input: OrderInput, sections: MenuSection[], settings:
   }
 }
 
-// Persistencia en archivo, igual que la carta. Es lo único que hay que cambiar para pasar a una base.
-// shortcut: en hosts de solo lectura (Vercel) no se puede guardar; migrar a Neon antes de publicar pedidos.
-const ORDERS_FILE = path.join(DATA_DIR, 'orders.json')
-
-async function readOrders(): Promise<Order[]> {
-  try {
-    const raw = JSON.parse(await fs.readFile(ORDERS_FILE, 'utf8'))
-    if (!Array.isArray(raw)) return []
-    // Los pedidos guardados antes de existir cupones y medios de pago no tienen esos campos.
-    return raw.map((order) => ({ ...order, descuento: order.descuento ?? 0, cupon: order.cupon ?? null, metodoPago: order.metodoPago ?? null }))
-  } catch {
-    return []
-  }
+// Persistencia en Postgres (Neon): tabla `pedidos`. El token del enlace de seguimiento lo genera la base.
+interface OrderRow {
+  id: number
+  token: string
+  estado: OrderState
+  cliente_nombre: string
+  cliente_telefono: string
+  notas: string | null
+  forma_entrega: string
+  subtotal: string
+  descuento: string
+  cupon: string | null
+  metodo_pago: string | null
+  total: string
+  items: OrderItem[]
+  created_at: Date
+  updated_at: Date
 }
 
-async function writeOrders(orders: Order[]) {
-  await fs.mkdir(DATA_DIR, { recursive: true })
-  const tmp = `${ORDERS_FILE}.${process.pid}.tmp`
-  await fs.writeFile(tmp, JSON.stringify(orders, null, 2))
-  await fs.rename(tmp, ORDERS_FILE)
+// El driver devuelve numeric como texto y las fechas como Date: se convierten acá, en un solo lugar.
+const toOrder = (row: OrderRow): Order => ({
+  id: row.id,
+  token: row.token,
+  estado: row.estado,
+  clienteNombre: row.cliente_nombre,
+  clienteTelefono: row.cliente_telefono,
+  notas: row.notas,
+  formaEntrega: row.forma_entrega,
+  subtotal: Number(row.subtotal),
+  descuento: Number(row.descuento),
+  cupon: row.cupon,
+  metodoPago: row.metodo_pago,
+  total: Number(row.total),
+  items: row.items,
+  createdAt: row.created_at.toISOString(),
+  updatedAt: row.updated_at.toISOString(),
+})
+
+export async function createOrder(input: OrderInput): Promise<Order> {
+  // Lectura estricta: si la base falla, el pedido falla; nunca se cobra con precios de la carta base.
+  const { sections, settings } = await loadStore()
+  const data = buildOrder(input, sections, settings, new Date())
+  const [row] = await query<OrderRow>(
+    `INSERT INTO pedidos (estado, cliente_nombre, cliente_telefono, notas, forma_entrega, subtotal, descuento, cupon, metodo_pago, total, items)
+     VALUES ('nuevo', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10::jsonb)
+     RETURNING *`,
+    [data.clienteNombre, data.clienteTelefono, data.notas, data.formaEntrega, data.subtotal, data.descuento, data.cupon, data.metodoPago, data.total, JSON.stringify(data.items)],
+  )
+  return toOrder(row)
 }
 
-// Todas las escrituras (pedido nuevo, cambio de estado) pasan por una sola cola: así un cambio
-// de estado no pisa un pedido recién creado ni se repiten números.
-let queue: Promise<unknown> = Promise.resolve()
-
-function withOrders<T>(mutate: (orders: Order[]) => T | Promise<T>): Promise<T> {
-  const run = async () => {
-    const orders = await readOrders()
-    const result = await mutate(orders)
-    await writeOrders(orders)
-    return result
-  }
-  const next = queue.then(run, run)
-  queue = next.catch(() => {})
-  return next
-}
-
-export function createOrder(input: OrderInput): Promise<Order> {
-  return withOrders(async (orders) => {
-    const { sections, settings } = await getStore()
-    const now = new Date()
-    const order: Order = {
-      ...buildOrder(input, sections, settings, now),
-      id: (orders.at(-1)?.id ?? 0) + 1,
-      token: randomUUID(),
-      estado: 'nuevo',
-      createdAt: now.toISOString(),
-      updatedAt: now.toISOString(),
-    }
-    orders.push(order)
-    return order
-  })
-}
-
-export function updateOrderState(id: number, estado: OrderState): Promise<Order | null> {
-  return withOrders((orders) => {
-    const order = orders.find((candidate) => candidate.id === id)
-    if (!order) return null
-    order.estado = estado
-    order.updatedAt = new Date().toISOString()
-    return order
-  })
+export async function updateOrderState(id: number, estado: OrderState): Promise<Order | null> {
+  const [row] = await query<OrderRow>('UPDATE pedidos SET estado = $2, updated_at = now() WHERE id = $1 RETURNING *', [id, estado])
+  return row ? toOrder(row) : null
 }
 
 export async function getOrderByToken(token: string) {
-  if (!isUuid(token)) return null
-  return (await readOrders()).find((order) => order.token === token) ?? null
+  if (!isUuid(token)) return null // un texto que no es uuid haría fallar la consulta con un 500
+  const [row] = await query<OrderRow>('SELECT * FROM pedidos WHERE token = $1', [token])
+  return row ? toOrder(row) : null
 }
 
-// shortcut: lee el archivo entero en cada consulta; paginar y contar en SQL al pasar a Neon.
 export async function listOrders(limit = 200) {
-  return (await readOrders()).sort((a, b) => b.id - a.id).slice(0, limit)
+  return (await query<OrderRow>('SELECT * FROM pedidos ORDER BY id DESC LIMIT $1', [limit])).map(toOrder)
 }
 
 export async function countOrders(estado: OrderState) {
-  return (await readOrders()).filter((order) => order.estado === estado).length
+  const [row] = await query<{ total: number }>('SELECT count(*)::int AS total FROM pedidos WHERE estado = $1', [estado])
+  return row?.total ?? 0
 }

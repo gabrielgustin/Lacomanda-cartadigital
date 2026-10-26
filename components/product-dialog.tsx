@@ -6,6 +6,7 @@ import { useLanguage } from '@/components/language-provider'
 import { Modal } from '@/components/modal'
 import { useOrder } from '@/components/order-provider'
 import { QuantityStepper } from '@/components/quantity-stepper'
+import { getCategoryIcon } from '@/lib/category-icons'
 import { formatPrice } from '@/lib/format'
 import type { MenuItem, MenuSection } from '@/lib/menu-data'
 
@@ -23,13 +24,20 @@ export function ProductDialog({ item, section, onClose }: ProductDialogProps) {
   const { quantities, add, remove } = useOrder()
   const quantity = quantities[item.id] ?? 0
   const name = item.name[lang]
+  const SectionIcon = getCategoryIcon(section.icon)
 
   return (
     <Modal labelledBy="product-dialog-title" onClose={onClose}>
       {(close) => (
         <>
-          <div className="relative h-52 sm:h-60">
-            <Image src={item.image ?? section.image} alt="" fill sizes="448px" className="object-cover" />
+          <div className={`relative ${item.image ? 'h-52 sm:h-60' : 'h-24'}`}>
+            {item.image ? (
+              <Image src={item.image} alt="" fill sizes="448px" className="object-cover" />
+            ) : (
+              <div aria-hidden className="hero-pattern flex h-full items-center justify-center bg-muted text-primary/40">
+                <SectionIcon className="h-10 w-10" strokeWidth={1.5} />
+              </div>
+            )}
             <button
               type="button"
               onClick={close}
@@ -40,7 +48,9 @@ export function ProductDialog({ item, section, onClose }: ProductDialogProps) {
             </button>
           </div>
           <div className="space-y-3 p-6">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-eyebrow">{section.title[lang]}</p>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-eyebrow">{section.title[lang]}
+              {item.group && `, ${item.group[lang].toLowerCase()}`}
+            </p>
             <div className="flex items-start justify-between gap-4">
               <h2 id="product-dialog-title" className="font-heading text-2xl text-heading">
                 {name}

@@ -28,7 +28,9 @@ async function saveSettings(change: (settings: OrderSettings) => string | void):
     if (error) return fail(error)
   } catch (error) {
     console.error('[backoffice] No se pudo guardar la configuración', error)
-    return fail('No se pudieron guardar los cambios. Si la carta está en un hosting de solo lectura, no se puede editar desde ahí.')
+    // El conflicto de edición simultánea trae un mensaje claro para el dueño; el resto es un error de conexión.
+    if (error instanceof Error && error.message.startsWith('No se pudo guardar:')) return fail(error.message)
+    return fail('No se pudieron guardar los cambios. Revisá la conexión con la base de datos e intentá de nuevo.')
   }
   revalidatePath('/backoffice', 'layout')
   return { ok: true }

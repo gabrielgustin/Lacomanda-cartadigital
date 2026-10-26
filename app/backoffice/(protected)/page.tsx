@@ -2,10 +2,10 @@ import Link from 'next/link'
 import { ClipboardList, Clock, CreditCard, ExternalLink, Grid3X3, Palette, QrCode, Store, Ticket, UtensilsCrossed, type LucideIcon } from 'lucide-react'
 import { PageShell } from '@/components/backoffice/page-shell'
 import { countOrders } from '@/lib/orders'
-import { getStore } from '@/lib/store'
+import { getStoreStrict } from '@/lib/store'
 
 export default async function BackofficeHome() {
-  const { sections } = await getStore()
+  const { sections } = await getStoreStrict()
   const products = sections.reduce((sum, section) => sum + section.items.length, 0)
   const nuevos = await countOrders('nuevo')
 

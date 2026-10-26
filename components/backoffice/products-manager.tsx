@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import Image from 'next/image'
+import { DishImage } from '@/components/dish-image'
 import { ArrowDown, ArrowUp, Pencil, Plus, Search, Trash2, X } from 'lucide-react'
 import { deleteProduct, moveProduct, saveProduct, setProductVisible, type ProductInput } from '@/app/backoffice/actions'
 import { ImageField } from '@/components/backoffice/image-field'
@@ -27,6 +27,7 @@ const toInput = (item: MenuItem): ProductInput => ({
   description: item.description,
   price: item.price,
   image: item.image ?? null,
+  group: item.group ?? null,
   visible: item.visible,
 })
 
@@ -120,7 +121,7 @@ export function ProductsManager({ sections }: { sections: MenuSection[] }) {
                     const position = section.items.findIndex((entry) => entry.id === item.id)
                     return (
                       <li key={item.id} className={cn('flex flex-wrap items-center gap-3 rounded-lg border border-border bg-card p-3 sm:flex-nowrap', !item.visible && 'opacity-70')}>
-                        <Image src={item.image ?? section.image} alt="" width={56} height={56} className="h-14 w-14 shrink-0 rounded-xl object-cover ring-1 ring-border" />
+                        <DishImage src={item.image} icon={section.icon} width={56} height={56} sizes="56px" className="h-14 w-14 shrink-0 rounded-xl ring-1 ring-border" />
                         <div className="min-w-0 flex-1">
                           <p className="truncate text-sm text-foreground">{item.name.es}</p>
                           <p className="mt-0.5 truncate text-xs text-muted-foreground">{item.description.es || 'Sin descripción'}</p>
@@ -174,6 +175,12 @@ function ProductDialog({ initial, sections, onClose }: { initial: ProductInput; 
   const { pending, error, run, setError } = useRunner()
   const isNew = !initial.id
   const section = sections.find((entry) => entry.id === draft.sectionId)
+
+  const setGroup = (lang: 'es' | 'en', value: string) =>
+    setDraft((current) => {
+      const group = { es: current.group?.es ?? '', en: current.group?.en ?? '', [lang]: value }
+      return { ...current, group: group.es || group.en ? group : null }
+    })
 
   const setPair = (key: 'name' | 'description', lang: 'es' | 'en', value: string) =>
     setDraft((current) => ({ ...current, [key]: { ...current[key], [lang]: value } }))
@@ -235,11 +242,19 @@ function ProductDialog({ initial, sections, onClose }: { initial: ProductInput; 
               </Field>
             </div>
 
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field label="Subcategoría (español)" hint="Opcional. Los platos con la misma subcategoría se muestran juntos bajo un título.">
+                <input className={inputClass} maxLength={40} placeholder="Ej: Tradicionales" value={draft.group?.es ?? ''} onChange={(event) => setGroup('es', event.target.value)} />
+              </Field>
+              <Field label="Subcategoría (inglés)" hint="Si lo dejás vacío se usa el español.">
+                <input className={inputClass} maxLength={40} value={draft.group?.en ?? ''} onChange={(event) => setGroup('en', event.target.value)} />
+              </Field>
+            </div>
+
             <ImageField
-              label="Imagen del producto"
+              label="Foto del producto"
               value={draft.image}
-              fallback={section?.image}
-              clearLabel="Usar la de la categoría"
+              clearLabel="Quitar la foto"
               onChange={(url) => setDraft((current) => ({ ...current, image: url }))}
             />
 

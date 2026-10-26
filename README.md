@@ -12,7 +12,7 @@ Stack: Next.js 16 (App Router) · React 19 · Tailwind v4 · TypeScript · zod �
 ## Cómo correrlo
 
 ```bash
-cp .env.example .env.local   # y completá BACKOFFICE_USER / BACKOFFICE_PASSWORD
+cp .env.example .env.local   # completá BACKOFFICE_USER, BACKOFFICE_PASSWORD y DATABASE_URL
 pnpm install
 pnpm dev                     # http://localhost:3000
 ```
@@ -46,20 +46,51 @@ Entrada en `/backoffice/login`, con el usuario y la contraseña de `.env.local`.
 
 ## Dónde se guarda todo
 
-Hoy en archivos dentro de `data/` (ignorada por git):
+Todo vive en **Postgres (Neon)**, conectado con `DATABASE_URL`. Las tablas se crean solas la primera vez que la app se conecta.
 
-| Archivo | Contenido | Módulo que lo maneja |
+| Tabla | Contenido | Módulo |
 | --- | --- | --- |
-| `data/store.json` | Carta, tema, horarios, medios de pago, cupones, datos del negocio | `lib/store.ts` |
-| `data/orders.json` | Pedidos | `lib/orders.ts` |
-| `data/uploads/` | Imágenes subidas | `app/api/backoffice/upload`, `app/media` |
+| `store` | Una sola fila (jsonb): carta, tema, horarios, medios de pago, cupones y datos del negocio | `lib/store.ts` |
+| `pedidos` | Pedidos para llevar (precio y nombre de cada plato tal como eran al comprar) | `lib/orders.ts` |
+| `media` | Imágenes subidas desde el backoffice (hasta 3 MB) | `app/api/backoffice/upload`, `app/media` |
 
-## Pendiente antes de publicar pedidos reales
+- **Edición simultánea:** cada guardado de la carta sube un número de versión; si dos personas guardan a la vez, el segundo reintenta sobre lo nuevo y no se pisan.
+- **Si la base no responde:** la carta pública muestra la carta base (no se rompe), pero los pedidos y los guardados **fallan con un error claro y no escriben nada**. El backoffice usa siempre lectura estricta, para que nunca se guarde algo armado sobre la carta base.
+- **Sin base configurada** (`DATABASE_URL` vacía) pasa lo mismo: la carta base se ve y nada se puede guardar.
 
-**Vercel es de solo lectura**: ahí se puede leer, pero no guardar. En producción hoy no se pueden confirmar pedidos ni guardar cambios del backoffice. Hay que pasar el guardado a una base de datos (Neon/Postgres) y las imágenes a un almacenamiento de objetos (Vercel Blob).
+### Ramas de Neon
 
-La persistencia está aislada en `lib/store.ts` y `lib/orders.ts` para que la migración no toque el resto. Además:
+| Rama | Quién la usa |
+| --- | --- |
+| `main` (producción) | Vercel, variable `DATABASE_URL` del entorno **Production** |
+| `dev` | Tu `.env.local`. **No uses la URL de producción en local ni en las previews de Vercel.** |
 
-- El límite por IP es en memoria y no es estricto en serverless: con tráfico real, usar Redis/Upstash.
+### Primera vez / importar tus datos locales
+
+```bash
+pnpm db:setup            # crea las tablas e importa data/store.json, data/orders.json y data/uploads si existen
+pnpm db:setup --dry-run  # muestra qué haría, sin escribir
+pnpm db:setup --force    # reemplaza la carta de la base por data/store.json
+```
+
+Para producción, pasá su URL de forma explícita (no queda guardada en ningún archivo):
+
+```bash
+DATABASE_URL="postgresql://..." node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/db-setup.mts
+```
+
+El script no pisa una carta que ya esté en la base salvo que uses `--force`, y si algo falla deshace todo.
+
+### Tests con base real
+
+`pnpm test` corre solo los tests puros. Los de integración contra Postgres (edición simultánea, numeración de pedidos, imágenes) se activan con una base **local** (se vacía al correr):
+
+```bash
+TEST_DATABASE_URL="postgresql://usuario@127.0.0.1:5432/prueba" pnpm test
+```
+
+## Pendiente
+
+- El límite de intentos por IP (pedidos, cupones, login) cuenta en memoria de cada instancia: no es estricto en Vercel. Con tráfico real, pasarlo a Redis/Upstash.
 - En Vercel hay que cargar `BACKOFFICE_USER` y `BACKOFFICE_PASSWORD` (una clave larga) y volver a desplegar.
 - Si el chequeo de tipos queda en cero, conviene quitar `ignoreBuildErrors` de `next.config.mjs`.

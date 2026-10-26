@@ -1,0 +1,3994 @@
+[
+ {
+  "id": "ejecutivo",
+  "label": {
+   "es": "Menú ejecutivo",
+   "en": "Set lunch"
+  },
+  "title": {
+   "es": "Menú ejecutivo",
+   "en": "Set lunch menu"
+  },
+  "eyebrow": {
+   "es": "Almuerzo del día",
+   "en": "Lunch of the day"
+  },
+  "image": "/menu/principales.png",
+  "icon": "utensils",
+  "visible": true,
+  "items": []
+ },
+ {
+  "id": "desayunos",
+  "label": {
+   "es": "Desayunos",
+   "en": "Breakfast"
+  },
+  "title": {
+   "es": "Desayunos & meriendas",
+   "en": "Breakfast & afternoon tea"
+  },
+  "eyebrow": {
+   "es": "Empezá el día bien",
+   "en": "Start the day right"
+  },
+  "image": "/menu/infantil.png",
+  "icon": "coffee",
+  "visible": true,
+  "items": [
+   {
+    "id": "desayunos-para-arrancar",
+    "sectionId": "desayunos",
+    "name": {
+     "es": "Para arrancar",
+     "en": "To start"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 8900,
+    "visible": true
+   },
+   {
+    "id": "desayunos-completo",
+    "sectionId": "desayunos",
+    "name": {
+     "es": "Completo",
+     "en": "Completo"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 13500,
+    "visible": true
+   },
+   {
+    "id": "desayunos-light",
+    "sectionId": "desayunos",
+    "name": {
+     "es": "Light",
+     "en": "Light"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 15500,
+    "visible": true
+   },
+   {
+    "id": "desayunos-nuestro-bowl",
+    "sectionId": "desayunos",
+    "name": {
+     "es": "Nuestro Bowl",
+     "en": "Our Bowl"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 13500,
+    "visible": true
+   },
+   {
+    "id": "desayunos-fit",
+    "sectionId": "desayunos",
+    "name": {
+     "es": "Fit",
+     "en": "Fit"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 17500,
+    "visible": true
+   },
+   {
+    "id": "desayunos-tentacion",
+    "sectionId": "desayunos",
+    "name": {
+     "es": "Tentación",
+     "en": "Temptation"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 0,
+    "visible": false
+   }
+  ]
+ },
+ {
+  "id": "tostones",
+  "label": {
+   "es": "Tostones",
+   "en": "Toasts"
+  },
+  "title": {
+   "es": "En tostones",
+   "en": "On toasted bread"
+  },
+  "eyebrow": {
+   "es": "Pan crocante, mucho sabor",
+   "en": "Crunchy bread, big flavor"
+  },
+  "image": "/menu/sandwiches.png",
+  "icon": "sandwich",
+  "visible": true,
+  "items": [
+   {
+    "id": "tostones-croque-madame",
+    "sectionId": "tostones",
+    "name": {
+     "es": "Croque Madame",
+     "en": "Croque Madame"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 16500,
+    "visible": true
+   },
+   {
+    "id": "tostones-el-clasico-de-palta",
+    "sectionId": "tostones",
+    "name": {
+     "es": "El clásico de palta",
+     "en": "The classic avocado"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 16500,
+    "visible": true
+   },
+   {
+    "id": "tostones-de-pollo",
+    "sectionId": "tostones",
+    "name": {
+     "es": "De pollo",
+     "en": "Chicken"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 17300,
+    "visible": true
+   }
+  ]
+ },
+ {
+  "id": "tostados",
+  "label": {
+   "es": "Sándwiches y tostados",
+   "en": "Sandwiches & toasties"
+  },
+  "title": {
+   "es": "Sándwiches y tostados",
+   "en": "Sandwiches & toasties"
+  },
+  "eyebrow": {
+   "es": "Con nachos y salsa",
+   "en": "Served with nachos and dip"
+  },
+  "image": "/menu/sandwiches.png",
+  "icon": "sandwich",
+  "visible": true,
+  "items": [
+   {
+    "id": "tostados-tostado-de-jamon-y-queso-napolitano",
+    "sectionId": "tostados",
+    "name": {
+     "es": "Tostado de jamón y queso napolitano",
+     "en": "Neapolitan ham and cheese toast"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 14500,
+    "visible": true
+   },
+   {
+    "id": "tostados-tostado-de-jamon-y-queso",
+    "sectionId": "tostados",
+    "name": {
+     "es": "Tostado de jamón y queso",
+     "en": "Ham and cheese toast"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 12500,
+    "visible": true
+   },
+   {
+    "id": "tostados-sandwich-de-jamon-crudo",
+    "sectionId": "tostados",
+    "name": {
+     "es": "Sándwich de jamón crudo",
+     "en": "Cured ham sandwich"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 15500,
+    "visible": true
+   }
+  ]
+ },
+ {
+  "id": "cafeteria",
+  "label": {
+   "es": "Cafetería",
+   "en": "Coffee"
+  },
+  "title": {
+   "es": "Cafetería",
+   "en": "Coffee"
+  },
+  "eyebrow": {
+   "es": "Un cafecito, siempre",
+   "en": "Always time for a coffee"
+  },
+  "image": "/menu/infantil.png",
+  "icon": "coffee",
+  "visible": true,
+  "items": [
+   {
+    "id": "cafeteria-ristretto-cafe-en-posillo",
+    "sectionId": "cafeteria",
+    "name": {
+     "es": "Ristretto",
+     "en": "Ristretto"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 4000,
+    "visible": true,
+    "group": {
+     "es": "Café en posillo",
+     "en": "Coffee in a small cup"
+    }
+   },
+   {
+    "id": "cafeteria-expresso-cafe-en-posillo",
+    "sectionId": "cafeteria",
+    "name": {
+     "es": "Expresso",
+     "en": "Espresso"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 4000,
+    "visible": true,
+    "group": {
+     "es": "Café en posillo",
+     "en": "Coffee in a small cup"
+    }
+   },
+   {
+    "id": "cafeteria-expresso-largo-cafe-en-jarrito",
+    "sectionId": "cafeteria",
+    "name": {
+     "es": "Expresso largo",
+     "en": "Long espresso"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 4300,
+    "visible": true,
+    "group": {
+     "es": "Café en jarrito",
+     "en": "Coffee in a small mug"
+    }
+   },
+   {
+    "id": "cafeteria-jarrito-cortado-cafe-en-jarrito",
+    "sectionId": "cafeteria",
+    "name": {
+     "es": "Jarrito cortado",
+     "en": "Small jug of cortado"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 4300,
+    "visible": true,
+    "group": {
+     "es": "Café en jarrito",
+     "en": "Coffee in a small mug"
+    }
+   },
+   {
+    "id": "cafeteria-lagrima-tazas-dobles",
+    "sectionId": "cafeteria",
+    "name": {
+     "es": "Lágrima",
+     "en": "Lágrima (mostly milk, a drop of coffee)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 5500,
+    "visible": true,
+    "group": {
+     "es": "Tazas dobles",
+     "en": "Double cups"
+    }
+   },
+   {
+    "id": "cafeteria-latte-tazas-dobles",
+    "sectionId": "cafeteria",
+    "name": {
+     "es": "Latte",
+     "en": "Latte"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 5500,
+    "visible": true,
+    "group": {
+     "es": "Tazas dobles",
+     "en": "Double cups"
+    }
+   },
+   {
+    "id": "cafeteria-americano-doble-tazas-dobles",
+    "sectionId": "cafeteria",
+    "name": {
+     "es": "Americano doble",
+     "en": "Double americano"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 5500,
+    "visible": true,
+    "group": {
+     "es": "Tazas dobles",
+     "en": "Double cups"
+    }
+   },
+   {
+    "id": "cafeteria-latte-cortado-tazas-dobles",
+    "sectionId": "cafeteria",
+    "name": {
+     "es": "Latte cortado",
+     "en": "Cortado latte"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 5500,
+    "visible": true,
+    "group": {
+     "es": "Tazas dobles",
+     "en": "Double cups"
+    }
+   },
+   {
+    "id": "cafeteria-tradicional-capuchinos",
+    "sectionId": "cafeteria",
+    "name": {
+     "es": "Tradicional",
+     "en": "Traditional"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 7800,
+    "visible": true,
+    "group": {
+     "es": "Capuchinos",
+     "en": "Cappuccinos"
+    }
+   },
+   {
+    "id": "cafeteria-capuchino-frape-capuchinos",
+    "sectionId": "cafeteria",
+    "name": {
+     "es": "Capuchino frapé",
+     "en": "Frappé cappuccino"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 7800,
+    "visible": true,
+    "group": {
+     "es": "Capuchinos",
+     "en": "Cappuccinos"
+    }
+   },
+   {
+    "id": "cafeteria-capuchino-mocha-capuchinos",
+    "sectionId": "cafeteria",
+    "name": {
+     "es": "Capuchino mocha",
+     "en": "Mocha cappuccino"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 7800,
+    "visible": true,
+    "group": {
+     "es": "Capuchinos",
+     "en": "Cappuccinos"
+    }
+   },
+   {
+    "id": "cafeteria-submarino-capuchinos",
+    "sectionId": "cafeteria",
+    "name": {
+     "es": "Submarino",
+     "en": "Submarino (hot milk with a chocolate bar)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 7800,
+    "visible": true,
+    "group": {
+     "es": "Capuchinos",
+     "en": "Cappuccinos"
+    }
+   },
+   {
+    "id": "cafeteria-vainillato-cafecitos-saborizados",
+    "sectionId": "cafeteria",
+    "name": {
+     "es": "Vainillato",
+     "en": "Vainillato"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 7900,
+    "visible": true,
+    "group": {
+     "es": "Cafecitos saborizados",
+     "en": "Flavored coffees"
+    }
+   },
+   {
+    "id": "cafeteria-dolche-cafecitos-saborizados",
+    "sectionId": "cafeteria",
+    "name": {
+     "es": "Dolche",
+     "en": "Dolche"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 7900,
+    "visible": true,
+    "group": {
+     "es": "Cafecitos saborizados",
+     "en": "Flavored coffees"
+    }
+   },
+   {
+    "id": "cafeteria-cafe-pana-cafecitos-saborizados",
+    "sectionId": "cafeteria",
+    "name": {
+     "es": "Café Pana",
+     "en": "Café Pana"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 7900,
+    "visible": true,
+    "group": {
+     "es": "Cafecitos saborizados",
+     "en": "Flavored coffees"
+    }
+   },
+   {
+    "id": "cafeteria-irlandes-cafecitos-saborizados",
+    "sectionId": "cafeteria",
+    "name": {
+     "es": "Irlandés",
+     "en": "Irish coffee"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 7900,
+    "visible": true,
+    "group": {
+     "es": "Cafecitos saborizados",
+     "en": "Flavored coffees"
+    }
+   },
+   {
+    "id": "cafeteria-te-otros",
+    "sectionId": "cafeteria",
+    "name": {
+     "es": "Té",
+     "en": "Tea"
+    },
+    "description": {
+     "es": "En hebras o en saquito",
+     "en": "Loose-leaf or tea bag"
+    },
+    "price": 3700,
+    "visible": true,
+    "group": {
+     "es": "Otros",
+     "en": "Others"
+    }
+   },
+   {
+    "id": "cafeteria-licuado-otros",
+    "sectionId": "cafeteria",
+    "name": {
+     "es": "Licuado",
+     "en": "Smoothie"
+    },
+    "description": {
+     "es": "De fruta de estación, con agua o con leche",
+     "en": "Seasonal fruit, with water or milk"
+    },
+    "price": 6800,
+    "visible": true,
+    "group": {
+     "es": "Otros",
+     "en": "Others"
+    }
+   }
+  ]
+ },
+ {
+  "id": "acompanamientos",
+  "label": {
+   "es": "Licuados y acomp.",
+   "en": "Smoothies & sides"
+  },
+  "title": {
+   "es": "Licuados y acompañamientos",
+   "en": "Smoothies & sides"
+  },
+  "eyebrow": {
+   "es": "Para acompañar el café",
+   "en": "To go with your coffee"
+  },
+  "image": "/menu/infantil.png",
+  "icon": "cookie",
+  "visible": true,
+  "items": [
+   {
+    "id": "acompanamientos-medialunas",
+    "sectionId": "acompanamientos",
+    "name": {
+     "es": "Medialunas",
+     "en": "Medialunas (croissants)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 1700,
+    "visible": true
+   },
+   {
+    "id": "acompanamientos-criollos",
+    "sectionId": "acompanamientos",
+    "name": {
+     "es": "Criollos",
+     "en": "Criollos (flaky pastry rolls)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 1500,
+    "visible": true
+   },
+   {
+    "id": "acompanamientos-mafalda-de-jamon-y-queso",
+    "sectionId": "acompanamientos",
+    "name": {
+     "es": "Mafalda de jamón y queso",
+     "en": "Mafalda with ham and cheese"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 4700,
+    "visible": true
+   },
+   {
+    "id": "acompanamientos-tostada-de-pan-blanco-o-negro",
+    "sectionId": "acompanamientos",
+    "name": {
+     "es": "Tostada de pan blanco o negro",
+     "en": "White or dark bread toast"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 1500,
+    "visible": true
+   },
+   {
+    "id": "acompanamientos-omelette-con-jamon-y-queso",
+    "sectionId": "acompanamientos",
+    "name": {
+     "es": "Omelette con jamón y queso",
+     "en": "Ham and cheese omelette"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 8000,
+    "visible": true
+   },
+   {
+    "id": "acompanamientos-tostada-con-huevo-revuelto",
+    "sectionId": "acompanamientos",
+    "name": {
+     "es": "Tostada con huevo revuelto",
+     "en": "Toast with scrambled eggs"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 9500,
+    "visible": true
+   }
+  ]
+ },
+ {
+  "id": "entradas",
+  "label": {
+   "es": "Entradas",
+   "en": "Starters"
+  },
+  "title": {
+   "es": "Entradas",
+   "en": "Starters"
+  },
+  "eyebrow": {
+   "es": "Para arrancar",
+   "en": "To get started"
+  },
+  "image": "/menu/entradas.png",
+  "icon": "salad",
+  "visible": true,
+  "items": [
+   {
+    "id": "entradas-papas-fritas",
+    "sectionId": "entradas",
+    "name": {
+     "es": "Papas fritas",
+     "en": "French fries"
+    },
+    "description": {
+     "es": "Papas fritas bastón",
+     "en": "Thick-cut french fries"
+    },
+    "price": 9000,
+    "visible": true
+   },
+   {
+    "id": "entradas-nachos-con-cheddar",
+    "sectionId": "entradas",
+    "name": {
+     "es": "Nachos con cheddar",
+     "en": "Nachos with cheddar"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 10900,
+    "visible": true,
+    "image": "/menu/entradas-nachos-con-cheddar.jpg"
+   },
+   {
+    "id": "entradas-rabas",
+    "sectionId": "entradas",
+    "name": {
+     "es": "Rabas",
+     "en": "Rabas (fried calamari)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 28000,
+    "visible": true,
+    "image": "/menu/entradas-rabas.jpg"
+   },
+   {
+    "id": "entradas-papas-fritas-con-huevo",
+    "sectionId": "entradas",
+    "name": {
+     "es": "Papas fritas con huevo",
+     "en": "Fries with eggs"
+    },
+    "description": {
+     "es": "Papas fritas bastón y huevos revueltos",
+     "en": "Thick-cut french fries and scrambled eggs"
+    },
+    "price": 12500,
+    "visible": true,
+    "image": "/menu/entradas-papas-fritas-con-huevo.jpg"
+   },
+   {
+    "id": "entradas-papas-jodidas",
+    "sectionId": "entradas",
+    "name": {
+     "es": "Papas jodidas",
+     "en": "Loaded fries"
+    },
+    "description": {
+     "es": "Papas fritas, cheddar, huevo, panceta, verdeo y chile opcional",
+     "en": "Fries, cheddar, egg, bacon, scallion and optional chili"
+    },
+    "price": 12900,
+    "visible": true,
+    "image": "/menu/entradas-papas-jodidas.jpg"
+   },
+   {
+    "id": "entradas-provoleta",
+    "sectionId": "entradas",
+    "name": {
+     "es": "Provoleta",
+     "en": "Provoleta with scallion"
+    },
+    "description": {
+     "es": "Provoleta, verdeo y pimentón",
+     "en": "Grilled provolone, scallion and paprika"
+    },
+    "price": 14900,
+    "visible": true
+   },
+   {
+    "id": "entradas-pinchos-de-langostino",
+    "sectionId": "entradas",
+    "name": {
+     "es": "Pinchos de langostino",
+     "en": "Prawn skewers"
+    },
+    "description": {
+     "es": "Langostino empanizado, salsa provenzal y papas fritas",
+     "en": "Breaded prawns, provençal sauce and french fries"
+    },
+    "price": 28000,
+    "visible": true,
+    "image": "/menu/entradas-pinchos-de-langostino.jpg"
+   },
+   {
+    "id": "entradas-papas-con-cheddar",
+    "sectionId": "entradas",
+    "name": {
+     "es": "Papas con cheddar",
+     "en": "Fries with cheddar"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 12500,
+    "visible": true
+   }
+  ]
+ },
+ {
+  "id": "picadas",
+  "label": {
+   "es": "Picadas",
+   "en": "Platters"
+  },
+  "title": {
+   "es": "Picadas",
+   "en": "Sharing platters"
+  },
+  "eyebrow": {
+   "es": "Para compartir (o no)",
+   "en": "To share (or not)"
+  },
+  "image": "/menu/entradas.png",
+  "icon": "utensils",
+  "visible": true,
+  "items": [
+   {
+    "id": "picadas-picada-birrera-para-2",
+    "sectionId": "picadas",
+    "name": {
+     "es": "Picada Birrera",
+     "en": "Beer platter"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 25500,
+    "visible": true,
+    "group": {
+     "es": "Para 2",
+     "en": "For 2"
+    }
+   },
+   {
+    "id": "picadas-picada-barril-para-2",
+    "sectionId": "picadas",
+    "name": {
+     "es": "Picada Barril",
+     "en": "Barrel platter"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 49900,
+    "visible": true,
+    "group": {
+     "es": "Para 2",
+     "en": "For 2"
+    },
+    "image": "/menu/picadas-picada-barril-para-2.jpg"
+   },
+   {
+    "id": "picadas-picada-pinta-para-2",
+    "sectionId": "picadas",
+    "name": {
+     "es": "Picada Pinta",
+     "en": "Pinta platter"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 38900,
+    "visible": true,
+    "group": {
+     "es": "Para 2",
+     "en": "For 2"
+    },
+    "image": "/menu/picadas-picada-pinta-para-2.jpg"
+   },
+   {
+    "id": "picadas-picada-birrera-para-4",
+    "sectionId": "picadas",
+    "name": {
+     "es": "Picada Birrera",
+     "en": "Beer platter"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 45900,
+    "visible": true,
+    "group": {
+     "es": "Para 4",
+     "en": "For 4"
+    }
+   },
+   {
+    "id": "picadas-picada-barril-para-4",
+    "sectionId": "picadas",
+    "name": {
+     "es": "Picada Barril",
+     "en": "Barrel platter"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 89900,
+    "visible": true,
+    "group": {
+     "es": "Para 4",
+     "en": "For 4"
+    }
+   },
+   {
+    "id": "picadas-picada-pinta-para-4",
+    "sectionId": "picadas",
+    "name": {
+     "es": "Picada Pinta",
+     "en": "Pinta platter"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 69900,
+    "visible": true,
+    "group": {
+     "es": "Para 4",
+     "en": "For 4"
+    }
+   }
+  ]
+ },
+ {
+  "id": "sandwiches",
+  "label": {
+   "es": "Sandwiches",
+   "en": "Sandwiches"
+  },
+  "title": {
+   "es": "Sandwiches especiales",
+   "en": "Special sandwiches"
+  },
+  "eyebrow": {
+   "es": "Lo bueno se comparte",
+   "en": "Good things are meant to be shared"
+  },
+  "image": "/menu/sandwiches.png",
+  "icon": "sandwich",
+  "visible": true,
+  "items": [
+   {
+    "id": "sandwiches-entrana",
+    "sectionId": "sandwiches",
+    "name": {
+     "es": "Entraña",
+     "en": "Skirt steak"
+    },
+    "description": {
+     "es": "Mayonesa casera, entraña braseada, rúcula, champiñones, tomate confitado y papas fritas",
+     "en": "Homemade mayo, braised skirt steak, arugula, mushrooms, confit tomato and french fries"
+    },
+    "price": 27000,
+    "visible": true,
+    "image": "/menu/sandwiches-entrana.jpg"
+   },
+   {
+    "id": "sandwiches-bife-de-chorizo",
+    "sectionId": "sandwiches",
+    "name": {
+     "es": "Bife de chorizo",
+     "en": "Sirloin steak"
+    },
+    "description": {
+     "es": "Mayonesa casera, bife de chorizo a la plancha, queso Chubut, huevo, lechuga, tomate y papas fritas",
+     "en": "Homemade mayo, griddled sirloin steak, Chubut cheese, egg, lettuce, tomato and french fries"
+    },
+    "price": 27000,
+    "visible": true,
+    "image": "/menu/sandwiches-bife-de-chorizo.jpg"
+   },
+   {
+    "id": "sandwiches-vacio-braseado",
+    "sectionId": "sandwiches",
+    "name": {
+     "es": "Vacío braseado",
+     "en": "Braised flank steak"
+    },
+    "description": {
+     "es": "Vacío braseado, salsa balsámica, mayonesa casera, queso Chubut, lechuga, tomate, huevo y papas fritas",
+     "en": "Braised flank steak, balsamic sauce, homemade mayo, Chubut cheese, lettuce, tomato, egg and french fries"
+    },
+    "price": 27000,
+    "visible": true,
+    "image": "/menu/sandwiches-vacio-braseado.jpg"
+   },
+   {
+    "id": "sandwiches-panceta",
+    "sectionId": "sandwiches",
+    "name": {
+     "es": "Panceta",
+     "en": "Pancetta"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 27000,
+    "visible": true,
+    "image": "/menu/sandwiches-panceta.jpg"
+   },
+   {
+    "id": "sandwiches-cordero",
+    "sectionId": "sandwiches",
+    "name": {
+     "es": "Cordero",
+     "en": "Lamb"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 27000,
+    "visible": true
+   },
+   {
+    "id": "sandwiches-molleja",
+    "sectionId": "sandwiches",
+    "name": {
+     "es": "Molleja",
+     "en": "Sweetbreads"
+    },
+    "description": {
+     "es": "Mayonesa casera, mollejitas grilladas al limón, queso Chubut, lechuga, tomate y papas fritas",
+     "en": "Homemade mayo, lemon-grilled sweetbreads, Chubut cheese, lettuce, tomato and french fries"
+    },
+    "price": 29500,
+    "visible": true,
+    "image": "/menu/sandwiches-molleja.jpg"
+   },
+   {
+    "id": "sandwiches-vegetariano",
+    "sectionId": "sandwiches",
+    "name": {
+     "es": "Vegetariano",
+     "en": "Vegetarian"
+    },
+    "description": {
+     "es": "Berenjena, cebolla, pimiento, huevo, queso, champiñón, lechuga y tomate",
+     "en": "Eggplant, onion, bell pepper, egg, cheese, mushroom, lettuce and tomato"
+    },
+    "price": 23000,
+    "visible": true
+   },
+   {
+    "id": "sandwiches-sandwich-de-milanesa-simple-tucumana",
+    "sectionId": "sandwiches",
+    "name": {
+     "es": "Sandwich de milanesa simple tucumana",
+     "en": "Simple Tucumán-style milanesa sandwich"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 15900,
+    "visible": false,
+    "image": "/menu/sandwiches-sandwich-de-milanesa-simple-tucumana.jpg"
+   },
+   {
+    "id": "sandwiches-milanesa-completa-tucumana",
+    "sectionId": "sandwiches",
+    "name": {
+     "es": "Milanesa completa tucumana",
+     "en": "Tucumán-style complete milanesa"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 17500,
+    "visible": false,
+    "image": "/menu/sandwiches-milanesa-completa-tucumana.jpg"
+   }
+  ]
+ },
+ {
+  "id": "burgers",
+  "label": {
+   "es": "Burgers",
+   "en": "Burgers"
+  },
+  "title": {
+   "es": "Burgers",
+   "en": "Burgers"
+  },
+  "eyebrow": {
+   "es": "Hechas para ensuciarse las manos",
+   "en": "Made to get your hands dirty"
+  },
+  "image": "/menu/burgers.png",
+  "icon": "utensils",
+  "visible": true,
+  "items": [
+   {
+    "id": "burgers-clasica",
+    "sectionId": "burgers",
+    "name": {
+     "es": "Clásica",
+     "en": "Classic"
+    },
+    "description": {
+     "es": "200 gr. de carne, mayonesa casera, huevo, queso, lechuga, tomate, pan brioche y papas fritas",
+     "en": "200 g beef patty, homemade mayo, egg, cheese, lettuce, tomato, brioche bun and french fries"
+    },
+    "price": 16900,
+    "visible": true,
+    "image": "/menu/burgers-clasica.jpg"
+   },
+   {
+    "id": "burgers-blue-cheese",
+    "sectionId": "burgers",
+    "name": {
+     "es": "Blue Cheese",
+     "en": "Blue cheese"
+    },
+    "description": {
+     "es": "200 gr. de carne, mayonesa casera, rúcula, queso azul, huevo, cebolla y papas fritas",
+     "en": "200 g beef patty, homemade mayo, arugula, blue cheese, egg, onion and french fries"
+    },
+    "price": 18500,
+    "visible": true,
+    "image": "/menu/burgers-blue-cheese.jpg"
+   },
+   {
+    "id": "burgers-bacon",
+    "sectionId": "burgers",
+    "name": {
+     "es": "Bacon",
+     "en": "Bacon"
+    },
+    "description": {
+     "es": "200 gr. de carne, panceta, cebollita caramelizada, cheddar, lechuga, tomate, pan brioche y papas fritas",
+     "en": "200 g beef patty, bacon, caramelized onion, cheddar, lettuce, tomato, brioche bun and french fries"
+    },
+    "price": 18500,
+    "visible": true,
+    "image": "/menu/burgers-bacon.jpg"
+   },
+   {
+    "id": "burgers-de-costillas",
+    "sectionId": "burgers",
+    "name": {
+     "es": "De Costillas",
+     "en": "Short rib"
+    },
+    "description": {
+     "es": "Medallón de costilla 200 gr., cheddar x2, panceta, cebolla crispy, pepinillos y papas fritas",
+     "en": "200 g short rib patty, double cheddar, bacon, crispy onion, pickles and french fries"
+    },
+    "price": 19300,
+    "visible": true,
+    "image": "/menu/burgers-de-costillas.jpg"
+   }
+  ]
+ },
+ {
+  "id": "lomos",
+  "label": {
+   "es": "Lomos",
+   "en": "Lomos"
+  },
+  "title": {
+   "es": "Lomos",
+   "en": "Lomo sandwiches"
+  },
+  "eyebrow": {
+   "es": "Con todo adentro",
+   "en": "Packed with everything"
+  },
+  "image": "/menu/sandwiches.png",
+  "icon": "sandwich",
+  "visible": true,
+  "items": [
+   {
+    "id": "lomos-lomo-de-carne",
+    "sectionId": "lomos",
+    "name": {
+     "es": "Lomo de carne",
+     "en": "Beef tenderloin"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 24900,
+    "visible": true,
+    "image": "/menu/lomos-lomo-de-carne.jpg"
+   },
+   {
+    "id": "lomos-roquefort",
+    "sectionId": "lomos",
+    "name": {
+     "es": "Roquefort",
+     "en": "Roquefort"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 25900,
+    "visible": true
+   },
+   {
+    "id": "lomos-de-pollo",
+    "sectionId": "lomos",
+    "name": {
+     "es": "De pollo",
+     "en": "Chicken"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 23900,
+    "visible": true
+   },
+   {
+    "id": "lomos-cheddar",
+    "sectionId": "lomos",
+    "name": {
+     "es": "Cheddar",
+     "en": "Cheddar"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 25900,
+    "visible": true
+   }
+  ]
+ },
+ {
+  "id": "milanesas",
+  "label": {
+   "es": "Milanesas",
+   "en": "Milanesas"
+  },
+  "title": {
+   "es": "Milanesas",
+   "en": "Breaded cutlets"
+  },
+  "eyebrow": {
+   "es": "Crocantes y bien servidas",
+   "en": "Crispy and generous"
+  },
+  "image": "/menu/principales.png",
+  "icon": "utensils",
+  "visible": true,
+  "items": [
+   {
+    "id": "milanesas-milanesa-con-guarnicion",
+    "sectionId": "milanesas",
+    "name": {
+     "es": "Milanesa con guarnición",
+     "en": "Milanesa with side dish"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 28500,
+    "visible": true,
+    "image": "/menu/milanesas-milanesa-con-guarnicion.jpg"
+   },
+   {
+    "id": "milanesas-milanesa-napo",
+    "sectionId": "milanesas",
+    "name": {
+     "es": "Milanesa napo",
+     "en": "Milanesa napo"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 30500,
+    "visible": true
+   },
+   {
+    "id": "milanesas-milanesa-a-caballo",
+    "sectionId": "milanesas",
+    "name": {
+     "es": "Milanesa a caballo",
+     "en": "Milanesa a caballo (with fried egg)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 30500,
+    "visible": true
+   }
+  ]
+ },
+ {
+  "id": "principales",
+  "label": {
+   "es": "Principales",
+   "en": "Mains"
+  },
+  "title": {
+   "es": "Platos principales",
+   "en": "Main dishes"
+  },
+  "eyebrow": {
+   "es": "El centro de la mesa",
+   "en": "The centerpiece of the table"
+  },
+  "image": "/menu/principales.png",
+  "icon": "utensils",
+  "visible": true,
+  "items": [
+   {
+    "id": "principales-bife-de-chorizo-criollo-350-gr",
+    "sectionId": "principales",
+    "name": {
+     "es": "Bife de chorizo criollo (350 gr)",
+     "en": "Creole sirloin steak (350 g)"
+    },
+    "description": {
+     "es": "Bife de chorizo de 350 gr., salsa criolla, huevo frito y papas rústicas",
+     "en": "350 g sirloin steak, salsa criolla, fried egg and rustic fries"
+    },
+    "price": 38900,
+    "visible": true,
+    "image": "/menu/principales-bife-de-chorizo-criollo-350-gr.jpg"
+   },
+   {
+    "id": "principales-salmon-rosado",
+    "sectionId": "principales",
+    "name": {
+     "es": "Salmón rosado",
+     "en": "Pink salmon"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 46900,
+    "visible": true
+   },
+   {
+    "id": "principales-entrana-a-la-provenzal",
+    "sectionId": "principales",
+    "name": {
+     "es": "Entraña a la provenzal",
+     "en": "Skirt steak Provençal style"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 38900,
+    "visible": true,
+    "image": "/menu/principales-entrana-a-la-provenzal.jpg"
+   }
+  ]
+ },
+ {
+  "id": "mexicana",
+  "label": {
+   "es": "Mexicana",
+   "en": "Mexican"
+  },
+  "title": {
+   "es": "Comida mexicana",
+   "en": "Mexican food"
+  },
+  "eyebrow": {
+   "es": "Armala como más te guste",
+   "en": "Build it your way"
+  },
+  "image": "/menu/mexicana.png",
+  "icon": "utensils",
+  "visible": true,
+  "items": [
+   {
+    "id": "mexicana-fajitas-mixtas",
+    "sectionId": "mexicana",
+    "name": {
+     "es": "Fajitas mixtas",
+     "en": "Fajitas"
+    },
+    "description": {
+     "es": "Carne a elección: ternera, pollo o cerdo, cebolla, pimientos, seis tortillas y seis salsas",
+     "en": "Choice of meat: beef, chicken or pork, onion, bell peppers, six tortillas and six sauces"
+    },
+    "price": 42900,
+    "visible": true,
+    "image": "/menu/mexicana-fajitas-mixtas.jpg"
+   },
+   {
+    "id": "mexicana-fajitas-de-entrana",
+    "sectionId": "mexicana",
+    "name": {
+     "es": "Fajitas de entraña",
+     "en": "Skirt steak fajitas"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 45900,
+    "visible": true,
+    "image": "/menu/mexicana-fajitas-de-entrana.jpg"
+   },
+   {
+    "id": "mexicana-quesadilla-de-champinones",
+    "sectionId": "mexicana",
+    "name": {
+     "es": "Quesadilla de champiñones",
+     "en": "Mushroom quesadilla"
+    },
+    "description": {
+     "es": "Dos tortillas de trigo, pollo, muzarella, champiñones y dos salsas",
+     "en": "Two wheat tortillas, chicken, mozzarella, mushrooms and two sauces"
+    },
+    "price": 24900,
+    "visible": true,
+    "image": "/menu/mexicana-quesadilla-de-champinones.jpg"
+   },
+   {
+    "id": "mexicana-quesadilla-jamon-y-queso",
+    "sectionId": "mexicana",
+    "name": {
+     "es": "Quesadilla jamón y queso",
+     "en": "Ham and mozzarella quesadilla"
+    },
+    "description": {
+     "es": "Dos tortillas de trigo, pollo, jamón, muzarella y dos salsas",
+     "en": "Two wheat tortillas, chicken, ham, mozzarella and two sauces"
+    },
+    "price": 24900,
+    "visible": true
+   },
+   {
+    "id": "mexicana-quesadilla-de-mariscos",
+    "sectionId": "mexicana",
+    "name": {
+     "es": "Quesadilla de mariscos",
+     "en": "Seafood quesadilla"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 30900,
+    "visible": true,
+    "image": "/menu/mexicana-quesadilla-de-mariscos.jpg"
+   }
+  ]
+ },
+ {
+  "id": "infantil",
+  "label": {
+   "es": "Infantil",
+   "en": "Kids"
+  },
+  "title": {
+   "es": "Menú infantil",
+   "en": "Kids' menu"
+  },
+  "eyebrow": {
+   "es": "Para los más chicos",
+   "en": "For the little ones"
+  },
+  "image": "/menu/infantil.png",
+  "icon": "baby",
+  "visible": true,
+  "items": [
+   {
+    "id": "infantil-milanesitas-de-ternera",
+    "sectionId": "infantil",
+    "name": {
+     "es": "Milanesitas de ternera",
+     "en": "Veal milanesa"
+    },
+    "description": {
+     "es": "Milanesita de ternera y papas fritas",
+     "en": "Small breaded veal cutlet and french fries"
+    },
+    "price": 20900,
+    "visible": true
+   },
+   {
+    "id": "infantil-hamburguesa",
+    "sectionId": "infantil",
+    "name": {
+     "es": "Hamburguesa",
+     "en": "Burger with fries"
+    },
+    "description": {
+     "es": "Hamburguesa de carne, queso, lechuga y tomate opcional, papas fritas",
+     "en": "Beef burger, cheese, lettuce and optional tomato, french fries"
+    },
+    "price": 20500,
+    "visible": true
+   },
+   {
+    "id": "infantil-bufalo-wings",
+    "sectionId": "infantil",
+    "name": {
+     "es": "Búfalo wings",
+     "en": "Buffalo wings"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 20500,
+    "visible": true
+   }
+  ]
+ },
+ {
+  "id": "ensaladas",
+  "label": {
+   "es": "Ensaladas",
+   "en": "Salads"
+  },
+  "title": {
+   "es": "Ensaladas",
+   "en": "Salads"
+  },
+  "eyebrow": {
+   "es": "Livianas y frescas",
+   "en": "Light and fresh"
+  },
+  "image": "/menu/entradas.png",
+  "icon": "salad",
+  "visible": true,
+  "items": [
+   {
+    "id": "ensaladas-ensalada-de-pollo",
+    "sectionId": "ensaladas",
+    "name": {
+     "es": "Ensalada de pollo",
+     "en": "Chicken salad"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 21000,
+    "visible": true,
+    "image": "/menu/ensaladas-ensalada-de-pollo.jpg"
+   },
+   {
+    "id": "ensaladas-ensalada-de-langostinos",
+    "sectionId": "ensaladas",
+    "name": {
+     "es": "Ensalada de langostinos",
+     "en": "Langoustine salad"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 27500,
+    "visible": true
+   },
+   {
+    "id": "ensaladas-ensalada-cesar",
+    "sectionId": "ensaladas",
+    "name": {
+     "es": "Ensalada César",
+     "en": "Caesar salad"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 18900,
+    "visible": true,
+    "image": "/menu/ensaladas-ensalada-cesar.jpg"
+   }
+  ]
+ },
+ {
+  "id": "pizzas",
+  "label": {
+   "es": "Pizzas",
+   "en": "Pizzas"
+  },
+  "title": {
+   "es": "Pizzas",
+   "en": "Pizzas"
+  },
+  "eyebrow": {
+   "es": "La mejor idea fue invitarte",
+   "en": "The best idea was inviting you"
+  },
+  "image": "/menu/pizzas.png",
+  "icon": "pizza",
+  "visible": true,
+  "items": [
+   {
+    "id": "pizzas-mozzarella-tradicionales",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Mozzarella",
+     "en": "Mozzarella"
+    },
+    "description": {
+     "es": "Salsa de tomate, mozzarella y orégano",
+     "en": "Tomato sauce, mozzarella and oregano"
+    },
+    "price": 18500,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "image": "/menu/pizzas-mozzarella-tradicionales.jpg",
+    "portions": 8
+   },
+   {
+    "id": "pizzas-napolitana-tradicionales",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Napolitana",
+     "en": "Neapolitan"
+    },
+    "description": {
+     "es": "Salsa de tomate, mozzarella y tomate en rodajas",
+     "en": "Tomato sauce, mozzarella and sliced tomato"
+    },
+    "price": 20000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "image": "/menu/pizzas-napolitana-tradicionales.jpg",
+    "portions": 8
+   },
+   {
+    "id": "pizzas-napo-con-jamon-tradicionales",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Napo con jamón",
+     "en": "Neapolitan with ham"
+    },
+    "description": {
+     "es": "Salsa de tomate, mozzarella, tomate en rodajas, jamón y oliva saborizada",
+     "en": "Tomato sauce, mozzarella, sliced tomato, ham and flavored olive oil"
+    },
+    "price": 22000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 8
+   },
+   {
+    "id": "pizzas-napo-con-albahaca-tradicionales",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Napo con albahaca",
+     "en": "Napo with basil"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 22000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "image": "/menu/pizzas-napo-con-albahaca-tradicionales.jpg",
+    "portions": 8
+   },
+   {
+    "id": "pizzas-anchoas-tradicionales",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Anchoas",
+     "en": "Anchovies"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 22000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 8
+   },
+   {
+    "id": "pizzas-anana-tradicionales",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Ananá",
+     "en": "Pineapple"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 32000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 8
+   },
+   {
+    "id": "pizzas-rucula-tradicionales",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Rúcula",
+     "en": "Arugula"
+    },
+    "description": {
+     "es": "Salsa de tomate, mozzarella, jamón crudo, rúcula y parmesano",
+     "en": "Tomato sauce, mozzarella, cured ham, arugula and parmesan"
+    },
+    "price": 30000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "image": "/menu/pizzas-rucula-tradicionales.jpg",
+    "portions": 8
+   },
+   {
+    "id": "pizzas-palmitos-tradicionales",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Palmitos",
+     "en": "Hearts of palm"
+    },
+    "description": {
+     "es": "Salsa de tomate, mozzarella, jamón cocido, palmitos y salsa golf",
+     "en": "Tomato sauce, mozzarella, cooked ham, hearts of palm and golf sauce"
+    },
+    "price": 33000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 8
+   },
+   {
+    "id": "pizzas-albahaca-y-cherry-tradicionales",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Albahaca y cherry",
+     "en": "Basil and cherry tomato"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 30000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "image": "/menu/pizzas-albahaca-y-cherry-tradicionales.jpg",
+    "portions": 8
+   },
+   {
+    "id": "pizzas-cuatro-quesos-tradicionales",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Cuatro quesos",
+     "en": "Four cheese"
+    },
+    "description": {
+     "es": "Salsa de tomate, mozzarella, provolone, sardo y roquefort",
+     "en": "Tomato sauce, mozzarella, provolone, sardo and roquefort"
+    },
+    "price": 25500,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "image": "/menu/pizzas-cuatro-quesos-tradicionales.jpg",
+    "portions": 8
+   },
+   {
+    "id": "pizzas-provenzal-tradicionales",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Provenzal",
+     "en": "Provençal"
+    },
+    "description": {
+     "es": "Salsa de tomate, mozzarella, ajo y perejil",
+     "en": "Tomato sauce, mozzarella, garlic and parsley"
+    },
+    "price": 18500,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 8
+   },
+   {
+    "id": "pizzas-especial-con-morron-tradicionales",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Especial con morrón",
+     "en": "Special with bell pepper"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 22000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "image": "/menu/pizzas-especial-con-morron-tradicionales.jpg",
+    "portions": 8
+   },
+   {
+    "id": "pizzas-fugazzeta-tradicionales",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Fugazzeta",
+     "en": "Fugazzetta"
+    },
+    "description": {
+     "es": "Salsa de tomate, mozzarella y cebolla dorada",
+     "en": "Tomato sauce, mozzarella and golden onion"
+    },
+    "price": 20000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 8
+   },
+   {
+    "id": "pizzas-especial-con-huevo-tradicionales",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Especial con huevo",
+     "en": "Special with egg"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 22000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 8
+   },
+   {
+    "id": "pizzas-calabresa-tradicionales",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Calabresa",
+     "en": "Calabrese"
+    },
+    "description": {
+     "es": "Salsa de tomate, mozzarella y salame",
+     "en": "Tomato sauce, mozzarella and salami"
+    },
+    "price": 27000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "image": "/menu/pizzas-calabresa-tradicionales.jpg",
+    "portions": 8
+   },
+   {
+    "id": "pizzas-carbonara-tradicionales",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Carbonara",
+     "en": "Carbonara"
+    },
+    "description": {
+     "es": "Salsa de tomate, mozzarella, panceta, huevo y parmesano",
+     "en": "Tomato sauce, mozzarella, bacon, egg and parmesan"
+    },
+    "price": 29500,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 8
+   },
+   {
+    "id": "pizzas-provolone-tradicionales",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Provolone",
+     "en": "Provolone"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 25500,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 8
+   },
+   {
+    "id": "pizzas-champignones-tradicionales",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Champignones",
+     "en": "Mushrooms"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 25000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 8
+   },
+   {
+    "id": "pizzas-la-comanda-gourmet",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "La Comanda",
+     "en": "La Comanda"
+    },
+    "description": {
+     "es": "Salsa de tomate, mozzarella, verdeo, panceta, pollo y champiñones",
+     "en": "Tomato sauce, mozzarella, scallion, bacon, chicken and mushrooms"
+    },
+    "price": 30000,
+    "visible": true,
+    "group": {
+     "es": "Gourmet",
+     "en": "Gourmet"
+    },
+    "image": "/menu/pizzas-la-comanda-gourmet.jpg",
+    "portions": 8
+   },
+   {
+    "id": "pizzas-del-chef-gourmet",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Del Chef",
+     "en": "Chef's"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 30000,
+    "visible": true,
+    "group": {
+     "es": "Gourmet",
+     "en": "Gourmet"
+    },
+    "portions": 8
+   },
+   {
+    "id": "pizzas-del-bosque-gourmet",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Del Bosque",
+     "en": "Forest"
+    },
+    "description": {
+     "es": "Salsa de tomate, mozzarella, rúcula, pera, roquefort y nuez",
+     "en": "Tomato sauce, mozzarella, arugula, pear, roquefort and walnut"
+    },
+    "price": 30000,
+    "visible": true,
+    "group": {
+     "es": "Gourmet",
+     "en": "Gourmet"
+    },
+    "image": "/menu/pizzas-del-bosque-gourmet.jpg",
+    "portions": 8
+   },
+   {
+    "id": "pizzas-onion-y-bacon-gourmet",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Onion y Bacon",
+     "en": "Onion and bacon"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 22000,
+    "visible": true,
+    "group": {
+     "es": "Gourmet",
+     "en": "Gourmet"
+    },
+    "portions": 8
+   },
+   {
+    "id": "pizzas-molleja-gourmet",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Molleja",
+     "en": "Sweetbreads"
+    },
+    "description": {
+     "es": "Mayonesa casera, mollejitas grilladas al limón, queso Chubut, lechuga, tomate y papas fritas",
+     "en": "Homemade mayo, lemon-grilled sweetbreads, Chubut cheese, lettuce, tomato and french fries"
+    },
+    "price": 34000,
+    "visible": true,
+    "group": {
+     "es": "Gourmet",
+     "en": "Gourmet"
+    },
+    "portions": 8
+   },
+   {
+    "id": "pizzas-de-mar-gourmet",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "De Mar",
+     "en": "Seafood"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 34000,
+    "visible": true,
+    "group": {
+     "es": "Gourmet",
+     "en": "Gourmet"
+    },
+    "image": "/menu/pizzas-de-mar-gourmet.jpg",
+    "portions": 8
+   },
+   {
+    "id": "pizzas-mozzarella-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Mozzarella (4 porciones)",
+     "en": "Mozzarella (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 10200,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-napo-con-jamon-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Napo con jamón (4 porciones)",
+     "en": "Neapolitan with ham (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 12000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-napo-con-albahaca-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Napo con albahaca (4 porciones)",
+     "en": "Napo with basil (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 12000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-anchoas-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Anchoas (4 porciones)",
+     "en": "Anchovies (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 12000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-anana-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Ananá (4 porciones)",
+     "en": "Pineapple (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 18000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-rucula-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Rúcula (4 porciones)",
+     "en": "Arugula (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 16000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-palmitos-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Palmitos (4 porciones)",
+     "en": "Hearts of palm (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 18000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-albahaca-y-cherry-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Albahaca y cherry (4 porciones)",
+     "en": "Basil and cherry tomato (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 16600,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-cuatro-quesos-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Cuatro quesos (4 porciones)",
+     "en": "Four cheese (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 12500,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-provenzal-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Provenzal (4 porciones)",
+     "en": "Provençal (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 10200,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-especial-con-morron-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Especial con morrón (4 porciones)",
+     "en": "Special with bell pepper (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 12000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-fugazzeta-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Fugazzeta (4 porciones)",
+     "en": "Fugazzeta (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 11000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-especial-con-huevo-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Especial con huevo (4 porciones)",
+     "en": "Special with egg (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 12000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-calabresa-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Calabresa (4 porciones)",
+     "en": "Calabrese (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 12000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-carbonara-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Carbonara (4 porciones)",
+     "en": "Carbonara (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 16600,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-provolone-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Provolone (4 porciones)",
+     "en": "Provolone (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 12000,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-champignones-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Champignones (4 porciones)",
+     "en": "Mushrooms (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 16600,
+    "visible": true,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-roquefort-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Roquefort (4 porciones)",
+     "en": "Roquefort (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 12000,
+    "visible": false,
+    "group": {
+     "es": "Tradicionales",
+     "en": "Traditional"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-la-comanda-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "La Comanda (4 porciones)",
+     "en": "La Comanda (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 16000,
+    "visible": true,
+    "group": {
+     "es": "Gourmet",
+     "en": "Gourmet"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-del-chef-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Del Chef (4 porciones)",
+     "en": "Chef's (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 16000,
+    "visible": true,
+    "group": {
+     "es": "Gourmet",
+     "en": "Gourmet"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-del-bosque-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Del Bosque (4 porciones)",
+     "en": "Forest (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 16600,
+    "visible": true,
+    "group": {
+     "es": "Gourmet",
+     "en": "Gourmet"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-onion-y-bacon-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Onion y Bacon (4 porciones)",
+     "en": "Onion and bacon (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 12000,
+    "visible": true,
+    "group": {
+     "es": "Gourmet",
+     "en": "Gourmet"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-molleja-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "Molleja (4 porciones)",
+     "en": "Sweetbreads (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 18000,
+    "visible": true,
+    "group": {
+     "es": "Gourmet",
+     "en": "Gourmet"
+    },
+    "portions": 4
+   },
+   {
+    "id": "pizzas-de-mar-4-porciones",
+    "sectionId": "pizzas",
+    "name": {
+     "es": "De Mar (4 porciones)",
+     "en": "Seafood (4 slices)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 19500,
+    "visible": true,
+    "group": {
+     "es": "Gourmet",
+     "en": "Gourmet"
+    },
+    "portions": 4
+   }
+  ]
+ },
+ {
+  "id": "tragos",
+  "label": {
+   "es": "Tragos",
+   "en": "Cocktails"
+  },
+  "title": {
+   "es": "Tragos",
+   "en": "Cocktails"
+  },
+  "eyebrow": {
+   "es": "Para brindar",
+   "en": "Let's toast"
+  },
+  "image": "/menu/bebidas.png",
+  "icon": "martini",
+  "visible": true,
+  "items": [
+   {
+    "id": "tragos-mojito",
+    "sectionId": "tragos",
+    "name": {
+     "es": "Mojito",
+     "en": "Mojito"
+    },
+    "description": {
+     "es": "Lima, menta, azúcar, ron blanco y Sprite",
+     "en": "Lime, mint, sugar, white rum and Sprite"
+    },
+    "price": 9500,
+    "visible": true
+   },
+   {
+    "id": "tragos-mojito-malibu",
+    "sectionId": "tragos",
+    "name": {
+     "es": "Mojito Malibú",
+     "en": "Malibú mojito"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 9500,
+    "visible": true
+   },
+   {
+    "id": "tragos-fernet-branca-con-coca",
+    "sectionId": "tragos",
+    "name": {
+     "es": "Fernet Branca con Coca",
+     "en": "Fernet Branca and Coke"
+    },
+    "description": {
+     "es": "Fernet Branca y Coca Cola",
+     "en": "Fernet Branca and Coca-Cola"
+    },
+    "price": 9000,
+    "visible": true
+   },
+   {
+    "id": "tragos-campari-con-naranja",
+    "sectionId": "tragos",
+    "name": {
+     "es": "Campari con naranja",
+     "en": "Campari and orange"
+    },
+    "description": {
+     "es": "Campari, jugo de naranja y rodaja de naranja",
+     "en": "Campari, orange juice and orange slice"
+    },
+    "price": 9500,
+    "visible": true
+   },
+   {
+    "id": "tragos-gin-mediterraneo",
+    "sectionId": "tragos",
+    "name": {
+     "es": "Gin Mediterráneo",
+     "en": "Mediterranean gin"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 9500,
+    "visible": true
+   },
+   {
+    "id": "tragos-gin-tonic",
+    "sectionId": "tragos",
+    "name": {
+     "es": "Gin Tonic",
+     "en": "Gin tonic"
+    },
+    "description": {
+     "es": "Gin Mediterráneo, almíbar de romero, agua tónica y frutos rojos",
+     "en": "Mediterráneo gin, rosemary syrup, tonic water and red berries"
+    },
+    "price": 9500,
+    "visible": true
+   },
+   {
+    "id": "tragos-caipirina",
+    "sectionId": "tragos",
+    "name": {
+     "es": "Caipiriña",
+     "en": "Caipirinha"
+    },
+    "description": {
+     "es": "Lima, azúcar y cachaça",
+     "en": "Lime, sugar and cachaça"
+    },
+    "price": 9500,
+    "visible": true
+   },
+   {
+    "id": "tragos-caipiroska",
+    "sectionId": "tragos",
+    "name": {
+     "es": "Caipiroska",
+     "en": "Caipiroska"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 9500,
+    "visible": true
+   },
+   {
+    "id": "tragos-americano",
+    "sectionId": "tragos",
+    "name": {
+     "es": "Americano",
+     "en": "Americano"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 9500,
+    "visible": true
+   },
+   {
+    "id": "tragos-negroni",
+    "sectionId": "tragos",
+    "name": {
+     "es": "Negroni",
+     "en": "Negroni"
+    },
+    "description": {
+     "es": "Gin, Campari, vermouth y naranja",
+     "en": "Gin, Campari, vermouth and orange"
+    },
+    "price": 9500,
+    "visible": true
+   },
+   {
+    "id": "tragos-cuba-libre",
+    "sectionId": "tragos",
+    "name": {
+     "es": "Cuba Libre",
+     "en": "Cuba Libre"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 9500,
+    "visible": true
+   },
+   {
+    "id": "tragos-aperol-spritz",
+    "sectionId": "tragos",
+    "name": {
+     "es": "Aperol Spritz",
+     "en": "Aperol Spritz"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 9500,
+    "visible": true
+   },
+   {
+    "id": "tragos-daiquiri",
+    "sectionId": "tragos",
+    "name": {
+     "es": "Daiquiri",
+     "en": "Daiquiri"
+    },
+    "description": {
+     "es": "De frutilla, ananá o durazno",
+     "en": "Strawberry, pineapple or peach"
+    },
+    "price": 9500,
+    "visible": true
+   },
+   {
+    "id": "tragos-old-fashioned",
+    "sectionId": "tragos",
+    "name": {
+     "es": "Old Fashioned",
+     "en": "Old Fashioned"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 9500,
+    "visible": true
+   },
+   {
+    "id": "tragos-jarra-fernet",
+    "sectionId": "tragos",
+    "name": {
+     "es": "Jarra Fernet",
+     "en": "Fernet pitcher"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 25000,
+    "visible": true
+   },
+   {
+    "id": "tragos-jarra-aperol",
+    "sectionId": "tragos",
+    "name": {
+     "es": "Jarra Aperol",
+     "en": "Aperol pitcher"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 23000,
+    "visible": true
+   },
+   {
+    "id": "tragos-fernet-coca-botella",
+    "sectionId": "tragos",
+    "name": {
+     "es": "Fernet + Coca (botella)",
+     "en": "Fernet + Coke (bottle)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 41000,
+    "visible": true
+   }
+  ],
+  "layout": "compact"
+ },
+ {
+  "id": "bebidas",
+  "label": {
+   "es": "Bebidas",
+   "en": "Drinks"
+  },
+  "title": {
+   "es": "Bebidas",
+   "en": "Soft drinks"
+  },
+  "eyebrow": {
+   "es": "Para acompañar",
+   "en": "To go with it"
+  },
+  "image": "/menu/bebidas.png",
+  "icon": "cup-soda",
+  "visible": true,
+  "items": [
+   {
+    "id": "bebidas-coca-cola-1-25-lts",
+    "sectionId": "bebidas",
+    "name": {
+     "es": "Coca-Cola 1,25 lts",
+     "en": "Coca-Cola 1.25 L"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 10500,
+    "visible": true
+   },
+   {
+    "id": "bebidas-linea-coca-cola-350-cc",
+    "sectionId": "bebidas",
+    "name": {
+     "es": "Línea Coca-Cola 350 cc",
+     "en": "Coca-Cola line 350 cc"
+    },
+    "description": {
+     "es": "Coca-Cola, Coca-Cola sin azúcar, Sprite y Fanta",
+     "en": "Coca-Cola, Coke Zero, Sprite and Fanta"
+    },
+    "price": 4000,
+    "visible": true
+   },
+   {
+    "id": "bebidas-agua-saborizada-500-ml",
+    "sectionId": "bebidas",
+    "name": {
+     "es": "Agua saborizada 500 ml",
+     "en": "Flavored water 500 ml"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 4000,
+    "visible": true
+   },
+   {
+    "id": "bebidas-agua-bonaqua-600-ml",
+    "sectionId": "bebidas",
+    "name": {
+     "es": "Agua Bonaqua 600 ml",
+     "en": "Bonaqua water 600 ml"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 4000,
+    "visible": true
+   },
+   {
+    "id": "bebidas-vaso-de-limonada",
+    "sectionId": "bebidas",
+    "name": {
+     "es": "Vaso de limonada",
+     "en": "Glass of lemonade"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 5900,
+    "visible": true
+   },
+   {
+    "id": "bebidas-jarra-de-limonada-1-lt",
+    "sectionId": "bebidas",
+    "name": {
+     "es": "Jarra de limonada 1 lt",
+     "en": "Pitcher of lemonade 1 L"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 9900,
+    "visible": true
+   }
+  ],
+  "layout": "compact"
+ },
+ {
+  "id": "cervezas",
+  "label": {
+   "es": "Cervezas",
+   "en": "Beers"
+  },
+  "title": {
+   "es": "Cervezas",
+   "en": "Beers"
+  },
+  "eyebrow": {
+   "es": "Bien frías",
+   "en": "Ice cold"
+  },
+  "image": "/menu/cervezas.png",
+  "icon": "beer",
+  "visible": true,
+  "items": [
+   {
+    "id": "cervezas-andes-origen-1-lt",
+    "sectionId": "cervezas",
+    "name": {
+     "es": "Andes Origen 1 lt",
+     "en": "Andes Origen 1 L"
+    },
+    "description": {
+     "es": "Rubia, negra, roja o IPA",
+     "en": "Blonde, dark, red or IPA"
+    },
+    "price": 11000,
+    "visible": true
+   },
+   {
+    "id": "cervezas-stella-artois-1-lt",
+    "sectionId": "cervezas",
+    "name": {
+     "es": "Stella Artois 1 lt",
+     "en": "Stella Artois 1 L"
+    },
+    "description": {
+     "es": "Rubia o noir",
+     "en": "Blonde or noir"
+    },
+    "price": 13000,
+    "visible": true
+   },
+   {
+    "id": "cervezas-stella-artois-330-cc",
+    "sectionId": "cervezas",
+    "name": {
+     "es": "Stella Artois 330 cc",
+     "en": "Stella Artois 330 cc"
+    },
+    "description": {
+     "es": "Sin alcohol",
+     "en": "Alcohol-free"
+    },
+    "price": 9000,
+    "visible": true
+   },
+   {
+    "id": "cervezas-michelob-ultra-473-cc",
+    "sectionId": "cervezas",
+    "name": {
+     "es": "Michelob Ultra 473 cc",
+     "en": "Michelob Ultra 473 cc"
+    },
+    "description": {
+     "es": "Sin gluten",
+     "en": "Gluten free"
+    },
+    "price": 6500,
+    "visible": true
+   },
+   {
+    "id": "cervezas-corona-330-cc",
+    "sectionId": "cervezas",
+    "name": {
+     "es": "Corona 330 cc",
+     "en": "Corona 330 cc"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 9000,
+    "visible": true
+   },
+   {
+    "id": "cervezas-corona-710-cc",
+    "sectionId": "cervezas",
+    "name": {
+     "es": "Corona 710 cc",
+     "en": "Corona 710 cc"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 12500,
+    "visible": true
+   },
+   {
+    "id": "cervezas-chopp-stella-artois-500-cc",
+    "sectionId": "cervezas",
+    "name": {
+     "es": "Chopp Stella Artois 500 cc",
+     "en": "Stella Artois draft 500 cc"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 7500,
+    "visible": true
+   },
+   {
+    "id": "cervezas-chopp-stella-artois-300-cc",
+    "sectionId": "cervezas",
+    "name": {
+     "es": "Chopp Stella Artois 300 cc",
+     "en": "Stella Artois draft 300 cc"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 6500,
+    "visible": true
+   },
+   {
+    "id": "cervezas-chopp-patagonia-500-cc",
+    "sectionId": "cervezas",
+    "name": {
+     "es": "Chopp Patagonia 500 cc",
+     "en": "Patagonia draft beer 500 cc"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 0,
+    "visible": false
+   },
+   {
+    "id": "cervezas-chopp-patagonia-300-cc",
+    "sectionId": "cervezas",
+    "name": {
+     "es": "Chopp Patagonia 300 cc",
+     "en": "Patagonia draft beer 300 cc"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 0,
+    "visible": false
+   },
+   {
+    "id": "cervezas-stella-artois-lata",
+    "sectionId": "cervezas",
+    "name": {
+     "es": "Stella Artois lata",
+     "en": "Stella Artois can"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 3675,
+    "visible": false,
+    "image": "/menu/cervezas-stella-artois-lata.jpg"
+   }
+  ],
+  "layout": "compact"
+ },
+ {
+  "id": "vinos",
+  "label": {
+   "es": "Vinos",
+   "en": "Wines"
+  },
+  "title": {
+   "es": "Vinos",
+   "en": "Wines"
+  },
+  "eyebrow": {
+   "es": "Una copa, una historia",
+   "en": "A glass, a story"
+  },
+  "image": "/menu/bebidas.png",
+  "icon": "wine",
+  "visible": true,
+  "items": [
+   {
+    "id": "vinos-alma-negra-tintos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Alma Negra",
+     "en": "Alma Negra"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 41500,
+    "visible": true,
+    "group": {
+     "es": "Tintos",
+     "en": "Reds"
+    }
+   },
+   {
+    "id": "vinos-desquiciado-cabernet-tintos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Desquiciado Cabernet",
+     "en": "Desquiciado Cabernet"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 23000,
+    "visible": true,
+    "group": {
+     "es": "Tintos",
+     "en": "Reds"
+    }
+   },
+   {
+    "id": "vinos-animal-organic-malbec-tintos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Animal Organic Malbec",
+     "en": "Animal Organic Malbec"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 21000,
+    "visible": true,
+    "group": {
+     "es": "Tintos",
+     "en": "Reds"
+    }
+   },
+   {
+    "id": "vinos-luigi-bosca-malbec-tintos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Luigi Bosca Malbec",
+     "en": "Luigi Bosca Malbec"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 23400,
+    "visible": true,
+    "group": {
+     "es": "Tintos",
+     "en": "Reds"
+    }
+   },
+   {
+    "id": "vinos-rutini-cabernetmalbec-tintos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Rutini Cabernet–Malbec",
+     "en": "Rutini Cabernet–Malbec"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 24500,
+    "visible": true,
+    "group": {
+     "es": "Tintos",
+     "en": "Reds"
+    }
+   },
+   {
+    "id": "vinos-trumpeter-wines-malbec-tintos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Trumpeter Wines Malbec",
+     "en": "Trumpeter Wines Malbec"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 16900,
+    "visible": true,
+    "group": {
+     "es": "Tintos",
+     "en": "Reds"
+    }
+   },
+   {
+    "id": "vinos-lui-wind-blend-malbec-tintos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Lui Wind Blend Malbec",
+     "en": "Lui Wind Blend Malbec"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 0,
+    "visible": false,
+    "group": {
+     "es": "Tintos",
+     "en": "Reds"
+    }
+   },
+   {
+    "id": "vinos-absurdo-cabernet-franc-tintos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Absurdo Cabernet Franc",
+     "en": "Absurdo Cabernet Franc"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 0,
+    "visible": false,
+    "group": {
+     "es": "Tintos",
+     "en": "Reds"
+    }
+   },
+   {
+    "id": "vinos-absurdo-malbec-tintos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Absurdo Malbec",
+     "en": "Absurdo Malbec"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 0,
+    "visible": false,
+    "group": {
+     "es": "Tintos",
+     "en": "Reds"
+    }
+   },
+   {
+    "id": "vinos-lui-reserva-cabernet-franc-tintos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Lui Reserva Cabernet Franc",
+     "en": "Lui Reserva Cabernet Franc"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 0,
+    "visible": false,
+    "group": {
+     "es": "Tintos",
+     "en": "Reds"
+    }
+   },
+   {
+    "id": "vinos-hey-malbec-tintos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Hey Malbec",
+     "en": "Hey Malbec"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 0,
+    "visible": false,
+    "group": {
+     "es": "Tintos",
+     "en": "Reds"
+    }
+   },
+   {
+    "id": "vinos-el-joven-equilibrista-tintos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "El Joven Equilibrista",
+     "en": "El Joven Equilibrista"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 0,
+    "visible": false,
+    "group": {
+     "es": "Tintos",
+     "en": "Reds"
+    }
+   },
+   {
+    "id": "vinos-lui-pinot-noir-tintos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Lui Pinot Noir",
+     "en": "Lui Pinot Noir"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 0,
+    "visible": false,
+    "group": {
+     "es": "Tintos",
+     "en": "Reds"
+    }
+   },
+   {
+    "id": "vinos-gran-lurton-corte-argentino-tintos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Gran Lurton Corte Argentino",
+     "en": "Gran Lurton Corte Argentino"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 0,
+    "visible": false,
+    "group": {
+     "es": "Tintos",
+     "en": "Reds"
+    }
+   },
+   {
+    "id": "vinos-desquiciado-malbec-tintos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Desquiciado Malbec",
+     "en": "Desquiciado Malbec"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 0,
+    "visible": false,
+    "group": {
+     "es": "Tintos",
+     "en": "Reds"
+    }
+   },
+   {
+    "id": "vinos-piedra-negra-cabernet-franc-tintos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Piedra Negra Cabernet Franc",
+     "en": "Piedra Negra Cabernet Franc"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 0,
+    "visible": false,
+    "group": {
+     "es": "Tintos",
+     "en": "Reds"
+    }
+   },
+   {
+    "id": "vinos-piedra-negra-malbec-tintos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Piedra Negra Malbec",
+     "en": "Piedra Negra Malbec"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 0,
+    "visible": false,
+    "group": {
+     "es": "Tintos",
+     "en": "Reds"
+    }
+   },
+   {
+    "id": "vinos-saletein-reserva-malbec-tintos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Saletein Reserva Malbec",
+     "en": "Saletein Reserva Malbec"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 0,
+    "visible": false,
+    "group": {
+     "es": "Tintos",
+     "en": "Reds"
+    }
+   },
+   {
+    "id": "vinos-zuccardi-a-malbec-tintos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Zuccardi A Malbec",
+     "en": "Zuccardi A Malbec"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 0,
+    "visible": false,
+    "group": {
+     "es": "Tintos",
+     "en": "Reds"
+    }
+   },
+   {
+    "id": "vinos-animal-extra-brut-espumantes",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Animal Extra Brut",
+     "en": "Animal Extra Brut"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 19200,
+    "visible": true,
+    "group": {
+     "es": "Espumantes",
+     "en": "Sparkling"
+    }
+   },
+   {
+    "id": "vinos-lui-brut-nature-espumantes",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Lui Brut Nature",
+     "en": "Lui Brut Nature"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 17850,
+    "visible": true,
+    "group": {
+     "es": "Espumantes",
+     "en": "Sparkling"
+    }
+   },
+   {
+    "id": "vinos-saletein-extra-brut-espumantes",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Saletein Extra Brut",
+     "en": "Saletein Extra Brut"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 17900,
+    "visible": true,
+    "group": {
+     "es": "Espumantes",
+     "en": "Sparkling"
+    }
+   },
+   {
+    "id": "vinos-malpensado-extra-brut-espumantes",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Malpensado Extra Brut",
+     "en": "Malpensado Extra Brut"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 15900,
+    "visible": true,
+    "group": {
+     "es": "Espumantes",
+     "en": "Sparkling"
+    }
+   },
+   {
+    "id": "vinos-chandon-extra-brut-espumantes",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Chandon Extra Brut",
+     "en": "Chandon Extra Brut"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 20900,
+    "visible": true,
+    "group": {
+     "es": "Espumantes",
+     "en": "Sparkling"
+    }
+   },
+   {
+    "id": "vinos-saletein-brut-natur-espumantes",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Saletein Brut Natur",
+     "en": "Saletein Brut Natur"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 18000,
+    "visible": true,
+    "group": {
+     "es": "Espumantes",
+     "en": "Sparkling"
+    }
+   },
+   {
+    "id": "vinos-lui-sauvignon-blanco-blancos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Lui Sauvignon Blanco",
+     "en": "Lui Sauvignon Blanco"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 19300,
+    "visible": true,
+    "group": {
+     "es": "Blancos",
+     "en": "Whites"
+    }
+   },
+   {
+    "id": "vinos-gran-delirio-sauvignon-blancos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Gran Delirio Sauvignon",
+     "en": "Gran Delirio Sauvignon"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 16700,
+    "visible": true,
+    "group": {
+     "es": "Blancos",
+     "en": "Whites"
+    }
+   },
+   {
+    "id": "vinos-absurdo-chardonnay-blancos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Absurdo Chardonnay",
+     "en": "Absurdo Chardonnay"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 16900,
+    "visible": true,
+    "group": {
+     "es": "Blancos",
+     "en": "Whites"
+    }
+   },
+   {
+    "id": "vinos-desquiciado-blend-blancos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Desquiciado Blend",
+     "en": "Desquiciado Blend"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 24700,
+    "visible": true,
+    "group": {
+     "es": "Blancos",
+     "en": "Whites"
+    }
+   },
+   {
+    "id": "vinos-desquiciado-pinot-gris-blancos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Desquiciado Pinot Gris",
+     "en": "Desquiciado Pinot Gris"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 0,
+    "visible": false,
+    "group": {
+     "es": "Blancos",
+     "en": "Whites"
+    }
+   },
+   {
+    "id": "vinos-chacabuco-chenin-dulce-blancos",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Chacabuco Chenin Dulce",
+     "en": "Chacabuco Chenin (sweet)"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 0,
+    "visible": false,
+    "group": {
+     "es": "Blancos",
+     "en": "Whites"
+    }
+   },
+   {
+    "id": "vinos-lui-wind-blend-pinot-noir-rosados",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Lui Wind Blend Pinot Noir",
+     "en": "Lui Wind Blend Pinot Noir"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 13500,
+    "visible": true,
+    "group": {
+     "es": "Rosados",
+     "en": "Rosés"
+    }
+   },
+   {
+    "id": "vinos-desquiciado-lunfa-rosados",
+    "sectionId": "vinos",
+    "name": {
+     "es": "Desquiciado Lunfa",
+     "en": "Desquiciado Lunfa"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 19200,
+    "visible": true,
+    "group": {
+     "es": "Rosados",
+     "en": "Rosés"
+    }
+   }
+  ],
+  "layout": "compact"
+ },
+ {
+  "id": "postres",
+  "label": {
+   "es": "Postres",
+   "en": "Desserts"
+  },
+  "title": {
+   "es": "Postres",
+   "en": "Desserts"
+  },
+  "eyebrow": {
+   "es": "El gran final",
+   "en": "The sweet finale"
+  },
+  "image": "/menu/infantil.png",
+  "icon": "cake",
+  "visible": true,
+  "items": [
+   {
+    "id": "postres-tiramisu",
+    "sectionId": "postres",
+    "name": {
+     "es": "Tiramisú",
+     "en": "Tiramisu"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 9500,
+    "visible": true
+   },
+   {
+    "id": "postres-helado-de-una-bocha",
+    "sectionId": "postres",
+    "name": {
+     "es": "Helado de una bocha",
+     "en": "One scoop of ice cream"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 5500,
+    "visible": true
+   },
+   {
+    "id": "postres-helado-de-dos-bochas",
+    "sectionId": "postres",
+    "name": {
+     "es": "Helado de dos bochas",
+     "en": "Two scoops of ice cream"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 7800,
+    "visible": true
+   },
+   {
+    "id": "postres-frutillas-con-crema",
+    "sectionId": "postres",
+    "name": {
+     "es": "Frutillas con crema",
+     "en": "Strawberries with cream"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 12200,
+    "visible": true
+   },
+   {
+    "id": "postres-copa-la-comanda",
+    "sectionId": "postres",
+    "name": {
+     "es": "Copa La Comanda",
+     "en": "La Comanda glass"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 13500,
+    "visible": true
+   },
+   {
+    "id": "postres-panqueques-de-dulce-de-leche",
+    "sectionId": "postres",
+    "name": {
+     "es": "Panqueques de dulce de leche",
+     "en": "Dulce de leche pancakes"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 11200,
+    "visible": true
+   },
+   {
+    "id": "postres-brownie-con-helado",
+    "sectionId": "postres",
+    "name": {
+     "es": "Brownie con helado",
+     "en": "Brownie with ice cream"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 11500,
+    "visible": true
+   },
+   {
+    "id": "postres-flan-casero",
+    "sectionId": "postres",
+    "name": {
+     "es": "Flan casero",
+     "en": "Homemade flan"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 8500,
+    "visible": true
+   },
+   {
+    "id": "postres-ensalada-de-frutas",
+    "sectionId": "postres",
+    "name": {
+     "es": "Ensalada de frutas",
+     "en": "Fruit salad"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 7900,
+    "visible": true
+   },
+   {
+    "id": "postres-pavlova",
+    "sectionId": "postres",
+    "name": {
+     "es": "Pavlova",
+     "en": "Pavlova"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 9500,
+    "visible": true
+   },
+   {
+    "id": "postres-crema-adicionales",
+    "sectionId": "postres",
+    "name": {
+     "es": "Crema",
+     "en": "Cream"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 1500,
+    "visible": true,
+    "group": {
+     "es": "Adicionales",
+     "en": "Extras"
+    }
+   },
+   {
+    "id": "postres-dulce-de-leche-adicionales",
+    "sectionId": "postres",
+    "name": {
+     "es": "Dulce de leche",
+     "en": "Dulce de leche"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 1500,
+    "visible": true,
+    "group": {
+     "es": "Adicionales",
+     "en": "Extras"
+    }
+   }
+  ]
+ },
+ {
+  "id": "promos",
+  "label": {
+   "es": "Promos",
+   "en": "Deals"
+  },
+  "title": {
+   "es": "Promos",
+   "en": "Deals"
+  },
+  "eyebrow": {
+   "es": "Más por menos",
+   "en": "More for less"
+  },
+  "image": "/menu/sandwiches.png",
+  "icon": "utensils",
+  "visible": false,
+  "items": [
+   {
+    "id": "promos-2-sandwiches-a-eleccion-2-latas-de-regalo",
+    "sectionId": "promos",
+    "name": {
+     "es": "2 sándwiches a elección + 2 latas de regalo",
+     "en": "2 sandwiches of your choice + 2 free cans"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 46000,
+    "visible": false,
+    "image": "/menu/promos-2-sandwiches-a-eleccion-2-latas-de-regalo.jpg"
+   },
+   {
+    "id": "promos-2-burgers-clasicas-2-latas-de-regalo",
+    "sectionId": "promos",
+    "name": {
+     "es": "2 burgers clásicas + 2 latas de regalo",
+     "en": "2 classic burgers + 2 free cans"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 34000,
+    "visible": false
+   },
+   {
+    "id": "promos-1-muzza-1-especial-con-morron",
+    "sectionId": "promos",
+    "name": {
+     "es": "1 muzza + 1 especial con morrón",
+     "en": "1 Muzza + 1 Special with bell pepper"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 35500,
+    "visible": false,
+    "image": "/menu/promos-1-muzza-1-especial-con-morron.jpg"
+   },
+   {
+    "id": "promos-2-sandwiches-de-milanesa-simple-2-latas-de-regalo",
+    "sectionId": "promos",
+    "name": {
+     "es": "2 sándwiches de milanesa simple + 2 latas de regalo",
+     "en": "2 simple milanesa sandwiches + 2 free cans"
+    },
+    "description": {
+     "es": "",
+     "en": ""
+    },
+    "price": 35000,
+    "visible": false,
+    "image": "/menu/promos-2-sandwiches-de-milanesa-simple-2-latas-de-regalo.jpg"
+   }
+  ]
+ }
+]

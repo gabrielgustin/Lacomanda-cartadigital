@@ -1,11 +1,11 @@
-import { promises as fs } from 'node:fs'
-import path from 'node:path'
+import { cache } from 'react'
+import { query } from '@/lib/db'
 import { seedMenu, type MenuItem, type MenuSection } from '@/lib/menu-data'
 import { DEFAULT_SETTINGS, sanitizeSettings, type OrderSettings } from '@/lib/settings'
 import { DEFAULT_THEME, sanitizeTheme, type ThemeSettings } from '@/lib/theme'
 
-// Persistencia en un archivo JSON local: simple y sin servicios externos.
-// OJO: en hosts de solo lectura (p. ej. Vercel) se puede leer pero no guardar.
+// La carta y toda su configuración viven en UNA fila de Postgres (tabla `store`, jsonb), en Neon.
+// Cada guardado incrementa `version`: si dos personas editan a la vez, el segundo reintenta sobre lo nuevo.
 
 export interface StoreData {
   sections: MenuSection[]
@@ -16,10 +16,6 @@ export interface StoreData {
   settings: OrderSettings
 }
 
-export const DATA_DIR = path.join(process.cwd(), 'data')
-export const UPLOADS_DIR = path.join(DATA_DIR, 'uploads')
-const STORE_FILE = path.join(DATA_DIR, 'store.json')
-
 const seed = (): StoreData => ({
   sections: structuredClone(seedMenu),
   theme: { ...DEFAULT_THEME },
@@ -27,37 +23,61 @@ const seed = (): StoreData => ({
   settings: structuredClone(DEFAULT_SETTINGS),
 })
 
-export async function getStore(): Promise<StoreData> {
-  try {
-    const raw = JSON.parse(await fs.readFile(STORE_FILE, 'utf8')) as Partial<StoreData>
-    if (!Array.isArray(raw.sections)) return seed()
-    return {
-      sections: raw.sections,
-      theme: sanitizeTheme(raw.theme),
-      siteUrl: raw.siteUrl ?? null,
-      settings: sanitizeSettings(raw.settings),
-    }
-  } catch {
-    return seed()
+function normalize(raw: unknown): StoreData {
+  const data = (raw && typeof raw === 'object' ? raw : {}) as Partial<StoreData>
+  if (!Array.isArray(data.sections)) return seed()
+  return {
+    sections: data.sections,
+    theme: sanitizeTheme(data.theme),
+    siteUrl: data.siteUrl ?? null,
+    settings: sanitizeSettings(data.settings),
   }
 }
 
-// Las escrituras se encolan para que dos guardados seguidos no se pisen.
-let queue: Promise<unknown> = Promise.resolve()
+async function loadRow() {
+  const rows = await query<{ data: unknown; version: number }>('SELECT data, version FROM store WHERE id = 1')
+  return rows[0] ? { data: normalize(rows[0].data), version: rows[0].version } : null
+}
 
-export function updateStore<T>(mutate: (draft: StoreData) => T): Promise<T> {
-  const run = async () => {
-    const draft = await getStore()
-    const result = mutate(draft)
-    await fs.mkdir(DATA_DIR, { recursive: true })
-    const tmp = `${STORE_FILE}.${process.pid}.tmp`
-    await fs.writeFile(tmp, JSON.stringify(draft, null, 2))
-    await fs.rename(tmp, STORE_FILE)
-    return result
+/**
+ * Lectura ESTRICTA y fresca: si la base falla, lanza el error (nunca devuelve la carta base).
+ * Es la que usan los pedidos, las escrituras y el backoffice: con datos inventados se cobrarían
+ * precios falsos o se pisaría la configuración real al guardar.
+ */
+export async function loadStore(): Promise<StoreData> {
+  return (await loadRow())?.data ?? seed()
+}
+
+/** Igual que `loadStore`, pero una sola lectura por visita (el layout y la página comparten el resultado). */
+export const getStoreStrict = cache(loadStore)
+
+/** Para la carta pública: si la base no responde, muestra la carta base en vez de romper la página. */
+export const getStore = cache(async (): Promise<StoreData> => {
+  try {
+    return await loadStore()
+  } catch (error) {
+    console.error('[store] No se pudo leer la base de datos; se muestra la carta base.', error)
+    return seed()
   }
-  const next = queue.then(run, run)
-  queue = next.catch(() => {})
-  return next
+})
+
+const MAX_ATTEMPTS = 5
+
+export async function updateStore<T>(mutate: (draft: StoreData) => T): Promise<T> {
+  for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+    const current = await loadRow()
+    const before = current ? JSON.stringify(current.data) : null
+    const draft = current?.data ?? seed()
+    const result = mutate(draft) // se vuelve a ejecutar sobre datos frescos si hay conflicto
+    const json = JSON.stringify(draft)
+    if (before === json) return result // nada que guardar
+
+    const saved = current
+      ? await query('UPDATE store SET data = $1::jsonb, version = version + 1, updated_at = now() WHERE id = 1 AND version = $2 RETURNING version', [json, current.version])
+      : await query('INSERT INTO store (id, data) VALUES (1, $1::jsonb) ON CONFLICT (id) DO NOTHING RETURNING version', [json])
+    if (saved.length > 0) return result
+  }
+  throw new Error('No se pudo guardar: la carta se estaba editando al mismo tiempo desde otro lugar. Probá de nuevo.')
 }
 
 /** Lo que ve el cliente en la carta pública: solo categorías y platos visibles. */

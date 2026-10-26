@@ -1,26 +1,23 @@
-import { promises as fs } from 'node:fs'
-import path from 'node:path'
-import { UPLOADS_DIR } from '@/lib/store'
+import { query } from '@/lib/db'
 
-const TYPES: Record<string, string> = {
-  '.png': 'image/png',
-  '.jpg': 'image/jpeg',
-  '.webp': 'image/webp',
-}
-
-// Sirve las imágenes subidas desde el backoffice (data/uploads). Los nombres
-// son aleatorios y nunca se reescriben, por eso la caché puede ser inmutable.
+// Sirve las imágenes subidas desde el backoffice (tabla `media`). Los nombres son aleatorios y
+// nunca se reescriben, por eso la caché puede ser inmutable (el CDN de Vercel las guarda tras el primer pedido).
 export async function GET(_request: Request, { params }: { params: Promise<{ name: string }> }) {
   const { name } = await params
-  const type = TYPES[path.extname(name).toLowerCase()]
-  if (!type || !/^[\w-]+\.\w+$/.test(name)) return new Response('Not found', { status: 404 })
+  if (!/^[a-f0-9]{16}\.(png|jpg|webp)$/.test(name)) return new Response('Not found', { status: 404 })
 
   try {
-    const file = await fs.readFile(path.join(UPLOADS_DIR, name))
-    return new Response(file, {
-      headers: { 'Content-Type': type, 'Cache-Control': 'public, max-age=31536000, immutable' },
+    const [row] = await query<{ content_type: string; bytes: Buffer }>('SELECT content_type, bytes FROM media WHERE name = $1', [name])
+    if (!row) return new Response('Not found', { status: 404 })
+    return new Response(new Uint8Array(row.bytes), {
+      headers: {
+        'Content-Type': row.content_type,
+        'Cache-Control': 'public, max-age=31536000, immutable',
+        'X-Content-Type-Options': 'nosniff',
+      },
     })
-  } catch {
-    return new Response('Not found', { status: 404 })
+  } catch (error) {
+    console.error('[media] No se pudo leer la imagen', error)
+    return new Response('Error', { status: 500 })
   }
 }

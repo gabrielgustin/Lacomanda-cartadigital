@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useRef, useState } from 'react'
+import { Fragment, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import { Search } from 'lucide-react'
 import { AdminLink } from '@/components/admin-link'
@@ -11,6 +11,7 @@ import { MenuItemCard } from '@/components/menu-item-card'
 import { useSiteTheme } from '@/components/site-theme'
 import { OrderBar } from '@/components/order-sheet'
 import { useOrder } from '@/components/order-provider'
+import { PromosPanel } from '@/components/promos-panel'
 import { ProductDialog } from '@/components/product-dialog'
 import { normalizeText } from '@/lib/format'
 import { type MenuItem } from '@/lib/menu-data'
@@ -22,6 +23,7 @@ export function MenuExperience() {
   const theme = useSiteTheme()
   const { sections: menu, count } = useOrder()
   const [query, setQuery] = useState('')
+  const [portions, setPortions] = useState<4 | 8>(8)
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null)
   const stickyRef = useRef<HTMLDivElement>(null)
 
@@ -32,11 +34,12 @@ export function MenuExperience() {
         ...section,
         items: section.items.filter(
           (item) =>
-            normalizeText(`${item.name[lang]} ${item.description[lang]}`).includes(needle),
+            (!item.portions || item.portions === portions) &&
+            normalizeText(`${item.name[lang]} ${item.description[lang]} ${item.group?.[lang] ?? ''}`).includes(needle),
         ),
       }))
       .filter((section) => section.items.length > 0)
-  }, [menu, query, lang])
+  }, [menu, query, lang, portions])
 
   const { activeSection, selectSection } = useActiveSection(
     filtered.map((section) => section.id),
@@ -95,6 +98,8 @@ export function MenuExperience() {
         </div>
         )}
 
+        {!isFiltering && <PromosPanel />}
+
         {filtered.length === 0 ? (
           <div className="py-12 text-center">
             <p className="text-sm text-muted-foreground">{t.noResults}</p>
@@ -113,15 +118,49 @@ export function MenuExperience() {
                 <div className="mb-6 flex items-end justify-between border-b border-border pb-4">
                   <div>
                     <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-eyebrow">{section.eyebrow[lang]}</p>
-                    <h2 id={`${section.id}-title`} className="font-heading text-3xl text-heading sm:text-4xl">
+                    <h2 id={`${section.id}-title`} className="font-heading text-[clamp(1.5rem,6.4vw,1.875rem)] text-heading [overflow-wrap:anywhere] sm:text-4xl">
                       {section.title[lang]}
                     </h2>
                   </div>
+                  {section.items.some((item) => item.portions) && (
+                    <div role="radiogroup" aria-label={t.portionsLabel} className="flex shrink-0 rounded-pill border border-border bg-card p-1 text-xs font-semibold">
+                      {([8, 4] as const).map((size) => (
+                        <button
+                          key={size}
+                          type="button"
+                          role="radio"
+                          aria-checked={portions === size}
+                          onClick={() => setPortions(size)}
+                          className={`rounded-pill px-3 py-1.5 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 ${portions === size ? 'bg-button text-button-foreground' : 'text-muted-foreground hover:text-foreground'}`}
+                        >
+                          {t.portionsOption(size)}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
-                <div className={`grid ${theme.itemStyle === 'cards' ? 'gap-6' : 'gap-4'} ${theme.columns === 2 ? 'sm:grid-cols-2' : 'mx-auto max-w-2xl'}`}>
-                  {section.items.map((item) => (
-                    <MenuItemCard key={item.id} item={item} image={item.image ?? section.image} onOpen={setSelectedItem} />
-                  ))}
+                <div
+                  className={`grid ${
+                    section.layout === 'compact'
+                      ? 'grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4'
+                      : `${theme.itemStyle === 'cards' ? 'gap-6' : 'gap-4'} ${theme.columns === 2 ? 'sm:grid-cols-2' : 'mx-auto max-w-2xl'}`
+                  }`}
+                >
+                  {section.items.map((item, index) => {
+                    const group = item.group?.[lang]
+                    return (
+                      <Fragment key={item.id}>
+                        {/* Subcategoría: un título con filete que ocupa toda la fila, cada vez que cambia el grupo. */}
+                        {group && group !== section.items[index - 1]?.group?.[lang] && (
+                          <h3 className="col-span-full flex items-center gap-4 pt-2 text-base font-semibold text-primary [text-transform:none]">
+                            <span>{group}</span>
+                            <span aria-hidden className="h-px flex-1 bg-border" />
+                          </h3>
+                        )}
+                        <MenuItemCard item={item} icon={section.icon} compact={section.layout === 'compact'} onOpen={setSelectedItem} />
+                      </Fragment>
+                    )
+                  })}
                 </div>
               </section>
             ))}

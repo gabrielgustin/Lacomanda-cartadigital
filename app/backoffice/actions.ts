@@ -83,7 +83,9 @@ async function mutate(change: (draft: StoreData) => string | void): Promise<Acti
     if (error) return fail(error)
   } catch (error) {
     console.error('[backoffice] No se pudo guardar', error)
-    return fail('No se pudieron guardar los cambios. Si la carta está en un hosting de solo lectura, no se puede editar desde ahí.')
+    // El conflicto de edición simultánea trae un mensaje claro para el dueño; el resto es un error de conexión.
+    if (error instanceof Error && error.message.startsWith('No se pudo guardar:')) return fail(error.message)
+    return fail('No se pudieron guardar los cambios. Revisá la conexión con la base de datos e intentá de nuevo.')
   }
   revalidatePath('/')
   revalidatePath('/backoffice', 'layout')
@@ -163,6 +165,8 @@ export interface ProductInput {
   description: Localized
   price: number
   image: string | null
+  /** Subcategoría opcional. */
+  group?: Localized | null
   visible: boolean
 }
 
@@ -170,6 +174,8 @@ export async function saveProduct(input: ProductInput): Promise<ActionResult> {
   const name = localized(input.name, 80)
   const description = localized(input.description, 400)
   const price = Math.round(Number(input.price) * 100) / 100
+  // Sin nombre en español no hay subcategoría; sin inglés se copia el español (igual que los nombres).
+  const group = text(input.group?.es, 40) ? localized(input.group ?? undefined, 40) : undefined
   if (!name.es) return fail('Escribí el nombre del producto.')
   if (!Number.isFinite(price) || price < 0 || price > 99_999_999) return fail('El precio no es válido.')
   if (input.image !== null && !validImage(input.image)) return fail('La imagen no es válida.')
@@ -178,7 +184,7 @@ export async function saveProduct(input: ProductInput): Promise<ActionResult> {
     const target = draft.sections.find((section) => section.id === input.sectionId)
     if (!target) return 'La categoría elegida ya no existe.'
 
-    const fields = { name, description, price, image: input.image ?? undefined, visible: Boolean(input.visible) }
+    const fields = { name, description, price, image: input.image ?? undefined, group, visible: Boolean(input.visible) }
 
     if (!input.id) {
       const item: MenuItem = { id: `p-${randomBytes(5).toString('hex')}`, sectionId: target.id, ...fields }

@@ -5,6 +5,7 @@ import {
   Cake,
   Coffee,
   Cookie,
+  CupSoda,
   Fish,
   IceCreamCone,
   Martini,
@@ -34,6 +35,7 @@ export const categoryIcons: Record<string, { label: string; Icon: LucideIcon }> 
   'ice-cream': { label: 'Helado', Icon: IceCreamCone },
   cookie: { label: 'Galletita', Icon: Cookie },
   baby: { label: 'Infantil', Icon: Baby },
+  'cup-soda': { label: 'Gaseosa', Icon: CupSoda },
 }
 
 export const getCategoryIcon = (key: string): LucideIcon => categoryIcons[key]?.Icon ?? Utensils

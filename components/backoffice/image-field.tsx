@@ -80,7 +80,7 @@ export function ImageField({ label, value, onChange, fallback, presets = [], cle
           )}
         </div>
       </div>
-      <p className="text-xs text-muted-foreground">PNG, JPG o WebP, hasta 4 MB.</p>
+      <p className="text-xs text-muted-foreground">PNG, JPG o WebP, hasta 3 MB.</p>
       {presets.length > 0 && (
         <div className="flex flex-wrap gap-2 pt-1" role="group" aria-label="Imágenes existentes">
           {presets.map((preset, index) => (
