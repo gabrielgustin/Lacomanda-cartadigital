@@ -101,21 +101,24 @@ export function PromosPanel() {
         </p>
       )}
 
-      <div className="mt-4 space-y-4 rounded-xl border border-border bg-muted/40 p-4">
-        <p className="flex items-start gap-2.5 text-sm leading-6 text-foreground">
-          <Banknote className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
+      <div className="mt-4 space-y-4">
+        <p className="flex items-start gap-3 px-1 text-sm font-bold leading-6 text-heading">
+          <Banknote className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden />
           {promosCopy.cashOnly[lang]}
         </p>
-        <div>
+        <div className="rounded-xl border border-border bg-muted/40 p-4">
           <h3 className="mb-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-eyebrow">{promosCopy.paymentsTitle[lang]}</h3>
           <ul className="flex flex-wrap gap-2">
             {paymentMethods.map((method) => {
               const Icon = paymentIcons[method.icon]
               return (
-                <li key={method.id} className="flex items-center gap-2 rounded-pill border border-border bg-card px-3 py-1.5 text-xs font-semibold text-foreground">
-                  <Icon className="h-3.5 w-3.5 text-primary" aria-hidden />
+                <li
+                  key={method.id}
+                  className={`flex items-center gap-2 rounded-pill border px-3 py-1.5 text-xs font-semibold ${method.note ? 'border-button bg-button text-button-foreground' : 'border-border bg-card text-foreground'}`}
+                >
+                  <Icon className={`h-3.5 w-3.5 ${method.note ? '' : 'text-primary'}`} aria-hidden />
                   {method.label[lang]}
-                  {method.note && <span className="text-price">{promosCopy.surcharge[lang]}</span>}
+                  {method.note && <span className="rounded-pill bg-button-foreground/20 px-2 py-0.5">{promosCopy.surcharge[lang]}</span>}
                 </li>
               )
             })}

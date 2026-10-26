@@ -18,6 +18,17 @@ import { type MenuItem } from '@/lib/menu-data'
 import { DEFAULT_FOOTER_URL, DEFAULT_LOGO_URL } from '@/lib/theme'
 import { useActiveSection } from '@/lib/use-active-section'
 
+/** Dentro de cada subcategoría, los platos con foto van primero; el resto conserva el orden del backoffice. */
+function photosFirst(items: MenuItem[]) {
+  const groupOrder = new Map<string, number>()
+  for (const item of items) {
+    const key = item.group?.es ?? ''
+    if (!groupOrder.has(key)) groupOrder.set(key, groupOrder.size)
+  }
+  const rank = (item: MenuItem) => (groupOrder.get(item.group?.es ?? '') ?? 0) * 2 + (item.image ? 0 : 1)
+  return [...items].sort((a, b) => rank(a) - rank(b))
+}
+
 export function MenuExperience() {
   const { lang, t } = useLanguage()
   const theme = useSiteTheme()
@@ -38,6 +49,7 @@ export function MenuExperience() {
             normalizeText(`${item.name[lang]} ${item.description[lang]} ${item.group?.[lang] ?? ''}`).includes(needle),
         ),
       }))
+      .map((section) => ({ ...section, items: photosFirst(section.items) }))
       .filter((section) => section.items.length > 0)
   }, [menu, query, lang, portions])
 

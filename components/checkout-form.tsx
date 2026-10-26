@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Bike, Clock, Loader2, ShoppingBag, X } from 'lucide-react'
+import { Bike, ChevronDown, Clock, Loader2, ShoppingBag, X } from 'lucide-react'
 import { useLanguage } from '@/components/language-provider'
 import { useOrder } from '@/components/order-provider'
 import { formatPrice } from '@/lib/format'
@@ -33,11 +33,26 @@ interface CheckoutFormProps {
   paymentMethods: PaymentMethod[]
 }
 
+function ScheduleList({ horarios }: { horarios: Tramo[][] }) {
+  const { lang } = useLanguage()
+  return (
+    <ul className="space-y-1 text-sm">
+      {scheduleRows(horarios, lang).map((row) => (
+        <li key={row.day} className="flex justify-between gap-4">
+          <span className="font-semibold text-foreground">{row.name}</span>
+          <span className="text-right text-muted-foreground">{row.text}</span>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
 export function CheckoutForm({ canOrder, open, initialDelivery, horarios, paymentMethods }: CheckoutFormProps) {
   const { lang, t } = useLanguage()
   const { ready, lines, clear } = useOrder()
   const [delivery, setDelivery] = useState<'retiro' | 'delivery'>(initialDelivery)
   const [address, setAddress] = useState('')
+  const [showHours, setShowHours] = useState(false)
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [notes, setNotes] = useState('')
@@ -145,6 +160,22 @@ export function CheckoutForm({ canOrder, open, initialDelivery, horarios, paymen
         <div role="alert" className="rounded-2xl border border-border bg-muted px-4 py-3">
           <p className="font-heading text-base text-heading">{t.closedTitle}</p>
           <p className="mt-1 text-sm leading-6 text-muted-foreground">{t.closedHint}</p>
+          <button
+            type="button"
+            onClick={() => setShowHours((current) => !current)}
+            aria-expanded={showHours}
+            aria-controls="closed-hours"
+            className="mt-3 flex items-center gap-1.5 rounded-pill text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+          >
+            <Clock className="h-4 w-4" aria-hidden />
+            {t.viewHours}
+            <ChevronDown className={`h-4 w-4 transition ${showHours ? 'rotate-180' : ''}`} aria-hidden />
+          </button>
+          {showHours && (
+            <div id="closed-hours" className="mt-3 rounded-xl bg-card p-4">
+              <ScheduleList horarios={horarios} />
+            </div>
+          )}
         </div>
       )}
 
@@ -244,21 +275,16 @@ export function CheckoutForm({ canOrder, open, initialDelivery, horarios, paymen
             />
           </div>
         )}
-        {delivery === 'delivery' && !open && (
+        {delivery === 'delivery' && !open && canOrder && (
           <div className="rounded-2xl bg-muted px-4 py-4">
             <p className="flex items-center gap-2 font-heading text-base text-heading">
               <Clock className="h-4 w-4 text-primary" aria-hidden />
               {t.scheduleTitle}
             </p>
             <p className="mt-1 text-sm leading-6 text-muted-foreground">{t.scheduleHint}</p>
-            <ul className="mt-3 space-y-1 text-sm">
-              {scheduleRows(horarios, lang).map((row) => (
-                <li key={row.day} className="flex justify-between gap-4">
-                  <span className="font-semibold text-foreground">{row.name}</span>
-                  <span className="text-right text-muted-foreground">{row.text}</span>
-                </li>
-              ))}
-            </ul>
+            <div className="mt-3">
+              <ScheduleList horarios={horarios} />
+            </div>
           </div>
         )}
       </section>
