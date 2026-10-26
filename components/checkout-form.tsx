@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { Loader2, ShoppingBag, X } from 'lucide-react'
+import { Bike, Clock, Loader2, ShoppingBag, X } from 'lucide-react'
 import { useLanguage } from '@/components/language-provider'
 import { useOrder } from '@/components/order-provider'
 import { formatPrice } from '@/lib/format'
+import { scheduleRows } from '@/lib/schedule'
+import type { Tramo } from '@/lib/settings'
 import { orderTotals, type CouponTerms } from '@/lib/pricing'
 
 interface PaymentMethod {
@@ -22,10 +23,19 @@ const fieldClass =
   'w-full rounded-2xl border border-border bg-card px-4 py-3 text-sm outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20'
 const labelClass = 'mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground'
 
-export function CheckoutForm({ canOrder, paymentMethods }: { canOrder: boolean; paymentMethods: PaymentMethod[] }) {
-  const router = useRouter()
+interface CheckoutFormProps {
+  canOrder: boolean
+  /** ¿Está abierto ahora? Con el local cerrado y delivery elegido se muestran los horarios de atención. */
+  open: boolean
+  horarios: Tramo[][]
+  paymentMethods: PaymentMethod[]
+}
+
+export function CheckoutForm({ canOrder, open, horarios, paymentMethods }: CheckoutFormProps) {
   const { lang, t } = useLanguage()
-  const { ready, lines } = useOrder()
+  const { ready, lines, clear } = useOrder()
+  const [delivery, setDelivery] = useState<'retiro' | 'delivery'>('retiro')
+  const [address, setAddress] = useState('')
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [notes, setNotes] = useState('')
@@ -84,6 +94,8 @@ export function CheckoutForm({ canOrder, paymentMethods }: { canOrder: boolean; 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           customer: { name, phone },
+          delivery,
+          address: delivery === 'delivery' ? address : undefined,
           notes: notes || undefined,
           paymentMethodId: paymentMethods.length > 0 ? paymentId : undefined,
           coupon: coupon?.codigo,
@@ -91,12 +103,13 @@ export function CheckoutForm({ canOrder, paymentMethods }: { canOrder: boolean; 
         }),
       })
       const data = await response.json().catch(() => ({}))
-      if (!response.ok || !data.token) throw new Error(data.error || t.sendError)
+      if (!response.ok || !data.url) throw new Error(data.error || t.sendError)
       try {
         window.localStorage.setItem(CONTACT_KEY, JSON.stringify({ name: name.trim(), phone: phone.trim() }))
       } catch {}
-      // El carrito se vacía recién en la pantalla de seguimiento, cuando el pedido ya existe.
-      router.push(`/pedido/${data.token}?nuevo=1`)
+      // El pedido termina en WhatsApp: se vacía el carrito y se abre la conversación con el mensaje armado.
+      clear()
+      window.location.assign(data.url)
     } catch (caught) {
       setError(caught instanceof Error && caught.message ? caught.message : t.sendError)
       setSending(false)
@@ -190,10 +203,62 @@ export function CheckoutForm({ canOrder, paymentMethods }: { canOrder: boolean; 
             className={`${fieldClass} resize-none`}
           />
         </div>
-        <p className="flex items-center gap-2 rounded-2xl bg-muted px-4 py-3 text-sm font-semibold text-foreground">
-          <ShoppingBag className="h-4 w-4 text-primary" aria-hidden />
-          {t.pickupLabel}
-        </p>
+      </section>
+
+      <section className="space-y-4 rounded-3xl border border-border bg-card p-5 sm:p-6">
+        <h2 id="checkout-delivery" className="font-heading text-lg text-heading">
+          {t.deliveryTypeLabel}
+        </h2>
+        <div role="radiogroup" aria-labelledby="checkout-delivery" className="flex flex-wrap gap-2">
+          {([
+            ['retiro', t.pickupOption, ShoppingBag],
+            ['delivery', t.deliveryOption, Bike],
+          ] as const).map(([value, label, Icon]) => (
+            <label
+              key={value}
+              className="flex cursor-pointer items-center gap-2 rounded-pill border border-border px-4 py-2 text-sm font-semibold transition has-[:checked]:border-primary has-[:checked]:bg-muted has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring"
+            >
+              <input type="radio" name="delivery" value={value} checked={delivery === value} onChange={() => setDelivery(value)} className="sr-only" />
+              <Icon className="h-4 w-4 text-primary" aria-hidden />
+              {label}
+            </label>
+          ))}
+        </div>
+        {delivery === 'delivery' && (
+          <div>
+            <label htmlFor="checkout-address" className={labelClass}>
+              {t.addressLabel}
+            </label>
+            <input
+              id="checkout-address"
+              value={address}
+              onChange={(event) => setAddress(event.target.value)}
+              required
+              minLength={5}
+              maxLength={200}
+              autoComplete="street-address"
+              placeholder={t.addressPlaceholder}
+              className={fieldClass}
+            />
+          </div>
+        )}
+        {delivery === 'delivery' && !open && (
+          <div className="rounded-2xl bg-muted px-4 py-4">
+            <p className="flex items-center gap-2 font-heading text-base text-heading">
+              <Clock className="h-4 w-4 text-primary" aria-hidden />
+              {t.scheduleTitle}
+            </p>
+            <p className="mt-1 text-sm leading-6 text-muted-foreground">{t.scheduleHint}</p>
+            <ul className="mt-3 space-y-1 text-sm">
+              {scheduleRows(horarios, lang).map((row) => (
+                <li key={row.day} className="flex justify-between gap-4">
+                  <span className="font-semibold text-foreground">{row.name}</span>
+                  <span className="text-right text-muted-foreground">{row.text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </section>
 
       {paymentMethods.length > 0 && (

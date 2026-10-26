@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { MenuItem, MenuSection } from '@/lib/menu-data'
-import { OrderError, buildOrder, isUuid } from '@/lib/orders'
+import { OrderError, buildOrder } from '@/lib/orders'
 import { orderSchema } from '@/lib/order-schema'
 import { DEFAULT_SETTINGS, type OrderSettings } from '@/lib/settings'
 
@@ -137,8 +137,13 @@ describe('buildOrder', () => {
 describe('orderSchema', () => {
   const base = { customer, items: [{ productId: 'a', quantity: 1 }] }
 
-  it('acepta un pedido válido', () => {
-    expect(orderSchema.safeParse(base).success).toBe(true)
+  it('acepta un pedido válido y por defecto es retiro', () => {
+    const parsed = orderSchema.parse(base)
+    expect(parsed.delivery).toBe('retiro')
+  })
+
+  it('acepta delivery con dirección', () => {
+    expect(orderSchema.safeParse({ ...base, delivery: 'delivery', address: 'Av. Mate de Luna 1234' }).success).toBe(true)
   })
 
   it.each([
@@ -148,14 +153,21 @@ describe('orderSchema', () => {
     ['cantidad cero', { ...base, items: [{ productId: 'a', quantity: 0 }] }],
     ['cantidad mayor a 99', { ...base, items: [{ productId: 'a', quantity: 100 }] }],
     ['comentario de más de 500', { ...base, notes: 'x'.repeat(501) }],
+    ['delivery sin dirección', { ...base, delivery: 'delivery' }],
+    ['forma de entrega inventada', { ...base, delivery: 'moto' }],
   ])('rechaza %s', (_name, body) => {
     expect(orderSchema.safeParse(body).success).toBe(false)
   })
 })
 
-describe('isUuid', () => {
-  it('distingue un token real de basura', () => {
-    expect(isUuid('3f2b8c1e-9d4a-4e6b-8a1c-2f7d5e9b0c3a')).toBe(true)
-    expect(isUuid('../../data/store')).toBe(false)
+describe('delivery en buildOrder', () => {
+  const items = [{ productId: 'a', quantity: 1 }]
+  it('guarda la dirección solo con delivery', () => {
+    const delivery = build({ customer, items, delivery: 'delivery', address: 'Calle 123' })
+    expect(delivery.formaEntrega).toBe('Delivery')
+    expect(delivery.direccion).toBe('Calle 123')
+    const pickup = build({ customer, items, address: 'Calle 123' })
+    expect(pickup.formaEntrega).toBe('Retiro en el local')
+    expect(pickup.direccion).toBeNull()
   })
 })

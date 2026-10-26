@@ -3,7 +3,7 @@ import { connection } from 'next/server'
 import { CheckoutForm } from '@/components/checkout-form'
 import { PageShell } from '@/components/page-shell'
 import { StoreProviders } from '@/components/store-providers'
-import { acceptsOrdersAt, checkoutSettings } from '@/lib/settings'
+import { acceptsOrdersAt, checkoutSettings, isOpenAt } from '@/lib/settings'
 import { getStore } from '@/lib/store'
 
 export const metadata: Metadata = { title: 'Finalizar pedido', robots: { index: false, follow: false } }
@@ -17,6 +17,8 @@ export default async function CheckoutPage() {
       <PageShell>
         <CheckoutForm
           canOrder={acceptsOrdersAt(settings, new Date())}
+          open={isOpenAt(settings, new Date())}
+          horarios={checkoutSettings(settings).horarios}
           paymentMethods={checkoutSettings(settings).metodosPago}
         />
       </PageShell>

@@ -181,4 +181,5 @@ export const findCoupon = (settings: Pick<OrderSettings, 'cupones'>, code: strin
 export const checkoutSettings = (settings: OrderSettings) => ({
   metodosPago: settings.metodosPago.filter((method) => method.activo).map(({ id, nombre, predeterminado }) => ({ id, nombre, predeterminado })),
   negocio: settings.negocio,
+  horarios: settings.horarios,
 })

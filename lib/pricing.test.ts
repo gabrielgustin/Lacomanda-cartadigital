@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { ORDER_STATES, PROGRESS_STEPS, couponDiscount, orderNumber, orderTotals } from '@/lib/pricing'
+import { couponDiscount, orderTotals } from '@/lib/pricing'
 
 describe('orderTotals', () => {
   const lines = [{ price: 8900, quantity: 2 }, { price: 5200, quantity: 1 }]
@@ -42,20 +42,5 @@ describe('couponDiscount', () => {
 
   it('el descuento sobre un subtotal en cero es cero', () => {
     expect(couponDiscount(0, { tipo: 'porcentaje', valor: 50 })).toBe(0)
-  })
-})
-
-describe('orderNumber', () => {
-  it('rellena con ceros', () => {
-    expect(orderNumber(12)).toBe('#00012')
-    expect(orderNumber(123456)).toBe('#123456')
-  })
-})
-
-describe('estados', () => {
-  it('el progreso tiene cinco pasos y no incluye "cancelado"', () => {
-    expect(PROGRESS_STEPS).toHaveLength(5)
-    expect(PROGRESS_STEPS).not.toContain('cancelado')
-    expect(ORDER_STATES).toContain('cancelado')
   })
 })

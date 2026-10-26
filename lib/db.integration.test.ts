@@ -9,20 +9,18 @@ const run = url && isLocal ? describe : describe.skip
 
 run('persistencia en Postgres', () => {
   let store: typeof import('@/lib/store')
-  let orders: typeof import('@/lib/orders')
   let db: typeof import('@/lib/db')
 
   beforeAll(async () => {
     process.env.DATABASE_URL = url
     db = await import('@/lib/db')
     store = await import('@/lib/store')
-    orders = await import('@/lib/orders')
     await db.query('SELECT 1') // crea las tablas
-    await db.query('TRUNCATE store, pedidos, media RESTART IDENTITY')
+    await db.query('TRUNCATE store, media RESTART IDENTITY')
   })
 
   afterAll(async () => {
-    await db?.query('TRUNCATE store, pedidos, media RESTART IDENTITY')
+    await db?.query('TRUNCATE store, media RESTART IDENTITY')
   })
 
   it('sin fila guardada devuelve la carta base', async () => {
@@ -56,44 +54,6 @@ run('persistencia en Postgres', () => {
     await store.updateStore(() => undefined)
     const [after] = await db.query<{ version: number }>('SELECT version FROM store WHERE id = 1')
     expect(after.version).toBe(before.version)
-  })
-
-  it('crea pedidos con precio del servidor, número correlativo y los lee por token', async () => {
-    const { seedMenu } = await import('@/lib/menu-data')
-    const item = seedMenu[0].items[0]
-    const input = { customer: { name: 'Ana', phone: '351 555-1234' }, paymentMethodId: 'efectivo', items: [{ productId: item.id, quantity: 2 }] }
-
-    const first = await orders.createOrder(input)
-    const second = await orders.createOrder(input)
-    expect(first.id).toBe(1)
-    expect(second.id).toBe(2)
-    expect(first.total).toBe(item.price * 2)
-    expect(typeof first.total).toBe('number')
-    expect(first.createdAt).toMatch(/^\d{4}-\d{2}-\d{2}T/)
-
-    const found = await orders.getOrderByToken(first.token)
-    expect(found?.id).toBe(1)
-    expect(await orders.getOrderByToken('no-es-un-uuid')).toBeNull()
-    expect(await orders.getOrderByToken('3f2b8c1e-9d4a-4e6b-8a1c-2f7d5e9b0c3a')).toBeNull()
-  })
-
-  it('cambia el estado, cuenta y lista del más nuevo al más viejo', async () => {
-    expect(await orders.countOrders('nuevo')).toBe(2)
-    const updated = await orders.updateOrderState(1, 'preparando')
-    expect(updated?.estado).toBe('preparando')
-    expect(await orders.updateOrderState(999, 'listo')).toBeNull()
-    expect(await orders.countOrders('nuevo')).toBe(1)
-    expect((await orders.listOrders(10)).map((order) => order.id)).toEqual([2, 1])
-  })
-
-  it('rechaza un estado inválido a nivel de base de datos', async () => {
-    await expect(db.query("UPDATE pedidos SET estado = 'hackeado' WHERE id = 1")).rejects.toThrow()
-  })
-
-  it('un pedido con un plato inexistente falla sin guardar nada', async () => {
-    const input = { customer: { name: 'Ana', phone: '351 555-1234' }, paymentMethodId: 'efectivo', items: [{ productId: 'no-existe', quantity: 1 }] }
-    await expect(orders.createOrder(input)).rejects.toThrow()
-    expect(await orders.listOrders(10)).toHaveLength(2)
   })
 
   it('guarda y recupera una imagen byte por byte', async () => {

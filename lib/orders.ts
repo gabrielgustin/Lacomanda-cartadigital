@@ -1,9 +1,7 @@
-import { query } from '@/lib/db'
 import type { Localized, MenuSection } from '@/lib/menu-data'
 import type { OrderInput } from '@/lib/order-schema'
-import { orderTotals, type OrderState } from '@/lib/pricing'
+import { orderTotals } from '@/lib/pricing'
 import { acceptsOrdersAt, couponValidOn, findCoupon, type OrderSettings } from '@/lib/settings'
-import { loadStore } from '@/lib/store'
 
 export class OrderError extends Error {
   constructor(
@@ -14,7 +12,6 @@ export class OrderError extends Error {
   }
 }
 
-/** Cada renglón guarda nombre y precio como eran al comprar: editar la carta después no cambia el pedido. */
 export interface OrderItem {
   productId: string
   nombre: Localized
@@ -22,52 +19,11 @@ export interface OrderItem {
   cantidad: number
 }
 
-export interface Order {
-  id: number
-  /** Enlace público de seguimiento. */
-  token: string
-  estado: OrderState
-  clienteNombre: string
-  clienteTelefono: string
-  notas: string | null
-  formaEntrega: string
-  subtotal: number
-  /** 0 si no se aplicó cupón. */
-  descuento: number
-  /** Código del cupón aplicado. */
-  cupon: string | null
-  /** Se guarda el NOMBRE del medio de pago (no el id): el pedido no cambia si después se renombra. */
-  metodoPago: string | null
-  total: number
-  items: OrderItem[]
-  createdAt: string
-  updatedAt: string
-}
-
-/** Lo que ve quien abre el enlace de seguimiento: sin teléfono ni token. */
-export const toPublicOrder = ({ id, estado, clienteNombre, notas, formaEntrega, subtotal, descuento, cupon, metodoPago, total, items, createdAt }: Order) => ({
-  id,
-  estado,
-  clienteNombre,
-  notas,
-  formaEntrega,
-  subtotal,
-  descuento,
-  cupon,
-  metodoPago,
-  total,
-  items,
-  createdAt,
-})
-export type PublicOrder = ReturnType<typeof toPublicOrder>
-
-export const isUuid = (value: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value)
-
 const MAX_QUANTITY = 99
 
 /**
  * Arma el pedido desde la carta y la configuración VIGENTES: precio, nombre, descuento y total
- * salen de acá, nunca del navegador. Función pura para poder probarla sin tocar el disco.
+ * salen de acá, nunca del navegador. Función pura: el pedido no se guarda, termina en un mensaje de WhatsApp.
  */
 export function buildOrder(input: OrderInput, sections: MenuSection[], settings: OrderSettings, now: Date) {
   if (!acceptsOrdersAt(settings, now)) {
@@ -112,7 +68,8 @@ export function buildOrder(input: OrderInput, sections: MenuSection[], settings:
     clienteNombre: input.customer.name,
     clienteTelefono: input.customer.phone,
     notas: input.notes || null,
-    formaEntrega: 'Para llevar',
+    formaEntrega: input.delivery === 'delivery' ? 'Delivery' : 'Retiro en el local',
+    direccion: input.delivery === 'delivery' ? (input.address ?? null) : null,
     subtotal,
     descuento,
     cupon: coupon?.codigo ?? null,
@@ -120,75 +77,4 @@ export function buildOrder(input: OrderInput, sections: MenuSection[], settings:
     total,
     items,
   }
-}
-
-// Persistencia en Postgres (Neon): tabla `pedidos`. El token del enlace de seguimiento lo genera la base.
-interface OrderRow {
-  id: number
-  token: string
-  estado: OrderState
-  cliente_nombre: string
-  cliente_telefono: string
-  notas: string | null
-  forma_entrega: string
-  subtotal: string
-  descuento: string
-  cupon: string | null
-  metodo_pago: string | null
-  total: string
-  items: OrderItem[]
-  created_at: Date
-  updated_at: Date
-}
-
-// El driver devuelve numeric como texto y las fechas como Date: se convierten acá, en un solo lugar.
-const toOrder = (row: OrderRow): Order => ({
-  id: row.id,
-  token: row.token,
-  estado: row.estado,
-  clienteNombre: row.cliente_nombre,
-  clienteTelefono: row.cliente_telefono,
-  notas: row.notas,
-  formaEntrega: row.forma_entrega,
-  subtotal: Number(row.subtotal),
-  descuento: Number(row.descuento),
-  cupon: row.cupon,
-  metodoPago: row.metodo_pago,
-  total: Number(row.total),
-  items: row.items,
-  createdAt: row.created_at.toISOString(),
-  updatedAt: row.updated_at.toISOString(),
-})
-
-export async function createOrder(input: OrderInput): Promise<Order> {
-  // Lectura estricta: si la base falla, el pedido falla; nunca se cobra con precios de la carta base.
-  const { sections, settings } = await loadStore()
-  const data = buildOrder(input, sections, settings, new Date())
-  const [row] = await query<OrderRow>(
-    `INSERT INTO pedidos (estado, cliente_nombre, cliente_telefono, notas, forma_entrega, subtotal, descuento, cupon, metodo_pago, total, items)
-     VALUES ('nuevo', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10::jsonb)
-     RETURNING *`,
-    [data.clienteNombre, data.clienteTelefono, data.notas, data.formaEntrega, data.subtotal, data.descuento, data.cupon, data.metodoPago, data.total, JSON.stringify(data.items)],
-  )
-  return toOrder(row)
-}
-
-export async function updateOrderState(id: number, estado: OrderState): Promise<Order | null> {
-  const [row] = await query<OrderRow>('UPDATE pedidos SET estado = $2, updated_at = now() WHERE id = $1 RETURNING *', [id, estado])
-  return row ? toOrder(row) : null
-}
-
-export async function getOrderByToken(token: string) {
-  if (!isUuid(token)) return null // un texto que no es uuid haría fallar la consulta con un 500
-  const [row] = await query<OrderRow>('SELECT * FROM pedidos WHERE token = $1', [token])
-  return row ? toOrder(row) : null
-}
-
-export async function listOrders(limit = 200) {
-  return (await query<OrderRow>('SELECT * FROM pedidos ORDER BY id DESC LIMIT $1', [limit])).map(toOrder)
-}
-
-export async function countOrders(estado: OrderState) {
-  const [row] = await query<{ total: number }>('SELECT count(*)::int AS total FROM pedidos WHERE estado = $1', [estado])
-  return row?.total ?? 0
 }

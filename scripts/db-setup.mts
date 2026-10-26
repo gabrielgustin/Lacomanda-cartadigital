@@ -38,7 +38,7 @@ try {
   await client.query('BEGIN')
   await client.query('SELECT pg_advisory_xact_lock(727311)')
   await client.query(SCHEMA_SQL)
-  console.log('✓ Tablas listas (store, pedidos, media).')
+  console.log('✓ Tablas listas (store, media).')
 
   // ── Carta y configuración ──
   const store = await readJson('store.json')
@@ -55,25 +55,6 @@ try {
         [JSON.stringify(store)],
       )
       console.log(`✓ Carta importada: ${store.sections.length} categorías, ${store.sections.reduce((n: number, s: { items: unknown[] }) => n + s.items.length, 0)} platos.`)
-    }
-  }
-
-  // ── Pedidos (solo si la tabla está vacía) ──
-  const orders = await readJson('orders.json')
-  if (Array.isArray(orders) && orders.length > 0) {
-    const { rows } = await client.query('SELECT count(*)::int AS n FROM pedidos')
-    if (rows[0].n > 0) console.log(`· La tabla pedidos ya tiene ${rows[0].n} pedidos: no se importan los del archivo.`)
-    else {
-      for (const o of orders) {
-        await client.query(
-          `INSERT INTO pedidos (id, token, estado, cliente_nombre, cliente_telefono, notas, forma_entrega, subtotal, descuento, cupon, metodo_pago, total, items, created_at, updated_at)
-           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13::jsonb,$14,$15)`,
-          [o.id, o.token, o.estado, o.clienteNombre, o.clienteTelefono, o.notas ?? null, o.formaEntrega, o.subtotal, o.descuento ?? 0, o.cupon ?? null, o.metodoPago ?? null, o.total, JSON.stringify(o.items), o.createdAt, o.updatedAt],
-        )
-      }
-      // Sin esto, el próximo pedido nuevo chocaría con un número ya importado.
-      await client.query(`SELECT setval(pg_get_serial_sequence('pedidos', 'id'), (SELECT max(id) FROM pedidos))`)
-      console.log(`✓ ${orders.length} pedidos importados (la numeración continúa desde el último).`)
     }
   }
 
