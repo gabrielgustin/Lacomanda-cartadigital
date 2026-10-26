@@ -27,14 +27,16 @@ interface CheckoutFormProps {
   canOrder: boolean
   /** ¿Está abierto ahora? Con el local cerrado y delivery elegido se muestran los horarios de atención. */
   open: boolean
+  /** Opción elegida en el paso anterior; se puede cambiar en el formulario. */
+  initialDelivery: 'retiro' | 'delivery'
   horarios: Tramo[][]
   paymentMethods: PaymentMethod[]
 }
 
-export function CheckoutForm({ canOrder, open, horarios, paymentMethods }: CheckoutFormProps) {
+export function CheckoutForm({ canOrder, open, initialDelivery, horarios, paymentMethods }: CheckoutFormProps) {
   const { lang, t } = useLanguage()
   const { ready, lines, clear } = useOrder()
-  const [delivery, setDelivery] = useState<'retiro' | 'delivery'>('retiro')
+  const [delivery, setDelivery] = useState<'retiro' | 'delivery'>(initialDelivery)
   const [address, setAddress] = useState('')
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
@@ -147,9 +149,9 @@ export function CheckoutForm({ canOrder, open, horarios, paymentMethods }: Check
       )}
 
       <div>
-        <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-eyebrow">{t.takeaway}</p>
+        <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-eyebrow">{delivery === 'delivery' ? t.deliveryOption : t.takeaway}</p>
         <h1 className="font-heading text-3xl text-heading sm:text-4xl">{t.checkoutTitle}</h1>
-        <p className="mt-2 text-sm leading-6 text-muted-foreground">{t.checkoutHint}</p>
+        <p className="mt-2 text-sm leading-6 text-muted-foreground">{delivery === 'delivery' ? t.deliveryCheckoutHint : t.pickupCheckoutHint}</p>
       </div>
 
       <section className="space-y-4 rounded-3xl border border-border bg-card p-5 sm:p-6" aria-labelledby="checkout-data">

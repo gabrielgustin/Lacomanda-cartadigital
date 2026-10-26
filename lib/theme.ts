@@ -219,7 +219,7 @@ export const TEXT_DEFS: { key: TextKey; label: string; where: string; es: string
   { key: 'addToOrder', label: 'Botón de agregar', where: 'En la ficha de cada plato', es: 'Agregar al pedido', en: 'Add to order' },
   { key: 'viewOrder', label: 'Botón del pedido', where: 'Barra fija al agregar platos', es: 'Ver pedido', en: 'View order' },
   { key: 'orderTitle', label: 'Título del pedido', where: 'Ventana con el resumen', es: 'Mi pedido', en: 'My order' },
-  { key: 'orderHint', label: 'Mensaje del pedido', where: 'Bajo el título del resumen', es: 'Mostrale este resumen al mozo cuando se acerque a tu mesa.', en: 'Show this summary to your waiter when they come to your table.', multiline: true },
+  { key: 'orderHint', label: 'Mensaje del pedido', where: 'Bajo el título del resumen', es: 'Revisá tu pedido y ajustá las cantidades. Después elegís cómo lo querés.', en: 'Review your order and adjust the quantities. Then choose how you want it.', multiline: true },
   { key: 'estimatedTotal', label: 'Etiqueta del total', where: 'Al pie del resumen', es: 'Total estimado', en: 'Estimated total' },
 ]
 

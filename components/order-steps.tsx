@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowLeft, ShoppingBag, Utensils, X } from 'lucide-react'
+import { ArrowLeft, Bike, ShoppingBag, Utensils, X } from 'lucide-react'
 import { useLanguage } from '@/components/language-provider'
 import type { OrderLine } from '@/components/order-provider'
 import { formatPrice } from '@/lib/format'
@@ -50,7 +50,7 @@ function StepHeader({ id, title, hint, onBack, onClose }: StepHeaderProps) {
 const optionClass =
   'group flex w-full items-center gap-4 rounded-3xl border border-border bg-card p-4 text-left transition hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60'
 
-/** Paso 2 de "Cerrar pedido": salón (lo toma el mozo) o para llevar (pasa a cargar los datos). */
+/** Paso 2 de "Cerrar pedido": salón (lo toma el mozo), para llevar o delivery (pasan a cargar los datos). */
 export function OrderTypeStep({ onBack, onClose, onDineIn }: { onBack: () => void; onClose: () => void; onDineIn: () => void }) {
   const { t } = useLanguage()
   return (
@@ -66,13 +66,22 @@ export function OrderTypeStep({ onBack, onClose, onDineIn }: { onBack: () => voi
             <span className="mt-1 block text-sm leading-5 text-muted-foreground">{t.dineInHint}</span>
           </span>
         </button>
-        <Link href="/finalizar-pedido" className={optionClass}>
+        <Link href="/finalizar-pedido?tipo=retiro" className={optionClass}>
           <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-pill bg-button text-button-foreground">
             <ShoppingBag className="h-5 w-5" aria-hidden />
           </span>
           <span>
             <span className="block font-heading text-base text-heading">{t.takeaway}</span>
             <span className="mt-1 block text-sm leading-5 text-muted-foreground">{t.takeawayHint}</span>
+          </span>
+        </Link>
+        <Link href="/finalizar-pedido?tipo=delivery" className={optionClass}>
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-pill bg-button text-button-foreground">
+            <Bike className="h-5 w-5" aria-hidden />
+          </span>
+          <span>
+            <span className="block font-heading text-base text-heading">{t.deliveryOption}</span>
+            <span className="mt-1 block text-sm leading-5 text-muted-foreground">{t.deliveryHint}</span>
           </span>
         </Link>
       </div>
