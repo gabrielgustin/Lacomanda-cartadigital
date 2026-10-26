@@ -10,14 +10,12 @@ import type { MenuItem } from '@/lib/menu-data'
 
 interface MenuItemCardProps {
   item: MenuItem
-  /** Ícono de la categoría, para el recuadro de los platos sin foto. */
-  icon: string
   /** Tarjeta chica para bebidas, tragos y vinos: foto, nombre y precio, sin descripción. */
   compact?: boolean
   onOpen: (item: MenuItem) => void
 }
 
-export function MenuItemCard({ item, icon, compact, onOpen }: MenuItemCardProps) {
+export function MenuItemCard({ item, compact, onOpen }: MenuItemCardProps) {
   const { lang, t } = useLanguage()
   const { quantities, add, remove } = useOrder()
   const { itemStyle } = useSiteTheme()
@@ -52,14 +50,16 @@ export function MenuItemCard({ item, icon, compact, onOpen }: MenuItemCardProps)
   if (compact) {
     return (
       <article className="group relative flex flex-col overflow-hidden rounded-xl border border-border bg-card transition hover:border-primary/60">
-        <DishImage
-          src={item.image}
-          icon={icon}
-          width={320}
-          height={320}
-          sizes="(min-width: 1024px) 220px, (min-width: 640px) 30vw, 46vw"
-          className={`${item.image ? 'aspect-square' : 'aspect-[5/2]'} w-full transition duration-300 group-hover:scale-[1.02]`}
-        />
+        {item.image && (
+          <DishImage
+            src={item.image}
+            icon=""
+            width={320}
+            height={320}
+            sizes="(min-width: 1024px) 220px, (min-width: 640px) 30vw, 46vw"
+            className="aspect-square w-full transition duration-300 group-hover:scale-[1.02]"
+          />
+        )}
         <div className="flex flex-1 flex-col justify-between gap-2 p-3">
           <h3 className="font-heading text-sm leading-tight text-heading group-hover:text-primary">
             <button
@@ -90,7 +90,7 @@ export function MenuItemCard({ item, icon, compact, onOpen }: MenuItemCardProps)
         {item.image && (
           <DishImage
             src={item.image}
-            icon={icon}
+            icon=""
             width={480}
             height={360}
             sizes="(min-width: 640px) 480px, 100vw"
@@ -108,10 +108,11 @@ export function MenuItemCard({ item, icon, compact, onOpen }: MenuItemCardProps)
 
   return (
     <article className="group relative flex items-center gap-4 border-b border-border/70 py-4 transition hover:bg-muted/30">
-      {itemStyle === 'list' && (
+      {itemStyle === 'list' && item.image && (
         <DishImage
           src={item.image}
-          icon={icon}
+          icon=""
+
           width={96}
           height={96}
           sizes="(min-width: 640px) 96px, 80px"

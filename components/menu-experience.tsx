@@ -157,7 +157,7 @@ export function MenuExperience() {
                             <span aria-hidden className="h-px flex-1 bg-border" />
                           </h3>
                         )}
-                        <MenuItemCard item={item} icon={section.icon} compact={section.layout === 'compact'} onOpen={setSelectedItem} />
+                        <MenuItemCard item={item} compact={section.layout === 'compact'} onOpen={setSelectedItem} />
                       </Fragment>
                     )
                   })}

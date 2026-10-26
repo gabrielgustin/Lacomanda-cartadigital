@@ -6,7 +6,6 @@ import { useLanguage } from '@/components/language-provider'
 import { Modal } from '@/components/modal'
 import { useOrder } from '@/components/order-provider'
 import { QuantityStepper } from '@/components/quantity-stepper'
-import { getCategoryIcon } from '@/lib/category-icons'
 import { formatPrice } from '@/lib/format'
 import type { MenuItem, MenuSection } from '@/lib/menu-data'
 
@@ -24,30 +23,23 @@ export function ProductDialog({ item, section, onClose }: ProductDialogProps) {
   const { quantities, add, remove } = useOrder()
   const quantity = quantities[item.id] ?? 0
   const name = item.name[lang]
-  const SectionIcon = getCategoryIcon(section.icon)
 
   return (
     <Modal labelledBy="product-dialog-title" onClose={onClose}>
       {(close) => (
         <>
-          <div className={`relative ${item.image ? 'h-52 sm:h-60' : 'h-24'}`}>
-            {item.image ? (
-              <Image src={item.image} alt="" fill sizes="448px" className="object-cover" />
-            ) : (
-              <div aria-hidden className="hero-pattern flex h-full items-center justify-center bg-muted text-primary/40">
-                <SectionIcon className="h-10 w-10" strokeWidth={1.5} />
-              </div>
-            )}
+          <div className={`relative ${item.image ? 'h-52 sm:h-60' : ''}`}>
+            {item.image && <Image src={item.image} alt="" fill sizes="448px" className="object-cover" />}
             <button
               type="button"
               onClick={close}
               aria-label={t.closeDetails}
-              className="absolute right-4 top-4 rounded-pill bg-card/90 p-2 text-foreground shadow-md transition hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="absolute right-4 top-4 z-10 rounded-pill bg-card/90 p-2 text-foreground shadow-md transition hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               <X className="h-5 w-5" aria-hidden />
             </button>
           </div>
-          <div className="space-y-3 p-6">
+          <div className={`space-y-3 p-6 ${item.image ? '' : 'pr-16'}`}>
             <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-eyebrow">{section.title[lang]}
               {item.group && `, ${item.group[lang].toLowerCase()}`}
             </p>
