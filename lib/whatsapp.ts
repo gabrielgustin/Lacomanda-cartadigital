@@ -34,6 +34,7 @@ interface MessageOrder {
   cupon: string | null
   subtotal: number
   descuento: number
+  recargo?: number
   total: number
   items: { nombre: { es: string }; precioUnitario: number; cantidad: number }[]
 }
@@ -49,6 +50,7 @@ export function orderMessage(order: MessageOrder): string {
     '',
   ]
   if (order.descuento > 0) lines.push(`Subtotal: ${money(order.subtotal)}`, `Descuento${order.cupon ? ` (${order.cupon})` : ''}: -${money(order.descuento)}`)
+  if (order.recargo) lines.push(`Recargo (${order.metodoPago ?? 'medio de pago'}): ${money(order.recargo)}`)
   lines.push(`*Total: ${money(order.total)}*`, '')
   lines.push(`Entrega: ${order.formaEntrega}`)
   if (order.direccion) lines.push(`Dirección: ${order.direccion}`)

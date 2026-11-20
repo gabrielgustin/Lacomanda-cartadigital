@@ -79,6 +79,18 @@ export function PaymentMethodsEditor({ initial }: { initial: MetodoPago[] }) {
                     onChange={(event) => patch(method.id, { nombre: event.target.value })}
                   />
                 </Field>
+                <Field label="Recargo %" className="w-24">
+                  <input
+                    className={inputClass}
+                    type="number"
+                    inputMode="decimal"
+                    min={0}
+                    max={100}
+                    step="0.5"
+                    value={method.recargo ?? 0}
+                    onChange={(event) => patch(method.id, { recargo: Math.min(100, Math.max(0, Number(event.target.value) || 0)) })}
+                  />
+                </Field>
                 <div className="flex w-full flex-wrap items-center gap-4 sm:w-auto sm:flex-nowrap">
                   <div className="flex items-center gap-2 text-sm text-foreground">
                     <Switch checked={method.activo} disabled={pending} label={`Activo: ${name}`} onChange={(value) => setActive(method.id, value)} />

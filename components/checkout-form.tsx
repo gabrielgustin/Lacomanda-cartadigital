@@ -14,6 +14,7 @@ interface PaymentMethod {
   id: string
   nombre: string
   predeterminado: boolean
+  recargo: number
 }
 type AppliedCoupon = CouponTerms & { codigo: string }
 
@@ -133,9 +134,11 @@ export function CheckoutForm({ canOrder, open, initialDelivery, horarios, paymen
     }
   }
 
-  const { subtotal, descuento, total } = orderTotals(
+  const selectedMethod = paymentMethods.find((method) => method.id === paymentId)
+  const { subtotal, descuento, recargo, total } = orderTotals(
     lines.map(({ item, quantity }) => ({ price: item.price, quantity })),
     coupon,
+    selectedMethod?.recargo ?? 0,
   )
 
   if (!ready) return <div className="h-64 animate-pulse rounded-3xl bg-muted" aria-hidden />
@@ -309,6 +312,7 @@ export function CheckoutForm({ canOrder, open, initialDelivery, horarios, paymen
                   className="h-4 w-4 accent-primary"
                 />
                 {method.nombre}
+                {method.recargo > 0 && <span className="text-xs font-normal text-muted-foreground">+{method.recargo}%</span>}
               </label>
             ))}
           </div>
@@ -383,20 +387,28 @@ export function CheckoutForm({ canOrder, open, initialDelivery, horarios, paymen
           ))}
         </ul>
         <div aria-live="polite" className="mt-2 space-y-2 border-t border-border pt-4">
+          {(descuento > 0 || recargo > 0) && (
+            <p className="flex items-baseline justify-between text-sm text-muted-foreground">
+              <span>{t.subtotalLabel}</span>
+              <span>{formatPrice(subtotal)}</span>
+            </p>
+          )}
           {descuento > 0 && (
-            <>
-              <p className="flex items-baseline justify-between text-sm text-muted-foreground">
-                <span>{t.subtotalLabel}</span>
-                <span>{formatPrice(subtotal)}</span>
-              </p>
-              <p className="flex items-baseline justify-between text-sm text-muted-foreground">
-                <span>
-                  {t.discountLabel}
-                  {coupon && ` (${coupon.codigo})`}
-                </span>
-                <span>−{formatPrice(descuento)}</span>
-              </p>
-            </>
+            <p className="flex items-baseline justify-between text-sm text-muted-foreground">
+              <span>
+                {t.discountLabel}
+                {coupon && ` (${coupon.codigo})`}
+              </span>
+              <span>−{formatPrice(descuento)}</span>
+            </p>
+          )}
+          {recargo > 0 && (
+            <p className="flex items-baseline justify-between text-sm text-muted-foreground">
+              <span>
+                {t.surchargeLabel} ({selectedMethod?.nombre})
+              </span>
+              <span>+{formatPrice(recargo)}</span>
+            </p>
           )}
           <p className="flex items-baseline justify-between">
             <span className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">{t.totalLabel}</span>

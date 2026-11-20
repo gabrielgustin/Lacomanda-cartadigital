@@ -5,20 +5,20 @@ describe('orderTotals', () => {
   const lines = [{ price: 8900, quantity: 2 }, { price: 5200, quantity: 1 }]
 
   it('suma precio por cantidad; sin cupón no hay descuento', () => {
-    expect(orderTotals(lines)).toEqual({ subtotal: 23000, descuento: 0, total: 23000 })
-    expect(orderTotals(lines, null)).toEqual({ subtotal: 23000, descuento: 0, total: 23000 })
+    expect(orderTotals(lines)).toEqual({ subtotal: 23000, descuento: 0, recargo: 0, total: 23000 })
+    expect(orderTotals(lines, null)).toEqual({ subtotal: 23000, descuento: 0, recargo: 0, total: 23000 })
   })
 
   it('un pedido vacío da cero', () => {
-    expect(orderTotals([])).toEqual({ subtotal: 0, descuento: 0, total: 0 })
+    expect(orderTotals([])).toEqual({ subtotal: 0, descuento: 0, recargo: 0, total: 0 })
   })
 
   it('aplica un cupón de porcentaje', () => {
-    expect(orderTotals(lines, { tipo: 'porcentaje', valor: 10 })).toEqual({ subtotal: 23000, descuento: 2300, total: 20700 })
+    expect(orderTotals(lines, { tipo: 'porcentaje', valor: 10 })).toEqual({ subtotal: 23000, descuento: 2300, recargo: 0, total: 20700 })
   })
 
   it('aplica un cupón de monto fijo', () => {
-    expect(orderTotals(lines, { tipo: 'fijo', valor: 1500 })).toEqual({ subtotal: 23000, descuento: 1500, total: 21500 })
+    expect(orderTotals(lines, { tipo: 'fijo', valor: 1500 })).toEqual({ subtotal: 23000, descuento: 1500, recargo: 0, total: 21500 })
   })
 })
 
@@ -28,7 +28,7 @@ describe('couponDiscount', () => {
   })
 
   it('un cupón fijo mayor al subtotal descuenta solo el subtotal', () => {
-    expect(orderTotals([{ price: 1000, quantity: 1 }], { tipo: 'fijo', valor: 5000 })).toEqual({ subtotal: 1000, descuento: 1000, total: 0 })
+    expect(orderTotals([{ price: 1000, quantity: 1 }], { tipo: 'fijo', valor: 5000 })).toEqual({ subtotal: 1000, descuento: 1000, recargo: 0, total: 0 })
   })
 
   it('100 % deja el total en cero', () => {
@@ -42,5 +42,9 @@ describe('couponDiscount', () => {
 
   it('el descuento sobre un subtotal en cero es cero', () => {
     expect(couponDiscount(0, { tipo: 'porcentaje', valor: 50 })).toBe(0)
+  })
+
+  it('suma el recargo del medio de pago sobre lo que queda tras el descuento', () => {
+    expect(orderTotals([{ price: 1000, quantity: 10 }], { tipo: 'porcentaje', valor: 10 }, 15)).toEqual({ subtotal: 10000, descuento: 1000, recargo: 1350, total: 10350 })
   })
 })

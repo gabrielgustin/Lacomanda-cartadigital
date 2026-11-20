@@ -114,7 +114,14 @@ describe('buildOrder', () => {
       metodosPago: [
         { id: 'efectivo', nombre: 'Efectivo', activo: true, predeterminado: true },
         { id: 'tarjeta', nombre: 'Tarjeta', activo: false, predeterminado: false },
+        { id: 'credito', nombre: 'Crédito', activo: true, predeterminado: false, recargo: 15 },
       ],
+    })
+
+    it('suma el recargo del medio elegido, calculado en el servidor', () => {
+      const order = build({ customer, items: [{ productId: 'a', quantity: 2 }], paymentMethodId: 'credito' }, withMethods)
+      expect(order.recargo).toBe(300)
+      expect(order.total).toBe(2300)
     })
 
     it('guarda el NOMBRE del medio elegido', () => {

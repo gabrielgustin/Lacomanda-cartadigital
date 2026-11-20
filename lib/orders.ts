@@ -59,9 +59,10 @@ export function buildOrder(input: OrderInput, sections: MenuSection[], settings:
     if (!coupon || !couponValidOn(coupon, now)) throw new OrderError('El cupón no es válido o está vencido.', 400)
   }
 
-  const { subtotal, descuento, total } = orderTotals(
+  const { subtotal, descuento, recargo, total } = orderTotals(
     items.map((item) => ({ price: item.precioUnitario, quantity: item.cantidad })),
     coupon,
+    method?.recargo ?? 0,
   )
 
   return {
@@ -72,6 +73,7 @@ export function buildOrder(input: OrderInput, sections: MenuSection[], settings:
     direccion: input.delivery === 'delivery' ? (input.address ?? null) : null,
     subtotal,
     descuento,
+    recargo,
     cupon: coupon?.codigo ?? null,
     metodoPago: method?.nombre ?? null,
     total,

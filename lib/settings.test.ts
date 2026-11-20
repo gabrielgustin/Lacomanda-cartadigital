@@ -196,7 +196,7 @@ describe('checkoutSettings', () => {
         cupones: [{ id: 'c', codigo: 'SECRETO', tipo: 'fijo', valor: 10, desde: null, hasta: null, activo: true }],
       }),
     )
-    expect(result.metodosPago).toEqual([{ id: 'e', nombre: 'Efectivo', predeterminado: true }])
+    expect(result.metodosPago).toEqual([{ id: 'e', nombre: 'Efectivo', predeterminado: true, recargo: 0 }])
     expect(JSON.stringify(result)).not.toContain('SECRETO')
     expect(result).not.toHaveProperty('cupones')
   })

@@ -24,6 +24,8 @@ export const metodoPagoSchema = z.object({
   nombre: z.string().trim().min(1).max(40),
   activo: z.boolean(),
   predeterminado: z.boolean(),
+  /** Recargo en % que se suma al total con este medio (0 = sin recargo). */
+  recargo: z.number().min(0).max(100).optional(),
 })
 
 // Con métodos activos tiene que haber exactamente un predeterminado y estar activo.
@@ -179,7 +181,7 @@ export const findCoupon = (settings: Pick<OrderSettings, 'cupones'>, code: strin
 
 /** Lo único de la configuración que viaja al navegador del cliente. Nunca incluye cupones. */
 export const checkoutSettings = (settings: OrderSettings) => ({
-  metodosPago: settings.metodosPago.filter((method) => method.activo).map(({ id, nombre, predeterminado }) => ({ id, nombre, predeterminado })),
+  metodosPago: settings.metodosPago.filter((method) => method.activo).map(({ id, nombre, predeterminado, recargo }) => ({ id, nombre, predeterminado, recargo: recargo ?? 0 })),
   negocio: settings.negocio,
   horarios: settings.horarios,
 })
