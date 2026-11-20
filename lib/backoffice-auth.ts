@@ -12,6 +12,10 @@ const secret = () => process.env.BACKOFFICE_SECRET || `lc:${user()}:${password()
 
 export const isConfigured = () => password().length > 0
 
+/** Dónde se define la clave: en el deploy son las variables de Vercel, en tu compu el archivo .env.local. */
+export const configHint = () =>
+  process.env.VERCEL ? 'Falta definir BACKOFFICE_PASSWORD en las variables de entorno de Vercel (Settings → Environment Variables) y volver a desplegar.' : 'Falta definir BACKOFFICE_PASSWORD en el archivo .env.local.'
+
 const sign = (value: string) => createHmac('sha256', secret()).update(value).digest('base64url')
 
 const safeEqual = (a: string, b: string) => {

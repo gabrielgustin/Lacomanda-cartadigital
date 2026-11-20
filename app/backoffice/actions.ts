@@ -8,6 +8,7 @@ import {
   SESSION_COOKIE,
   checkCredentials,
   createSessionToken,
+  configHint,
   isConfigured,
   requireAdmin,
   sessionCookieOptions,
@@ -26,7 +27,7 @@ const fail = (error: string): ActionResult => ({ ok: false, error })
 let failedLogins: number[] = []
 
 export async function login(_previous: string | null, formData: FormData): Promise<string | null> {
-  if (!isConfigured()) return 'Falta definir BACKOFFICE_PASSWORD en el archivo .env.local.'
+  if (!isConfigured()) return configHint()
 
   // Freno básico contra fuerza bruta: 5 intentos fallidos por minuto en total.
   const now = Date.now()
