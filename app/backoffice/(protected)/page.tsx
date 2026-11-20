@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Clock, CreditCard, ExternalLink, Grid3X3, Palette, QrCode, Store, Ticket, UtensilsCrossed, type LucideIcon } from 'lucide-react'
+import { CalendarCheck, Clock, CreditCard, MessageSquareQuote, ExternalLink, Grid3X3, Palette, QrCode, Store, Ticket, UtensilsCrossed, type LucideIcon } from 'lucide-react'
 import { PageShell } from '@/components/backoffice/page-shell'
 import { getStoreStrict } from '@/lib/store'
 
@@ -19,6 +19,8 @@ export default async function BackofficeHome() {
     { href: '/backoffice/horarios', title: 'Horarios', detail: 'Días y horas de atención', Icon: Clock },
     { href: '/backoffice/pagos', title: 'Medios de pago', detail: 'Efectivo, transferencia y más', Icon: CreditCard },
     { href: '/backoffice/cupones', title: 'Cupones', detail: 'Descuentos para tus clientes', Icon: Ticket },
+    { href: '/backoffice/reservas', title: 'Reservas', detail: 'Mesas reservadas desde la web', Icon: CalendarCheck },
+    { href: '/backoffice/resenas', title: 'Reseñas', detail: 'Opiniones que se ven en la web', Icon: MessageSquareQuote },
     { href: '/backoffice/negocio', title: 'Datos del negocio', detail: 'Nombre, dirección y contacto', Icon: Store },
   ]
 
