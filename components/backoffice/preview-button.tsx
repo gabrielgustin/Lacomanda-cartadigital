@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { ExternalLink, X } from 'lucide-react'
 import { Modal } from '@/components/modal'
+import { withBase } from '@/lib/base-path'
 
 // Abre la carta tal como la ve el cliente en una ventana flotante, sin salir del panel.
 export function PreviewButton({ className }: { className?: string }) {
@@ -33,7 +34,7 @@ export function PreviewButton({ className }: { className?: string }) {
                   <X className="h-5 w-5" aria-hidden />
                 </button>
               </div>
-              <iframe src="/" title="Vista previa de la carta digital" className="min-h-0 w-full flex-1 border-0 bg-white" />
+              <iframe src={withBase('/')} title="Vista previa de la carta digital" className="min-h-0 w-full flex-1 border-0 bg-white" />
             </>
           )}
         </Modal>

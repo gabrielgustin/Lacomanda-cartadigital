@@ -41,6 +41,7 @@ import {
   type ThemeSettings,
 } from '@/lib/theme'
 import { cn } from '@/lib/utils'
+import { withBase } from '@/lib/base-path'
 
 const TABS = [
   { id: 'plantillas', label: 'Plantillas', Icon: LayoutTemplate },
@@ -274,7 +275,7 @@ function LivePreview({ theme }: { theme: ThemeSettings }) {
           {/* Marco negro y pantalla */}
           <div className="absolute rounded-[54px] bg-black" style={{ inset: 5 }} />
           <div className="absolute overflow-hidden rounded-[50px] bg-white" style={{ inset: BEZEL, width: SCREEN_W, height: SCREEN_H }}>
-            <iframe ref={frame} src="/?preview=1" title="Vista previa de la carta" onLoad={send} className="block border-0 bg-white" style={{ width: SCREEN_W, height: SCREEN_H }} />
+            <iframe ref={frame} src={withBase('/?preview=1')} title="Vista previa de la carta" onLoad={send} className="block border-0 bg-white" style={{ width: SCREEN_W, height: SCREEN_H }} />
           </div>
 
           {/* Dynamic Island e indicador de inicio */}

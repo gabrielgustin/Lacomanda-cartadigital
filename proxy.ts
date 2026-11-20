@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { BASE_PATH } from '@/lib/base-path'
 import { SESSION_COOKIE, verifySessionToken } from '@/lib/backoffice-auth'
 
 // Primera barrera: corta las visitas sin sesión antes de renderizar. Cada
@@ -11,7 +12,10 @@ export function proxy(request: NextRequest) {
   if (verifySessionToken(request.cookies.get(SESSION_COOKIE)?.value)) return NextResponse.next()
 
   if (pathname.startsWith('/api/')) return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
-  return NextResponse.redirect(new URL('/backoffice/login', request.url))
+  // Detrás del dominio principal, request.url trae el host interno: se redirige al host que vio el visitante.
+  const host = request.headers.get('x-forwarded-host') ?? request.headers.get('host') ?? request.nextUrl.host
+  const protocol = request.headers.get('x-forwarded-proto') ?? request.nextUrl.protocol.replace(':', '')
+  return NextResponse.redirect(`${protocol}://${host}${BASE_PATH}/backoffice/login`)
 }
 
 export const config = {

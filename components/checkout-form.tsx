@@ -8,6 +8,7 @@ import { useOrder } from '@/components/order-provider'
 import { formatPrice } from '@/lib/format'
 import { scheduleRows } from '@/lib/schedule'
 import type { Tramo } from '@/lib/settings'
+import { withBase } from '@/lib/base-path'
 import { orderTotals, type CouponTerms } from '@/lib/pricing'
 
 interface PaymentMethod {
@@ -73,7 +74,7 @@ export function CheckoutForm({ canOrder, open, initialDelivery, horarios, paymen
     setChecking(true)
     setCouponError('')
     try {
-      const response = await fetch('/api/coupons/validate', {
+      const response = await fetch(withBase('/api/coupons/validate'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code }),
@@ -107,7 +108,7 @@ export function CheckoutForm({ canOrder, open, initialDelivery, horarios, paymen
     setError('')
     try {
       // Solo viajan ids y cantidades: el precio lo calcula el servidor.
-      const response = await fetch('/api/orders', {
+      const response = await fetch(withBase('/api/orders'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

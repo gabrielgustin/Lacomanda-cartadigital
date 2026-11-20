@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { ImagePlus, Loader2, X } from 'lucide-react'
 import { ErrorNote, btnOutline } from '@/components/backoffice/ui'
 import { cn } from '@/lib/utils'
+import { withBase } from '@/lib/base-path'
 
 interface ImageFieldProps {
   label: string
@@ -32,7 +33,7 @@ export function ImageField({ label, value, onChange, fallback, presets = [], cle
     try {
       const body = new FormData()
       body.append('file', file)
-      const response = await fetch('/api/backoffice/upload', { method: 'POST', body })
+      const response = await fetch(withBase('/api/backoffice/upload'), { method: 'POST', body })
       const data = (await response.json().catch(() => ({}))) as { url?: string; error?: string }
       if (!response.ok || !data.url) throw new Error(data.error ?? 'No se pudo subir la imagen')
       onChange(data.url)

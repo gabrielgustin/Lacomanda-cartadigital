@@ -3,6 +3,7 @@ import { Bevan, DM_Sans } from 'next/font/google'
 import type { Metadata, Viewport } from 'next'
 import { headers } from 'next/headers'
 import { connection } from 'next/server'
+import { withBase } from '@/lib/base-path'
 import { getStore } from '@/lib/store'
 import { DEFAULT_FAVICON_URL, DEFAULT_LOGO_URL, DEFAULT_SITE_DESCRIPTION, DEFAULT_SITE_NAME } from '@/lib/theme'
 import './globals.css'
@@ -22,8 +23,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const siteName = theme.siteName ?? DEFAULT_SITE_NAME
   const title = `${siteName} | Carta digital`
   const description = theme.siteDescription ?? DEFAULT_SITE_DESCRIPTION
-  const favicon = theme.faviconUrl ?? DEFAULT_FAVICON_URL
-  const shareImage = theme.shareImageUrl ?? DEFAULT_SHARE_IMAGE
+  const favicon = withBase(theme.faviconUrl ?? DEFAULT_FAVICON_URL)
+  const shareImage = withBase(theme.shareImageUrl ?? DEFAULT_SHARE_IMAGE)
 
   return {
     // Las imágenes subidas son rutas relativas: necesitan una base para volverse absolutas al compartir.

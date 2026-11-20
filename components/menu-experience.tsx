@@ -17,6 +17,7 @@ import { normalizeText } from '@/lib/format'
 import { type MenuItem } from '@/lib/menu-data'
 import { DEFAULT_FOOTER_URL, DEFAULT_LOGO_URL } from '@/lib/theme'
 import { useActiveSection } from '@/lib/use-active-section'
+import { withBase } from '@/lib/base-path'
 
 /** Dentro de cada subcategoría, los platos con foto van primero; el resto conserva el orden del backoffice. */
 function photosFirst(items: MenuItem[]) {
@@ -68,7 +69,7 @@ export function MenuExperience() {
     <main className={`min-h-screen bg-background text-foreground ${count > 0 ? 'pb-24' : ''}`}>
       <header
         className="hero-pattern relative border-b border-border"
-        style={theme.heroImageUrl ? { backgroundImage: `url(${theme.heroImageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
+        style={theme.heroImageUrl ? { backgroundImage: `url(${withBase(theme.heroImageUrl)})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
       >
         {theme.showLanguage && <LanguageToggle />}
         <AdminLink />
