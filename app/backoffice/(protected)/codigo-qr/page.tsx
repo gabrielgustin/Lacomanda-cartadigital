@@ -11,7 +11,7 @@ export default async function QrPage() {
 
   return (
     <PageShell title="Código QR" backHref="/backoffice">
-      <QrPanel savedUrl={siteUrl} detectedUrl={`${protocol}://${host}/`} />
+      <QrPanel savedUrl={siteUrl} detectedUrl={`${protocol}://${host}/carta`} />
     </PageShell>
   )
 }

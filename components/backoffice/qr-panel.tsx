@@ -18,15 +18,11 @@ function saveBlob(blob: Blob, filename: string) {
   URL.revokeObjectURL(url)
 }
 
-export function QrPanel({ savedUrl, detectedUrl }: { savedUrl: string | null; detectedUrl: string }) {
-  const [input, setInput] = useState(savedUrl ?? '')
-  const [saved, setSaved] = useState(false)
-  const { pending, error, run } = useRunner()
-  const wrapperRef = useRef<HTMLDivElement>(null)
+// La web principal vive en el dominio raíz; la carta, bajo /carta.
+const WEB_URL = 'https://lacomandaa.com.ar'
 
-  const effectiveUrl = savedUrl ?? detectedUrl
-  const isLocal = /^https?:\/\/(localhost|127\.|\[::1\]|0\.0\.0\.0)/.test(effectiveUrl)
-  const dirty = input.trim() !== (savedUrl ?? '')
+function QrCard({ title, url, filename }: { title: string; url: string; filename: string }) {
+  const wrapperRef = useRef<HTMLDivElement>(null)
 
   const svgMarkup = () => {
     const svg = wrapperRef.current?.querySelector('svg')
@@ -40,7 +36,7 @@ export function QrPanel({ savedUrl, detectedUrl }: { savedUrl: string | null; de
 
   const downloadSvg = () => {
     const markup = svgMarkup()
-    if (markup) saveBlob(new Blob([markup], { type: 'image/svg+xml' }), 'qr-carta.svg')
+    if (markup) saveBlob(new Blob([markup], { type: 'image/svg+xml' }), `${filename}.svg`)
   }
 
   const downloadPng = () => {
@@ -56,32 +52,49 @@ export function QrPanel({ savedUrl, detectedUrl }: { savedUrl: string | null; de
       context.fillStyle = '#ffffff'
       context.fillRect(0, 0, canvas.width, canvas.height)
       context.drawImage(image, QUIET_ZONE, QUIET_ZONE, QR_SIZE, QR_SIZE)
-      canvas.toBlob((blob) => blob && saveBlob(blob, 'qr-carta.png'), 'image/png')
+      canvas.toBlob((blob) => blob && saveBlob(blob, `${filename}.png`), 'image/png')
     }
     image.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(markup)}`
   }
 
   return (
-    <div className="grid items-start gap-6 md:grid-cols-[minmax(0,320px)_minmax(0,1fr)]">
-      <div className="rounded-lg border border-border bg-card p-5">
-        <div ref={wrapperRef} className="mx-auto aspect-square w-full max-w-64 rounded-xl bg-white p-4">
-          <QRCode value={effectiveUrl} level="M" style={{ width: '100%', height: '100%' }} />
-        </div>
-        <p className="mt-4 break-all text-center text-xs text-muted-foreground">{effectiveUrl}</p>
-        <div className="mt-4 flex flex-wrap justify-center gap-2">
-          <button type="button" className={btnPrimary} onClick={downloadPng}>
-            <Download className="h-4 w-4" aria-hidden />
-            Descargar PNG
-          </button>
-          <button type="button" className={btnOutline} onClick={downloadSvg}>
-            <Download className="h-4 w-4" aria-hidden />
-            SVG
-          </button>
-        </div>
+    <div className="rounded-lg border border-border bg-card p-5">
+      <h2 className="mb-3 text-center text-lg">{title}</h2>
+      <div ref={wrapperRef} className="mx-auto aspect-square w-full max-w-64 rounded-xl bg-white p-4">
+        <QRCode value={url} level="M" style={{ width: '100%', height: '100%' }} />
       </div>
+      <a href={url} target="_blank" rel="noreferrer" className="mt-4 block break-all text-center text-xs text-muted-foreground underline-offset-2 hover:underline">
+        {url}
+      </a>
+      <div className="mt-4 flex flex-wrap justify-center gap-2">
+        <button type="button" className={btnPrimary} onClick={downloadPng}>
+          <Download className="h-4 w-4" aria-hidden />
+          Descargar PNG
+        </button>
+        <button type="button" className={btnOutline} onClick={downloadSvg}>
+          <Download className="h-4 w-4" aria-hidden />
+          SVG
+        </button>
+      </div>
+    </div>
+  )
+}
 
-      <div className="space-y-4 rounded-lg border border-border bg-card p-5">
-        <h2 className="text-lg">Dirección de la carta</h2>
+export function QrPanel({ savedUrl, detectedUrl }: { savedUrl: string | null; detectedUrl: string }) {
+  const [input, setInput] = useState(savedUrl ?? '')
+  const [saved, setSaved] = useState(false)
+  const { pending, error, run } = useRunner()
+  const effectiveUrl = savedUrl ?? detectedUrl
+  const isLocal = /^https?:\/\/(localhost|127\.|\[::1\]|0\.0\.0\.0)/.test(effectiveUrl)
+  const dirty = input.trim() !== (savedUrl ?? '')
+
+  return (
+    <div className="grid items-start gap-6 md:grid-cols-2">
+      <QrCard title="Carta digital" url={effectiveUrl} filename="qr-carta" />
+      <QrCard title="Página web" url={WEB_URL} filename="qr-web" />
+
+      <div className="space-y-4 rounded-lg border border-border bg-card p-5 md:col-span-2">
+        <h2 className="text-lg">Dirección de la carta digital</h2>
         <p className="text-sm leading-6 text-muted-foreground">
           Es la dirección que abre el cliente al escanear el código. Si todavía no publicaste la carta, dejala vacía y se usa la dirección actual.
         </p>
