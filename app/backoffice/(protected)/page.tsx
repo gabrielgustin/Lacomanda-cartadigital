@@ -27,9 +27,9 @@ export default async function BackofficeHome() {
 
   return (
     <PageShell width="max-w-5xl">
-      <div className="flex flex-col gap-6 lg:flex-row">
-        <div className="flex-1">
-          <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div>
+        <div>
+          <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {main.map(({ href, title, detail, Icon }) => (
               <Link
                 key={href}
@@ -41,10 +41,17 @@ export default async function BackofficeHome() {
                 <span className="text-xs text-gray-500">{detail}</span>
               </Link>
             ))}
+            <div className="flex h-30 flex-col justify-center rounded-lg bg-[#1e4b8e] p-6 text-white md:col-span-2 lg:col-span-1">
+              <h3 className="mb-3 text-lg font-medium">Conoce más sobre Autogestiva</h3>
+              <Link href="https://www.autogestiva.com.ar" target="_blank" rel="noopener noreferrer" className="flex items-center hover:underline">
+                <ExternalLink className="mr-4 h-5 w-5" aria-hidden />
+                Visita nuestro sitio web
+              </Link>
+            </div>
           </div>
 
           <h2 className="mb-6 text-xl font-medium text-[#1e4b8e]">Personaliza tu tienda</h2>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {custom.map(({ href, title, Icon }) => (
               <Link
                 key={href}
@@ -60,7 +67,7 @@ export default async function BackofficeHome() {
           </div>
 
           <h2 className="mb-6 mt-8 title-font text-xl font-medium text-heading">Pedidos por WhatsApp</h2>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {takeaway.map(({ href, title, detail, Icon }) => (
               <Link
                 key={href}
@@ -78,16 +85,6 @@ export default async function BackofficeHome() {
             ))}
           </div>
         </div>
-
-        <aside className="w-full lg:w-[350px]">
-          <div className="rounded-lg bg-[#1e4b8e] p-6 text-white">
-            <h3 className="mb-6 text-lg font-medium">Conoce más sobre Autogestiva</h3>
-            <Link href="https://www.autogestiva.com.ar" target="_blank" rel="noopener noreferrer" className="flex items-center hover:underline">
-              <ExternalLink className="mr-4 h-5 w-5" aria-hidden />
-              Visita nuestro sitio web
-            </Link>
-          </div>
-        </aside>
       </div>
     </PageShell>
   )

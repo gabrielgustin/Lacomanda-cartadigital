@@ -2,7 +2,14 @@
 
 import { useEffect, useState } from 'react'
 import { AppWindow, Check, Download, EllipsisVertical, Share, SquarePlus, type LucideIcon } from 'lucide-react'
+import { btnPrimary } from '@/components/backoffice/ui'
 import { cn } from '@/lib/utils'
+
+// Evento de Chrome, Edge y Android que permite abrir el diálogo de instalación con un botón propio.
+interface InstallPromptEvent extends Event {
+  prompt: () => Promise<void>
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>
+}
 
 interface Step {
   title: string
@@ -93,6 +100,33 @@ const chip = (active: boolean) =>
 export function InstallGuide() {
   const [device, setDevice] = useState('desktop')
   const [browser, setBrowser] = useState('chrome')
+  const [installEvent, setInstallEvent] = useState<InstallPromptEvent | null>(null)
+  const [installed, setInstalled] = useState(false)
+
+  useEffect(() => {
+    if (window.matchMedia('(display-mode: standalone)').matches) setInstalled(true)
+    const onPrompt = (event: Event) => {
+      event.preventDefault()
+      setInstallEvent(event as InstallPromptEvent)
+    }
+    const onInstalled = () => {
+      setInstalled(true)
+      setInstallEvent(null)
+    }
+    window.addEventListener('beforeinstallprompt', onPrompt)
+    window.addEventListener('appinstalled', onInstalled)
+    return () => {
+      window.removeEventListener('beforeinstallprompt', onPrompt)
+      window.removeEventListener('appinstalled', onInstalled)
+    }
+  }, [])
+
+  const install = async () => {
+    if (!installEvent) return
+    await installEvent.prompt()
+    await installEvent.userChoice
+    setInstallEvent(null) // el navegador solo deja usarlo una vez
+  }
 
   // Se adelanta el dispositivo y navegador de quien mira; se puede cambiar a mano.
   useEffect(() => {
@@ -117,6 +151,23 @@ export function InstallGuide() {
       <p className="text-sm leading-6 text-muted-foreground">
         Instalá el panel y abrilo con un toque, como cualquier otra app, sin buscar el link. Elegí tu dispositivo y seguí los pasos.
       </p>
+
+      {installed ? (
+        <p role="status" className="flex items-center gap-2 rounded-lg border border-emerald-300 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+          <Check className="h-4 w-4 shrink-0" aria-hidden />
+          El panel ya está instalado en este dispositivo.
+        </p>
+      ) : (
+        installEvent && (
+          <div className="flex flex-wrap items-center gap-3 rounded-lg border border-primary/30 bg-primary/5 p-4">
+            <button type="button" className={btnPrimary} onClick={install}>
+              <Download className="h-4 w-4" aria-hidden />
+              Instalar ahora
+            </button>
+            <p className="text-sm text-muted-foreground">Tu navegador lo permite con un solo toque. Si preferís hacerlo a mano, seguí los pasos de abajo.</p>
+          </div>
+        )
+      )}
 
       <div className="space-y-3">
         <div role="group" aria-label="Dispositivo" className="flex flex-wrap gap-2">
