@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   description: 'Panel de administración de la carta digital',
   robots: { index: false, follow: false },
   manifest: withBase('/backoffice/manifest.webmanifest'),
+  icons: { icon: withBase('/panel-icon-192.png'), apple: withBase('/panel-icon-192.png') },
 }
 
 // Todos los backoffice de Autogestiva comparten esta apariencia, sin importar el
