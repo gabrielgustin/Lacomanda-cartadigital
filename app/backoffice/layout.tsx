@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { withBase } from '@/lib/base-path'
 import { Inter, Oswald } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -8,6 +9,7 @@ export const metadata: Metadata = {
   title: 'Backoffice | Autogestiva',
   description: 'Panel de administración de la carta digital',
   robots: { index: false, follow: false },
+  manifest: withBase('/backoffice/manifest.webmanifest'),
 }
 
 // Todos los backoffice de Autogestiva comparten esta apariencia, sin importar el

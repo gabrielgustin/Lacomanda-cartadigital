@@ -7,7 +7,8 @@ import { SESSION_COOKIE, verifySessionToken } from '@/lib/backoffice-auth'
 // página, acción y ruta del backoffice vuelve a verificar la sesión por su cuenta.
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
-  if (pathname === '/backoffice/login') return NextResponse.next()
+  // El manifiesto lo pide el navegador sin cookies: tiene que ser público.
+  if (pathname === '/backoffice/login' || pathname === '/backoffice/manifest.webmanifest') return NextResponse.next()
 
   if (verifySessionToken(request.cookies.get(SESSION_COOKIE)?.value)) return NextResponse.next()
 

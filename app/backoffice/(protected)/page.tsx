@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { CalendarCheck, Clock, CreditCard, MessageSquareQuote, ExternalLink, Grid3X3, Palette, QrCode, Store, Ticket, UtensilsCrossed, type LucideIcon } from 'lucide-react'
+import { CalendarCheck, Clock, Smartphone, CreditCard, MessageSquareQuote, ExternalLink, Grid3X3, Palette, QrCode, Store, Ticket, UtensilsCrossed, type LucideIcon } from 'lucide-react'
 import { PageShell } from '@/components/backoffice/page-shell'
 import { getStoreStrict } from '@/lib/store'
 
@@ -14,6 +14,7 @@ export default async function BackofficeHome() {
   const custom: { href: string; title: string; Icon: LucideIcon }[] = [
     { href: '/backoffice/codigo-qr', title: 'Código QR', Icon: QrCode },
     { href: '/backoffice/personalizar', title: 'Personaliza tu App', Icon: Palette },
+    { href: '/backoffice/instalar', title: 'Instalar el panel en tu dispositivo', Icon: Smartphone },
   ]
   const takeaway: { href: string; title: string; detail: string; Icon: LucideIcon }[] = [
     { href: '/backoffice/horarios', title: 'Horarios', detail: 'Días y horas de atención', Icon: Clock },

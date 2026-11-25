@@ -3,7 +3,6 @@
 import { Fragment, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import { Search } from 'lucide-react'
-import { AdminLink } from '@/components/admin-link'
 import { CategoryNav } from '@/components/category-nav'
 import { LanguageToggle } from '@/components/language-toggle'
 import { useLanguage } from '@/components/language-provider'
@@ -72,7 +71,6 @@ export function MenuExperience() {
         style={theme.heroImageUrl ? { backgroundImage: `url(${withBase(theme.heroImageUrl)})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
       >
         {theme.showLanguage && <LanguageToggle />}
-        <AdminLink />
         <div className="mx-auto flex max-w-(--content-width) flex-col items-center px-5 pb-6 pt-4 text-center sm:pb-8 sm:pt-6">
           <Image
             src={theme.logoUrl ?? DEFAULT_LOGO_URL}
