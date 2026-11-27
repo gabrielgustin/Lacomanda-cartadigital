@@ -1,3 +1,4 @@
+import { unstable_cache } from 'next/cache'
 import { cache } from 'react'
 import { query } from '@/lib/db'
 import { seedMenu, type MenuItem, type MenuSection } from '@/lib/menu-data'
@@ -51,10 +52,17 @@ export async function loadStore(): Promise<StoreData> {
 /** Igual que `loadStore`, pero una sola lectura por visita (el layout y la página comparten el resultado). */
 export const getStoreStrict = cache(loadStore)
 
-/** Para la carta pública: si la base no responde, muestra la carta base en vez de romper la página. */
+/** Se refresca al guardar desde el panel (updateTag). El día de respaldo cubre cambios hechos directo en la base. */
+export const STORE_TAG = 'store'
+const cachedStore = unstable_cache(loadStore, ['store'], { tags: [STORE_TAG], revalidate: 86_400 })
+
+/**
+ * Para la carta pública, desde la caché: así cada visita no despierta la base (Neon cobra por hora despierta).
+ * Si la base no responde, muestra la carta base en vez de romper la página (un error no queda en la caché).
+ */
 export const getStore = cache(async (): Promise<StoreData> => {
   try {
-    return await loadStore()
+    return await cachedStore()
   } catch (error) {
     console.error('[store] No se pudo leer la base de datos; se muestra la carta base.', error)
     return seed()

@@ -1,3 +1,4 @@
+import { unstable_cache } from 'next/cache'
 import { z } from 'zod'
 import { query } from '@/lib/db'
 
@@ -14,7 +15,13 @@ const COLUMNS = 'id, autor, texto, estrellas, visible'
 
 export const listarResenas = () => query<Resena>(`SELECT ${COLUMNS} FROM resenas ORDER BY id DESC`)
 
-export const resenasPublicas = () => query<Omit<Resena, 'id' | 'visible'>>('SELECT autor, texto, estrellas FROM resenas WHERE visible ORDER BY id DESC')
+export const RESENAS_TAG = 'resenas'
+// La web las pide seguido: desde la caché no despiertan la base. Se refresca al guardar desde el panel.
+export const resenasPublicas = unstable_cache(
+  () => query<Omit<Resena, 'id' | 'visible'>>('SELECT autor, texto, estrellas FROM resenas WHERE visible ORDER BY id DESC'),
+  ['resenas-publicas'],
+  { tags: [RESENAS_TAG], revalidate: 86_400 },
+)
 
 export const crearResena = (r: z.infer<typeof resenaSchema>) =>
   query('INSERT INTO resenas (autor, texto, estrellas, visible) VALUES ($1, $2, $3, $4)', [r.autor, r.texto, r.estrellas, r.visible])

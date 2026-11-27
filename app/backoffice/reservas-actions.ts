@@ -1,10 +1,10 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, updateTag } from 'next/cache'
 import type { ActionResult } from '@/app/backoffice/actions'
 import { requireAdmin } from '@/lib/backoffice-auth'
 import { borrarReserva, cambiarEstado, ESTADOS, type Estado } from '@/lib/reservas'
-import { borrarResena, crearResena, editarResena, resenaSchema } from '@/lib/resenas'
+import { borrarResena, crearResena, editarResena, RESENAS_TAG, resenaSchema } from '@/lib/resenas'
 
 // En un archivo 'use server' todo export async es invocable desde el navegador: estos helpers NO se exportan.
 const fail = (error: string): ActionResult => ({ ok: false, error })
@@ -18,6 +18,7 @@ async function run(path: string, job: () => Promise<unknown>): Promise<ActionRes
     console.error('[backoffice] reservas/reseñas', error)
     return fail(FALLO)
   }
+  if (path.includes('resenas')) updateTag(RESENAS_TAG)
   revalidatePath(path)
   return { ok: true }
 }

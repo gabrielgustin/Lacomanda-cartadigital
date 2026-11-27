@@ -3,7 +3,7 @@
 import { randomBytes } from 'node:crypto'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, updateTag } from 'next/cache'
 import {
   SESSION_COOKIE,
   checkCredentials,
@@ -15,7 +15,7 @@ import {
 } from '@/lib/backoffice-auth'
 import { categoryIcons } from '@/lib/category-icons'
 import type { Localized, MenuItem, MenuSection } from '@/lib/menu-data'
-import { updateStore, type StoreData } from '@/lib/store'
+import { STORE_TAG, updateStore, type StoreData } from '@/lib/store'
 import { sanitizeTheme, type ThemeSettings } from '@/lib/theme'
 
 export type ActionResult = { ok: true } | { ok: false; error: string }
@@ -88,6 +88,7 @@ async function mutate(change: (draft: StoreData) => string | void): Promise<Acti
     if (error instanceof Error && error.message.startsWith('No se pudo guardar:')) return fail(error.message)
     return fail('No se pudieron guardar los cambios. Revisá la conexión con la base de datos e intentá de nuevo.')
   }
+  updateTag(STORE_TAG)
   revalidatePath('/')
   revalidatePath('/backoffice', 'layout')
   return { ok: true }

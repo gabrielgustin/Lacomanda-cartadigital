@@ -1,7 +1,7 @@
 'use server'
 
 import { randomBytes } from 'node:crypto'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, updateTag } from 'next/cache'
 import type { ActionResult } from '@/app/backoffice/actions'
 import { requireAdmin } from '@/lib/backoffice-auth'
 import {
@@ -12,7 +12,7 @@ import {
   type OrderSettings,
 } from '@/lib/settings'
 import { toWhatsAppNumber } from '@/lib/whatsapp'
-import { updateStore } from '@/lib/store'
+import { STORE_TAG, updateStore } from '@/lib/store'
 import type { z } from 'zod'
 
 // En un archivo 'use server' todo export async es invocable desde el navegador: por eso estos helpers NO se exportan.
@@ -32,6 +32,7 @@ async function saveSettings(change: (settings: OrderSettings) => string | void):
     if (error instanceof Error && error.message.startsWith('No se pudo guardar:')) return fail(error.message)
     return fail('No se pudieron guardar los cambios. Revisá la conexión con la base de datos e intentá de nuevo.')
   }
+  updateTag(STORE_TAG)
   revalidatePath('/backoffice', 'layout')
   return { ok: true }
 }
